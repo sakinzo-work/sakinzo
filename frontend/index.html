@@ -3436,10 +3436,12 @@
             <form class="contact-box" id="indexContactForm">
                 <h3>Contact Us</h3>
                 <div class="f-row">
-                    <input class="f-inp" type="text" name="name" placeholder="Name*" required>
-                    <input class="f-inp" type="email" name="email" placeholder="Email*" required>
+                    <input class="f-inp" type="text" name="name" placeholder="Full Name*" required>
+                    <input class="f-inp" type="email" name="email" placeholder="Email Address*" required>
+                    <input class="f-inp" type="tel" name="phone" placeholder="Phone Number">
+                    <input class="f-inp" type="text" name="company" placeholder="Company">
                 </div>
-                <input class="f-inp" type="text" name="desc" placeholder="Project description*" style="margin-top:10px" required>
+                <input class="f-inp" type="text" name="desc" placeholder="Project Description*" style="margin-top:10px" required>
                 <label class="f-attach" for="indexAttachment">
                     <input id="indexAttachment" type="file" accept=".png,.jpg,.jpeg,.xlsx,.doc,.docx,.pdf" style="display:none">
                     <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
@@ -3632,6 +3634,8 @@
                     const fd = new FormData();
                     fd.append('name', fields.name.value.trim());
                     fd.append('email', fields.email.value.trim());
+                    fd.append('phone', fields.phone.value.trim());
+                    fd.append('company', fields.company.value.trim());
                     fd.append('desc', fields.desc.value.trim());
                     fd.append('source', 'Index footer');
                     const file = fileInput?.files?.[0];
