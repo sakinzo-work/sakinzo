@@ -16,10 +16,25 @@ const crudRouter = require('./utils/crudRouter');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const origins = (process.env.CLIENT_ORIGIN || '').split(',').map(x => x.trim()).filter(Boolean);
+const defaultOrigins = [
+  'https://sakinzo-work.github.io',
+  'http://127.0.0.1:5500',
+  'http://localhost:5500',
+  'http://localhost:3000'
+];
+const origins = [...new Set([
+  ...defaultOrigins,
+  ...(process.env.CLIENT_ORIGIN || '').split(',').map(x => x.trim()).filter(Boolean)
+])];
 
 app.use(helmet({ crossOriginResourcePolicy: false }));
-app.use(cors({ origin: origins.length ? origins : true, credentials: true }));
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || origins.includes(origin)) return callback(null, true);
+    callback(new Error(`CORS blocked for origin: ${origin}`));
+  },
+  credentials: true
+}));
 app.use(morgan('dev'));
 app.use(express.json({ limit: '2mb' }));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
