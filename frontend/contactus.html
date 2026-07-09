@@ -257,6 +257,18 @@
             box-shadow: 0 6px 20px rgba(22, 115, 255, .36);
         }
 
+        .btn-home {
+            background: #fff;
+            color: var(--ink);
+            border: 1px solid var(--line);
+            box-shadow: none;
+        }
+
+        .btn-home:hover {
+            background: var(--bg);
+            box-shadow: none;
+        }
+
         .hamburger {
             display: none;
             flex-direction: column;
@@ -1699,7 +1711,7 @@
     <!-- ════════════ HEADER ════════════ -->
     <header>
         <div class="header-wrap">
-            <a href="#" class="logo">
+            <a href="index.html" class="logo" aria-label="Back to Sakinzo home">
                 <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
                     <rect width="36" height="36" rx="9" fill="#022542" />
                     <path d="M7 11L11 19L15 11L18 17L21 11L25 19L29 11" stroke="#1673FF" stroke-width="2.2"
@@ -1784,6 +1796,7 @@
                             stroke-linejoin="round" />
                     </svg>
                 </button>
+                <a href="index.html" class="btn-cta btn-home">Home</a>
                 <a href="#form-section" class="btn-cta">Get in touch</a>
             </div>
 
@@ -1806,6 +1819,8 @@
                 </div>
             </div>
             <div style="padding: 16px 14px 0;">
+                <a href="index.html" class="btn-cta btn-home" style="width:100%;justify-content:center;margin-bottom:10px;"
+                    onclick="toggleMobile()">Back to home</a>
                 <a href="#form-section" class="btn-cta" style="width:100%;justify-content:center;"
                     onclick="toggleMobile()">Get in touch</a>
             </div>
@@ -2032,7 +2047,7 @@
         <div class="footer-wrap">
             <div class="footer-top">
                 <div class="fbrand">
-                    <a href="#" class="logo">
+                    <a href="index.html" class="logo" aria-label="Back to Sakinzo home">
                         <svg width="34" height="34" viewBox="0 0 36 36" fill="none">
                             <rect width="36" height="36" rx="9" fill="#0b2240" />
                             <path d="M7 11L11 19L15 11L18 17L21 11L25 19L29 11" stroke="#1673FF" stroke-width="2.2"
