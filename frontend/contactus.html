@@ -1663,16 +1663,39 @@
         @media (max-width: 640px) {
 
             nav,
-            .header-right .btn-ghost {
+            .header-right {
                 display: none;
+            }
+
+            .header-wrap {
+                height: 62px;
+                padding: 0 18px;
+            }
+
+            .logo-name {
+                font-size: 19px;
             }
 
             .hamburger {
                 display: flex;
             }
 
+            .mobile-nav {
+                inset: 62px 0 0 0;
+                overflow-y: auto;
+            }
+
             .hero-band {
-                padding: 48px 20px 64px;
+                padding: 36px 18px 46px;
+            }
+
+            .hero-inner h1 {
+                font-size: 32px;
+                line-height: 1.15;
+            }
+
+            .hero-desc {
+                font-size: 14px;
             }
 
             .steps {
@@ -1681,14 +1704,41 @@
 
             .form-grid {
                 grid-template-columns: 1fr;
+                row-gap: 2px;
             }
 
             .form-card {
-                padding: 32px 22px;
+                padding: 28px 18px;
+                border-radius: 14px;
+            }
+
+            .form-card h2 {
+                font-size: 23px;
+            }
+
+            .input-wrap input,
+            .input-wrap textarea {
+                font-size: 15px;
+            }
+
+            .attach-zone {
+                padding: 18px 14px;
+                align-items: flex-start;
+            }
+
+            .submit-row {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .btn-submit {
+                width: 100%;
+                justify-content: center;
             }
 
             .content-wrap {
-                padding: 40px 20px 60px;
+                padding: 28px 14px 52px;
+                gap: 22px;
             }
 
             .sidebar {
