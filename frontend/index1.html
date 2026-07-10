@@ -2081,6 +2081,7 @@
             overflow: hidden;
             min-height: 360px;
             aspect-ratio: 4 / 5;
+            background: #071323;
             cursor: pointer;
             text-decoration: none;
             display: block;
@@ -2095,23 +2096,29 @@
 
         .project-img {
             position: absolute;
-            inset: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: 58%;
+            object-fit: contain;
             object-position: center;
-            background: #e8eef7;
+            background: #f4f7fb;
+            padding: 12px;
             transition: transform .5s ease;
         }
 
         .project-card:hover .project-img {
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
 
         .project-overlay {
             position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0.7) 70%, rgba(0, 0, 0, 0.95) 100%);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            min-height: 48%;
+            background: linear-gradient(180deg, rgba(7, 19, 35, .82) 0%, #071323 48%, #040914 100%);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
@@ -2120,7 +2127,7 @@
         }
 
         .project-card:hover .project-overlay {
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.8) 70%, rgba(0, 0, 0, 0.98) 100%);
+            background: linear-gradient(180deg, rgba(10, 32, 58, .9) 0%, #071323 48%, #040914 100%);
         }
 
         .project-category {
@@ -2145,6 +2152,10 @@
             line-height: 1.3;
             margin-bottom: 10px;
             letter-spacing: -0.02em;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .project-desc {
@@ -2152,6 +2163,10 @@
             color: rgba(255, 255, 255, 0.75);
             line-height: 1.6;
             margin-bottom: 18px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .project-tech {
@@ -2211,8 +2226,18 @@
             }
 
             .project-card {
-                min-height: 320px;
-                aspect-ratio: 16 / 11;
+                min-height: 430px;
+                aspect-ratio: auto;
+            }
+
+            .project-img {
+                height: 54%;
+                padding: 10px;
+            }
+
+            .project-overlay {
+                min-height: 50%;
+                padding: 22px;
             }
         }
 
