@@ -30,5 +30,12 @@ const mobileGroup=(name,items)=>`<div class="mob-item"><div class="mob-link" onc
 document.querySelector('.site-header').outerHTML=`<header class="hdr"><div class="hdr-inner"><a href="index.html" class="logo"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 8 L18 2 L30 8 L26 14 L18 11 L10 14 Z" fill="#1673FF"/><path d="M6 8 L10 14 L6 20 L18 34 L30 20 L26 14 L18 11 L10 14 Z" fill="#1673FF" opacity=".85"/><path d="M10 14 L18 11 L26 14 L18 28 Z" fill="rgba(255,255,255,0.35)"/></svg><span class="logo-txt">Sakin<span>zo</span></span></a><nav>${navGroups}</nav><div class="hdr-right"><span class="lang">EN${arrow}</span><a href="contactus.html#form-section" class="btn-git">Get in touch</a></div><button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></header><div class="mobile-menu" id="mobileMenu">${mobileGroup('About Us',links.about)}${mobileGroup('Success Stories',links.stories)}${mobileGroup('Services',links.services)}${mobileGroup('Insights',links.insights)}<a href="contactus.html#form-section" class="mob-cta" onclick="closeMenu()">Get in touch</a></div>`;
 const ham=document.getElementById('hamburger'),mobMenu=document.getElementById('mobileMenu');
 ham.addEventListener('click',()=>{ham.classList.toggle('open');mobMenu.classList.toggle('open');document.body.style.overflow=mobMenu.classList.contains('open')?'hidden':''});
+document.querySelectorAll('.nbtn').forEach(btn=>btn.addEventListener('click',event=>{
+    event.stopPropagation();
+    const group=btn.closest('.ndrop');
+    document.querySelectorAll('.ndrop.open').forEach(item=>{if(item!==group)item.classList.remove('open')});
+    group.classList.toggle('open');
+}));
+document.addEventListener('click',()=>document.querySelectorAll('.ndrop.open').forEach(item=>item.classList.remove('open')));
 function toggleMobSub(el){el.classList.toggle('active');el.nextElementSibling.classList.toggle('open')}
 function closeMenu(){ham.classList.remove('open');mobMenu.classList.remove('open');document.body.style.overflow=''}
