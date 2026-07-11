@@ -1672,7 +1672,8 @@
 
             /* ---- Safe zone: 20px from every screen edge ---- */
             .wrap {
-                padding: 0 20px !important
+                padding-left: 20px !important;
+                padding-right: 20px !important
             }
 
             .hdr-inner {
@@ -2016,58 +2017,6 @@
             position: relative;
         }
 
-        .wrap {
-            max-width: 1360px;
-            margin: 0 auto;
-            padding: 0 40px;
-            width: 100%;
-        }
-
-        .sec {
-            padding: 88px 0;
-        }
-
-        .sec-hd {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 44px;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .sec-title {
-            font-size: clamp(24px, 3vw, 38px);
-            font-weight: 800;
-            color: #0d1b2e;
-            letter-spacing: -0.025em;
-            line-height: 1.15;
-        }
-
-        .sec-btn-row {
-            text-align: center;
-            margin-top: 44px;
-        }
-
-        .btn-blue {
-            display: inline-block;
-            background: #1673FF;
-            color: #fff;
-            border: none;
-            border-radius: 100px;
-            padding: 12px 28px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: .18s;
-            white-space: nowrap;
-        }
-
-        .btn-blue:hover {
-            background: #0f5fe0;
-        }
-
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -2260,7 +2209,8 @@
         ================================================ */
         @media (max-width: 380px) {
             .wrap {
-                padding: 0 16px !important
+                padding-left: 16px !important;
+                padding-right: 16px !important
             }
 
             .hdr-inner {
