@@ -43,18 +43,14 @@
             color: var(--text);
             line-height: 1.5;
             overflow-x: hidden;
-            padding-top: 68px;
         }
 
         /* ══════════════════════════════
    HEADER
 ══════════════════════════════ */
         header {
-            position: fixed;
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            width: 100%;
             z-index: 500;
             background: rgba(255, 255, 255, .96);
             backdrop-filter: blur(12px);
@@ -310,15 +306,9 @@
         .mobile-nav {
             display: none;
             position: fixed;
-            top: 68px;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: calc(100vh - 68px);
-            height: calc(100dvh - 68px);
+            inset: 68px 0 0 0;
             background: #fff;
             overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
             z-index: 400;
             padding: 16px 20px 40px;
             border-top: 1px solid var(--border);
@@ -1257,8 +1247,6 @@
             color: rgba(255, 255, 255, .5);
             position: relative;
             z-index: 1;
-            flex-wrap: wrap;
-            row-gap: 4px;
         }
 
         .online-dot {
@@ -1368,10 +1356,6 @@
             border: 1.5px solid var(--border);
         }
 
-        .sidebar-label {
-            display: none;
-        }
-
         .card-methods h3 {
             font-size: 12px;
             font-weight: 800;
@@ -1423,23 +1407,11 @@
             color: #0077b5;
         }
 
-        .method {
-            min-width: 0;
-        }
-
-        .method>div {
-            min-width: 0;
-            flex: 1;
-        }
-
         .method strong {
             display: block;
             font-size: 13px;
             font-weight: 700;
             color: var(--navy);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
 
         .method span {
@@ -1696,7 +1668,6 @@
             .sidebar {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                gap: 16px;
                 position: relative;
                 top: auto;
                 z-index: 1;
@@ -1705,12 +1676,6 @@
 
             .card-team {
                 grid-column: 1 / -1;
-            }
-
-            .card-team,
-            .card-offices,
-            .card-methods {
-                padding: 24px;
             }
         }
 
@@ -1750,10 +1715,6 @@
                 padding: 0 18px;
             }
 
-            body {
-                padding-top: 62px;
-            }
-
             .logo-name {
                 font-size: 19px;
             }
@@ -1763,9 +1724,7 @@
             }
 
             .mobile-nav {
-                top: 62px;
-                height: calc(100vh - 62px);
-                height: calc(100dvh - 62px);
+                inset: 62px 0 0 0;
                 overflow-y: auto;
             }
 
@@ -1840,73 +1799,18 @@
 
             .content-wrap {
                 padding: 26px 16px 52px;
-                gap: 28px;
+                gap: 16px;
             }
 
-            .sidebar-label {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                font-size: 11px;
-                font-weight: 700;
-                color: var(--blue);
-                text-transform: uppercase;
-                letter-spacing: .1em;
-                margin-bottom: 14px;
-            }
-
-            .sidebar-label::before {
-                content: '';
-                width: 20px;
-                height: 2px;
-                background: var(--blue);
-                border-radius: 2px;
-            }
-
-            /* One seamless panel instead of three floating cards */
             .sidebar {
                 grid-template-columns: 1fr;
-                gap: 0;
-                border-radius: 18px;
-                overflow: hidden;
-                box-shadow: var(--shadow);
+                gap: 16px;
             }
 
             .card-team,
             .card-offices,
             .card-methods {
-                border-radius: 0;
-                box-shadow: none;
-            }
-
-            .card-team {
-                padding: 24px 22px;
-            }
-
-            .card-offices {
-                padding: 24px 22px;
-                border-top: 1px solid rgba(2, 37, 66, .06);
-            }
-
-            .card-methods {
-                padding: 6px 22px 10px;
-                background: #fff;
-                border: none;
-                border-top: 1px solid var(--border);
-            }
-
-            .card-methods h3 {
-                margin: 16px 0 4px;
-            }
-
-            .av {
-                width: 40px;
-                height: 40px;
-                font-size: 13px;
-            }
-
-            .online-row span {
-                font-size: 12.5px;
+                padding: 22px;
             }
 
             .fnav {
@@ -2251,7 +2155,6 @@
         </div>
 
         <!-- SIDEBAR -->
-        <div class="sidebar-label">Contact details</div>
         <div class="sidebar">
 
             <!-- Team Card — rendered dynamically from admin data -->
@@ -2556,27 +2459,12 @@
             renderOffices();
         });
 
-        let lockedScrollY = 0;
         function toggleMobile() {
             const nav = document.getElementById('mobileNav');
             const btn = document.getElementById('hambtn');
             const isOpen = nav.classList.toggle('open');
             btn.classList.toggle('open', isOpen);
-            if (isOpen) {
-                lockedScrollY = window.scrollY;
-                document.body.style.position = 'fixed';
-                document.body.style.top = `-${lockedScrollY}px`;
-                document.body.style.left = '0';
-                document.body.style.right = '0';
-                document.body.style.width = '100%';
-            } else {
-                document.body.style.position = '';
-                document.body.style.top = '';
-                document.body.style.left = '';
-                document.body.style.right = '';
-                document.body.style.width = '';
-                window.scrollTo(0, lockedScrollY);
-            }
+            document.body.style.overflow = isOpen ? 'hidden' : '';
         }
         function toggleSection(btn) { btn.classList.toggle('active'); btn.nextElementSibling.classList.toggle('open'); }
 

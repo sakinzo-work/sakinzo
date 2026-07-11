@@ -2100,16 +2100,27 @@
             left: 0;
             right: 0;
             width: 100%;
-            height: 58%;
-            object-fit: contain;
+            height: 56%;
+            object-fit: cover;
             object-position: center;
             background: #f4f7fb;
-            padding: 12px;
             transition: transform .5s ease;
         }
 
         .project-card:hover .project-img {
-            transform: scale(1.02);
+            transform: scale(1.06);
+        }
+
+        .project-img-fallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #16233f 0%, #0b1830 100%);
         }
 
         .project-overlay {
@@ -2117,7 +2128,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            min-height: 48%;
+            min-height: 46%;
             background: linear-gradient(180deg, rgba(7, 19, 35, .82) 0%, #071323 48%, #040914 100%);
             display: flex;
             flex-direction: column;
@@ -2230,13 +2241,13 @@
                 aspect-ratio: auto;
             }
 
-            .project-img {
-                height: 54%;
-                padding: 10px;
+            .project-img,
+            .project-img-fallback {
+                height: 52%;
             }
 
             .project-overlay {
-                min-height: 50%;
+                min-height: 48%;
                 padding: 22px;
             }
         }
@@ -2530,41 +2541,7 @@
                 <p>The client's results are our win. It's not about creating a solution or product that fits initial
                     requirements but about long-term value impacting the client's business and its customers.</p>
             </div>
-            <!-- <div style="font-size:12px;font-weight:700;color:#1673FF;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px">
-                Our Certifications &amp; Reviews</div> -->
             <div class="cert-row">
-
-
-                <!-- 
-
-                <div class="cert-card">
-                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="flex-shrink:0">
-                        <circle cx="24" cy="24" r="21" stroke="#1673FF" stroke-width="2" fill="none" />
-                        <circle cx="24" cy="24" r="14" stroke="#1673FF" stroke-width="1" fill="none" opacity=".35" />
-                        <text x="24" y="21" text-anchor="middle" font-size="9.5" font-weight="800" fill="#1673FF" font-family="Inter,sans-serif">ISO</text>
-                        <text x="24" y="32" text-anchor="middle" font-size="9.5" font-weight="800" fill="#1673FF" font-family="Inter,sans-serif">9001</text>
-                    </svg>
-                    <div>
-                        <div class="cert-txt">ISO 9001:2015</div>
-                        <div class="cert-sub">Certified</div>
-                    </div>
-                </div>
-                <div class="cert-card">
-                    <svg width="44" height="44" viewBox="0 0 44 44" fill="none" style="flex-shrink:0">
-                        <path d="M22 4 L38 13 L38 31 L22 40 L6 31 L6 13 Z" fill="#e8240b" opacity=".9" />
-                        <text x="22" y="26" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" font-family="Georgia,serif">Clutch</text>
-                    </svg>
-                    <div>
-                        <div style="font-size:11px;color:#999;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Top Reviewed on</div>
-                        <div style="font-size:19px;font-weight:800;color:#e8240b;line-height:1.1">Clutch</div>
-                        <div class="stars">★★★★★</div>
-                        <div style="font-size:11px;color:#aaa">15 reviews</div>
-                    </div>
-                </div>
-                -->
-
-
-
             </div>
 
 
@@ -2720,17 +2697,17 @@
         </div>
     </section>
 
-    <section class="projects-sec" id="sec-projects" id="sec-projects">
+    <section class="projects-sec" id="sec-projects">
         <div class="wrap sec">
             <div class="sec-hd">
                 <h2 class="sec-title">Our Projects</h2>
-                <a href="#" class="btn-blue">View All Projects</a>
+                <a href="#" class="btn-blue projects-view-all" onclick="handleProjectsViewAll(event)">View All Projects</a>
             </div>
             <div class="projects-grid" id="main-projects-grid">
                 <!-- Dynamically rendered from admin panel -->
             </div>
             <div class="sec-btn-row">
-                <a href="#" class="btn-blue">View All Projects</a>
+                <a href="#" class="btn-blue projects-view-all" onclick="handleProjectsViewAll(event)">View All Projects</a>
             </div>
         </div>
     </section>
@@ -3498,16 +3475,6 @@
                     India | Mharashtra | Pune<br>
 
                 </address>
-                <!-- <div class="ft-lbl" style="margin-top:28px">Certification</div> -->
-                <!-- <div class="ft-iso">
-                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-                        <circle cx="15" cy="15" r="13" stroke="#4a7aaa" stroke-width="1.5" fill="none" />
-                        <circle cx="15" cy="15" r="8" stroke="#4a7aaa" stroke-width=".8" fill="none" opacity=".4" />
-                        <text x="15" y="13" text-anchor="middle" font-size="5.5" font-weight="800" fill="#4a7aaa" font-family="Inter,sans-serif">ISO</text>
-                        <text x="15" y="21" text-anchor="middle" font-size="5.5" font-weight="800" fill="#4a7aaa" font-family="Inter,sans-serif">9001</text>
-                    </svg>
-                    ISO 9001
-                </div> -->
                 <hr class="ft-hr">
                 <div class="ft-socials">
                     <a href="#" class="s-ic"><svg width="13" height="13" viewBox="0 0 13 13" fill="none">
@@ -3623,19 +3590,56 @@
         let fi = 0;
         const escapeHtml = (value = '') => String(value).replace(/[&<>"]/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[s]));
         const fullUrl = (url = '') => url && url.startsWith('/uploads/') ? API_BASE.replace('/api','') + url : url;
-        async function loadSiteData() {
-            try { const res = await fetch(`${API_BASE}/public/site-data`); if (!res.ok) throw new Error('API unavailable'); WLDATA = await res.json(); }
-            catch (error) { console.warn('Unable to load API data:', error.message); }
-            renderProjects(); renderStats(); renderClients(); applySectionVisibility(); setupFeedback(); renderClientsMap(); setupPageInteractions();
+
+        // ── PROJECTS: render + "View All Projects" load-more ──────────
+        let ALL_PROJECTS = [];
+        let projectsShown = 6;
+        const PROJECTS_PAGE_SIZE = 6;
+
+        function projectCardHtml(p) {
+            const fallbackMarkup = `<div class="project-img-fallback"><span style="color:rgba(255,255,255,.35);font-size:12px;font-weight:600;letter-spacing:.05em">NO IMAGE</span></div>`;
+            const imgTag = p.img
+                ? `<img src="${fullUrl(p.img)}" alt="${escapeHtml(p.title)}" class="project-img" loading="lazy" onerror="this.outerHTML='${fallbackMarkup.replace(/'/g, "\\'")}'">`
+                : fallbackMarkup;
+            return `<a href="contactus.html#form-section" class="project-card">${imgTag}<div class="project-overlay"><span class="project-category">${escapeHtml(p.category || '')}</span><h3 class="project-title">${escapeHtml(p.title || '')}</h3><p class="project-desc">${escapeHtml(p.desc || '')}</p><div class="project-tech">${(p.tags || []).map(t => `<span class="tech-tag">${escapeHtml(t)}</span>`).join('')}</div><span class="project-link">Get in touch</span></div></a>`;
         }
+
         function renderProjects() {
             const grid = document.getElementById('main-projects-grid'); if (!grid) return;
-            const projects = (WLDATA.projects || []).filter(p => p.visible !== false).sort((a, b) => (a.order || 0) - (b.order || 0));
-            if (!projects.length) { grid.innerHTML = '<p style="color:#999;text-align:center;padding:40px 0;grid-column:1/-1">No projects added yet.</p>'; return; }
-            grid.innerHTML = projects.map(p => `<a href="contactus.html#form-section" class="project-card">${p.img ? `<img src="${fullUrl(p.img)}" alt="${escapeHtml(p.title)}" class="project-img" onerror="this.style.display='none'">` : `<div style="position:absolute;inset:0;background:#1a2540"></div>`}<div class="project-overlay"><span class="project-category">${escapeHtml(p.category || '')}</span><h3 class="project-title">${escapeHtml(p.title || '')}</h3><p class="project-desc">${escapeHtml(p.desc || '')}</p><div class="project-tech">${(p.tags || []).map(t => `<span class="tech-tag">${escapeHtml(t)}</span>`).join('')}</div><span class="project-link">Get in touch</span></div></a>`).join('');
+            ALL_PROJECTS = (WLDATA.projects || []).filter(p => p.visible !== false).sort((a, b) => (a.order || 0) - (b.order || 0));
+            if (!ALL_PROJECTS.length) { grid.innerHTML = '<p style="color:#999;text-align:center;padding:40px 0;grid-column:1/-1">No projects added yet.</p>'; toggleProjectsButtons(false); return; }
+            projectsShown = Math.min(PROJECTS_PAGE_SIZE, ALL_PROJECTS.length);
+            paintProjects();
         }
+
+        function paintProjects() {
+            const grid = document.getElementById('main-projects-grid'); if (!grid) return;
+            grid.innerHTML = ALL_PROJECTS.slice(0, projectsShown).map(projectCardHtml).join('');
+            toggleProjectsButtons(ALL_PROJECTS.length > PROJECTS_PAGE_SIZE);
+        }
+
+        function toggleProjectsButtons(hasMore) {
+            document.querySelectorAll('.projects-view-all').forEach(btn => {
+                if (!hasMore) { btn.style.display = 'none'; return; }
+                btn.style.display = '';
+                btn.textContent = projectsShown < ALL_PROJECTS.length ? 'View All Projects' : 'Show Less';
+            });
+        }
+
+        function handleProjectsViewAll(e) {
+            e.preventDefault();
+            if (projectsShown < ALL_PROJECTS.length) {
+                projectsShown = ALL_PROJECTS.length;
+            } else {
+                projectsShown = Math.min(PROJECTS_PAGE_SIZE, ALL_PROJECTS.length);
+                document.getElementById('sec-projects')?.scrollIntoView({ behavior: 'smooth' });
+            }
+            paintProjects();
+        }
+        window.handleProjectsViewAll = handleProjectsViewAll;
+
         function renderStats() { const grid = document.getElementById('main-stats-grid'); if (!grid) return; const stats = (WLDATA.stats || []).filter(s => s.visible !== false).sort((a,b)=>(a.order||0)-(b.order||0)); if (!stats.length) return; grid.innerHTML = stats.map((s, i) => `<div class="stat" ${i > 0 ? 'style="border-left:2px solid #e2eaf4;padding-left:32px"' : ''}><div class="stat-num">${escapeHtml(s.value)}</div><div class="stat-lbl">${escapeHtml(s.label)}</div></div>`).join(''); }
-        function renderClients() { const grid = document.getElementById('main-clients-grid') || document.querySelector('.clients-grid'); if (!grid) return; const clients = (WLDATA.clients || []).filter(c => c.visible !== false).sort((a,b)=>(a.order||0)-(b.order||0)); if (!clients.length) { grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#5f7089">No clients added yet.</p>'; return; } grid.innerHTML = clients.map(c => `<div class="cl-card">${c.logo ? `<img src="${fullUrl(c.logo)}" alt="${escapeHtml(c.name)}" style="max-width:130px;max-height:46px;object-fit:contain">` : `<span style="font-size:15px;font-weight:700;color:#0d1b2e">${escapeHtml(c.name)}</span>`}</div>`).join(''); }
+        function renderClients() { const grid = document.getElementById('main-clients-grid') || document.querySelector('.clients-grid'); if (!grid) return; const clients = (WLDATA.clients || []).filter(c => c.visible !== false).sort((a,b)=>(a.order||0)-(b.order||0)); if (!clients.length) { return; } grid.innerHTML = clients.map(c => `<div class="cl-card">${c.logo ? `<img src="${fullUrl(c.logo)}" alt="${escapeHtml(c.name)}" style="max-width:130px;max-height:46px;object-fit:contain">` : `<span style="font-size:15px;font-weight:700;color:#0d1b2e">${escapeHtml(c.name)}</span>`}</div>`).join(''); }
         function applySectionVisibility() { const secs = WLDATA.sections || {}; const secMap = { why:'sec-why', clients:'sec-clients', whatwedo:'sec-whatwedo', projects:'sec-projects', services:'sec-services', cases:'sec-cases', map:'sec-map', feedback:'sec-feedback', insights:'sec-insights' }; Object.entries(secMap).forEach(([key, elId]) => { const el = document.getElementById(elId); if (el) el.style.display = (secs[key] !== false) ? '' : 'none'; }); }
         function setupFeedback() { feedbacks = (WLDATA.testimonials || []).filter(t => t.visible !== false).sort((a,b)=>(a.order||0)-(b.order||0)).map(t => ({ init: t.initials || (t.name || '').substring(0,2).toUpperCase(), name: t.name || '', role: t.role || '', txt: t.text || '' })); if (!feedbacks.length) { const sec = document.getElementById('sec-feedback'); if (sec) sec.style.display = 'none'; return; } renderFb(); setInterval(fbNext, 5000); }
         function buildDots() { const d = document.getElementById('fbDots'); if (!d) return; d.innerHTML = ''; feedbacks.forEach((_, i) => { const dot = document.createElement('div'); dot.className = 'fb-dot' + (i === fi ? ' on' : ''); dot.onclick = () => { fi = i; renderFb(); }; d.appendChild(dot); }); }
@@ -3684,6 +3688,11 @@
                     btn.textContent = 'Send Request';
                 }
             });
+        }
+        async function loadSiteData() {
+            try { const res = await fetch(`${API_BASE}/public/site-data`); if (!res.ok) throw new Error('API unavailable'); WLDATA = await res.json(); }
+            catch (error) { console.warn('Unable to load API data:', error.message); }
+            renderProjects(); renderStats(); renderClients(); applySectionVisibility(); setupFeedback(); renderClientsMap(); setupPageInteractions();
         }
         function setupPageInteractions() { const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } }); }, { threshold:.08 }); document.querySelectorAll('.reveal').forEach(el => obs.observe(el)); document.querySelectorAll('a[href="#contact"]').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); document.getElementById('contact').scrollIntoView({ behavior:'smooth' }); }); }); setupIndexContactForm(); }
         document.addEventListener('DOMContentLoaded', loadSiteData);

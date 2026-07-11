@@ -3471,7 +3471,7 @@
                     <span class="ft-logo-txt">Sakin<span>zo</span></span>
                 </div>
                 <div class="ft-lbl">Our Offices</div>
-                <address class="ft-addr">
+                <address class="ft-addr" id="ftOfficesList">
                     India | Mharashtra | Pune<br>
 
                 </address>
@@ -3647,6 +3647,20 @@
         function fbNext() { if (!feedbacks.length) return; fi = (fi + 1) % feedbacks.length; renderFb(); }
         function fbPrev() { if (!feedbacks.length) return; fi = (fi - 1 + feedbacks.length) % feedbacks.length; renderFb(); }
         window.fbNext = fbNext; window.fbPrev = fbPrev;
+        function renderFooterOffices() {
+            const el = document.getElementById('ftOfficesList');
+            if (!el) return;
+            const offices = (WLDATA.mapLocations || [])
+                .filter(m => m.visible !== false)
+                .sort((a, b) => (a.order || 0) - (b.order || 0));
+            if (!offices.length) return; // keep the static fallback markup already in the HTML
+            el.innerHTML = offices.map(o => {
+                const parts = [o.country, o.city].filter(Boolean);
+                const line = parts.length ? escapeHtml(parts.join(' | ')) : escapeHtml(o.name || '');
+                return `${line}<br>`;
+            }).join('');
+        }
+
         function renderClientsMap() { const el = document.getElementById('clientsMap'); const empty = document.getElementById('mapEmpty'); if (!el || typeof L === 'undefined') return; const points = (WLDATA.mapLocations || []).filter(m => m.visible !== false && Number.isFinite(Number(m.lat)) && Number.isFinite(Number(m.lng))); if (!points.length) { if (empty) empty.style.display = 'block'; return; } if (empty) empty.style.display = 'none'; const map = L.map('clientsMap', { scrollWheelZoom:false }).setView([20,0],2); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution:'&copy; OpenStreetMap contributors' }).addTo(map); const bounds=[]; points.forEach(p=>{ const marker=L.marker([Number(p.lat),Number(p.lng)]).addTo(map); marker.bindPopup(`<strong>${escapeHtml(p.name)}</strong><br>${escapeHtml([p.city,p.country].filter(Boolean).join(', '))}<br>${Number(p.clientsCount || 1)} client(s)`); bounds.push([Number(p.lat), Number(p.lng)]); }); if(bounds.length>1) map.fitBounds(bounds,{padding:[40,40]}); else map.setView(bounds[0],5); }
         function setupIndexContactForm() {
             const form = document.getElementById('indexContactForm');
@@ -3692,7 +3706,7 @@
         async function loadSiteData() {
             try { const res = await fetch(`${API_BASE}/public/site-data`); if (!res.ok) throw new Error('API unavailable'); WLDATA = await res.json(); }
             catch (error) { console.warn('Unable to load API data:', error.message); }
-            renderProjects(); renderStats(); renderClients(); applySectionVisibility(); setupFeedback(); renderClientsMap(); setupPageInteractions();
+            renderProjects(); renderStats(); renderClients(); renderFooterOffices(); applySectionVisibility(); setupFeedback(); renderClientsMap(); setupPageInteractions();
         }
         function setupPageInteractions() { const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } }); }, { threshold:.08 }); document.querySelectorAll('.reveal').forEach(el => obs.observe(el)); document.querySelectorAll('a[href="#contact"]').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); document.getElementById('contact').scrollIntoView({ behavior:'smooth' }); }); }); setupIndexContactForm(); }
         document.addEventListener('DOMContentLoaded', loadSiteData);
