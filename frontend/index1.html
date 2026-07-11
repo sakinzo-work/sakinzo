@@ -3601,7 +3601,7 @@
             const imgTag = p.img
                 ? `<img src="${fullUrl(p.img)}" alt="${escapeHtml(p.title)}" class="project-img" loading="lazy" onerror="this.outerHTML='${fallbackMarkup.replace(/'/g, "\\'")}'">`
                 : fallbackMarkup;
-            return `<a href="contactus.html#form-section" class="project-card">${imgTag}<div class="project-overlay"><span class="project-category">${escapeHtml(p.category || '')}</span><h3 class="project-title">${escapeHtml(p.title || '')}</h3><p class="project-desc">${escapeHtml(p.desc || '')}</p><div class="project-tech">${(p.tags || []).map(t => `<span class="tech-tag">${escapeHtml(t)}</span>`).join('')}</div><span class="project-link">Get in touch</span></div></a>`;
+            return `<a href="project.html?id=${encodeURIComponent(p._id)}" class="project-card">${imgTag}<div class="project-overlay"><span class="project-category">${escapeHtml(p.category || '')}</span><h3 class="project-title">${escapeHtml(p.title || '')}</h3><p class="project-desc">${escapeHtml(p.desc || '')}</p><div class="project-tech">${(p.tags || []).map(t => `<span class="tech-tag">${escapeHtml(t)}</span>`).join('')}</div><span class="project-link">View project</span></div></a>`;
         }
 
         function renderProjects() {

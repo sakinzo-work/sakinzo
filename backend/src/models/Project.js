@@ -4,6 +4,8 @@ module.exports = mongoose.model('Project', new mongoose.Schema({
   category: { type: String, default: '' },
   desc: { type: String, default: '' },
   img: { type: String, default: '' },
+  images: [{ type: String }],
+  demoUrl: { type: String, default: '' },
   tags: [{ type: String }],
   order: { type: Number, default: 0 },
   visible: { type: Boolean, default: true }
