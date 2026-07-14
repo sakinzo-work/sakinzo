@@ -12,6 +12,7 @@ const TeamMember = require('./models/TeamMember');
 const Testimonial = require('./models/Testimonial');
 const Stat = require('./models/Stat');
 const MapLocation = require('./models/MapLocation');
+const Admin = require('./models/Admin');
 const crudRouter = require('./utils/crudRouter');
 
 const app = express();
@@ -41,6 +42,7 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.get('/api/health', (req, res) => res.json({ ok: true, service: 'sakinzo-api' }));
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/admins', require('./routes/admins'));
 app.use('/api/public', require('./routes/public'));
 app.use('/api/projects', crudRouter(Project));
 app.use('/api/clients', crudRouter(Client));
@@ -58,8 +60,20 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ message: err.message || 'Server error' });
 });
 
-mongoose.connect(process.env.MONGODB_URI).then(() => {
+mongoose.connect(process.env.MONGODB_URI).then(async () => {
   console.log('MongoDB connected');
+  const bootstrapEmail = String(process.env.ADMIN_EMAIL || '').toLowerCase().trim();
+  if (bootstrapEmail) {
+    const existing = await Admin.findOne({ email: bootstrapEmail });
+    if (existing) {
+      if (existing.role !== 'owner' || existing.active === false) {
+        existing.role = 'owner'; existing.active = true; await existing.save();
+      }
+    } else if (process.env.ADMIN_PASSWORD) {
+      await Admin.create({ name: process.env.ADMIN_NAME || 'Admin', email: bootstrapEmail, password: process.env.ADMIN_PASSWORD, role: 'owner', active: true });
+      console.log('Bootstrap owner account created');
+    }
+  }
   app.listen(PORT, () => console.log(`API running on http://localhost:${PORT}`));
 }).catch(err => {
   console.error('MongoDB connection failed:', err.message);
