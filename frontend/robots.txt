@@ -6,4 +6,4 @@ Disallow: /index1.html
 Disallow: /index2.html
 Disallow: /constactus2.html
 
-# Add the final custom-domain sitemap URL here after the domain is connected.
+Sitemap: https://sakinzo-work.github.io/sakinzo/frontend/sitemap.xml
