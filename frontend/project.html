@@ -26,9 +26,8 @@
       const id=new URLSearchParams(location.search).get('id');
       if(!id)return showError('Project not found','No project was selected.');
       try{
-        const res=await fetch(`${API_BASE}/public/site-data`);if(!res.ok)throw new Error('Unable to load project');
-        const data=await res.json();const p=(data.projects||[]).find(item=>String(item._id)===id);
-        if(!p)return showError('Project not found','This project may have been removed or hidden.');
+        const res=await fetch(`${API_BASE}/projects/${encodeURIComponent(id)}`,{cache:'no-store'});if(res.status===404)return showError('Project not found','This project may have been removed or hidden.');if(!res.ok)throw new Error('Unable to load project');
+        const p=await res.json();
         document.title=`${p.title||'Project'} Case Study | Sakin.zo`;
         const projectDescription=`Explore ${p.title||'this Sakin.zo project'}: ${p.desc||'a custom software solution designed for measurable business impact.'}`.slice(0,160);
         document.querySelector('meta[name="description"]')?.setAttribute('content',projectDescription);

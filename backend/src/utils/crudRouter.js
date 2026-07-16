@@ -25,6 +25,15 @@ module.exports = function crudRouter(Model, options = {}) {
     catch (err) { next(err); }
   });
 
+  router.get('/:id', async (req, res, next) => {
+    try {
+      const doc = await Model.findOne({ _id: req.params.id, visible: { $ne: false } });
+      if (!doc) return res.status(404).json({ message: 'Item not found' });
+      res.set('Cache-Control', 'no-store');
+      res.json(doc);
+    } catch (err) { next(err); }
+  });
+
   router.post('/', requireAuth, async (req, res, next) => {
     try { res.status(201).json(await Model.create(req.body)); }
     catch (err) { next(err); }
