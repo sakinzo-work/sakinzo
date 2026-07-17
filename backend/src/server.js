@@ -51,6 +51,7 @@ app.use('/api/testimonials', crudRouter(Testimonial));
 app.use('/api/stats', crudRouter(Stat));
 app.use('/api/map-locations', crudRouter(MapLocation));
 app.use('/api/sections', require('./routes/sections'));
+app.use('/api/what-we-do-services', require('./routes/whatWeDoServices'));
 app.use('/api/submissions', require('./routes/submissions'));
 app.use('/api/upload', require('./routes/upload'));
 
