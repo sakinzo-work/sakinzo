@@ -608,6 +608,7 @@
         .wwd-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
+            grid-auto-flow: dense;
             gap: 14px
         }
 
@@ -625,7 +626,8 @@
             transform: translateY(-4px)
         }
 
-        .wwd-card.full {
+        .wwd-card.full,
+        .wwd-card.wwd-auto-full {
             grid-column: 1/-1
         }
 
@@ -639,7 +641,8 @@
             padding: 32px 36px 30px
         }
 
-        .wwd-card.full .wwd-inner {
+        .wwd-card.full .wwd-inner,
+        .wwd-card.wwd-auto-full .wwd-inner {
             min-height: 280px
         }
 
@@ -1813,7 +1816,8 @@
                 grid-template-columns: 1fr
             }
 
-            .wwd-card.full {
+            .wwd-card.full,
+            .wwd-card.wwd-auto-full {
                 grid-column: auto
             }
 
@@ -1822,7 +1826,8 @@
                 padding: 20px 18px 18px
             }
 
-            .wwd-card.full .wwd-inner {
+            .wwd-card.full .wwd-inner,
+            .wwd-card.wwd-auto-full .wwd-inner {
                 min-height: 200px
             }
 
@@ -3637,7 +3642,27 @@
         function renderStats() { const grid = document.getElementById('main-stats-grid'); if (!grid) return; const stats = (WLDATA.stats || []).filter(s => s.visible !== false).sort((a,b)=>(a.order||0)-(b.order||0)); if (!stats.length) return; grid.innerHTML = stats.map((s, i) => `<div class="stat" ${i > 0 ? 'style="border-left:2px solid #e2eaf4;padding-left:32px"' : ''}><div class="stat-num">${escapeHtml(s.value)}</div><div class="stat-lbl">${escapeHtml(s.label)}</div></div>`).join(''); }
         function renderClients() { const grid = document.getElementById('main-clients-grid') || document.querySelector('.clients-grid'); if (!grid) return; const clients = (WLDATA.clients || []).filter(c => c.visible !== false).sort((a,b)=>(a.order||0)-(b.order||0)); if (!clients.length) { return; } grid.innerHTML = clients.map(c => `<div class="cl-card">${c.logo ? `<img src="${fullUrl(c.logo)}" alt="${escapeHtml(c.name)}" style="max-width:130px;max-height:46px;object-fit:contain">` : `<span style="font-size:15px;font-weight:700;color:#0d1b2e">${escapeHtml(c.name)}</span>`}</div>`).join(''); }
         function applySectionVisibility() { const secs = WLDATA.sections || {}; const secMap = { why:'sec-why', clients:'sec-clients', whatwedo:'sec-whatwedo', projects:'sec-projects', services:'sec-services', cases:'sec-cases', map:'sec-map', feedback:'sec-feedback', insights:'sec-insights' }; Object.entries(secMap).forEach(([key, elId]) => { const el = document.getElementById(elId); if (el) el.style.display = (secs[key] !== false) ? '' : 'none'; }); }
-        function applyWhatWeDoVisibility() { const states = WLDATA.whatWeDoServices || {}; document.querySelectorAll('[data-service-key]').forEach(card => { card.style.display = states[card.dataset.serviceKey] !== false ? '' : 'none'; }); }
+        function applyWhatWeDoVisibility() {
+            const states = WLDATA.whatWeDoServices || {};
+            const grid = document.querySelector('#sec-whatwedo .wwd-grid');
+            if (!grid) return;
+            const cards = [...grid.querySelectorAll('[data-service-key]')];
+            cards.forEach(card => {
+                card.classList.remove('wwd-auto-full');
+                card.style.display = states[card.dataset.serviceKey] !== false ? '' : 'none';
+            });
+
+            let halfWidthRun = [];
+            const fillIncompleteRow = () => {
+                if (halfWidthRun.length % 2 === 1) halfWidthRun[halfWidthRun.length - 1].classList.add('wwd-auto-full');
+                halfWidthRun = [];
+            };
+            cards.filter(card => card.style.display !== 'none').forEach(card => {
+                if (card.classList.contains('full')) fillIncompleteRow();
+                else halfWidthRun.push(card);
+            });
+            fillIncompleteRow();
+        }
         function setupFeedback() { feedbacks = (WLDATA.testimonials || []).filter(t => t.visible !== false).sort((a,b)=>(a.order||0)-(b.order||0)).map(t => ({ init: t.initials || (t.name || '').substring(0,2).toUpperCase(), name: t.name || '', role: t.role || '', txt: t.text || '' })); if (!feedbacks.length) { const sec = document.getElementById('sec-feedback'); if (sec) sec.style.display = 'none'; return; } renderFb(); setInterval(fbNext, 5000); }
         function buildDots() { const d = document.getElementById('fbDots'); if (!d) return; d.innerHTML = ''; feedbacks.forEach((_, i) => { const dot = document.createElement('div'); dot.className = 'fb-dot' + (i === fi ? ' on' : ''); dot.onclick = () => { fi = i; renderFb(); }; d.appendChild(dot); }); }
         function renderFb() { if (!feedbacks.length) return; const f = feedbacks[fi]; ['fbInit','fbName','fbRole','fbTxt'].forEach((id,idx)=>{ const el=document.getElementById(id); if(el) el.textContent=[f.init,f.name,f.role,f.txt][idx]; }); const fill=document.getElementById('fbFill'); if(fill) fill.style.width=((fi+1)/feedbacks.length*100)+'%'; buildDots(); }
