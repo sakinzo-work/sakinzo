@@ -11,6 +11,7 @@ const TeamMember = require('./models/TeamMember');
 const Testimonial = require('./models/Testimonial');
 const Stat = require('./models/Stat');
 const MapLocation = require('./models/MapLocation');
+const Insight = require('./models/Insight');
 const Admin = require('./models/Admin');
 const crudRouter = require('./utils/crudRouter');
 
@@ -49,6 +50,7 @@ app.use('/api/team', crudRouter(TeamMember));
 app.use('/api/testimonials', crudRouter(Testimonial));
 app.use('/api/stats', crudRouter(Stat));
 app.use('/api/map-locations', crudRouter(MapLocation));
+app.use('/api/insights', crudRouter(Insight));
 app.use('/api/sections', require('./routes/sections'));
 app.use('/api/what-we-do-services', require('./routes/whatWeDoServices'));
 app.use('/api/submissions', require('./routes/submissions'));

@@ -1,0 +1,28 @@
+{
+  "id": "./admin.html",
+  "name": "Sakin.zo Admin Console",
+  "short_name": "Sakin Admin",
+  "description": "Securely manage Sakin.zo projects, insights, clients and website content.",
+  "start_url": "./admin.html?source=pwa",
+  "scope": "./admin.html",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "any",
+  "background_color": "#0f1117",
+  "theme_color": "#181c27",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "./admin-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./admin-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

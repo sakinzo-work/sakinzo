@@ -1224,6 +1224,8 @@
             border-color: rgba(22, 115, 255, 0.2)
         }
 
+        .ins-img{width:calc(100% + 64px);height:220px;object-fit:cover;display:block;margin:-32px -32px 26px;border-radius:16px 16px 0 0}.ins-meta{font-size:12px;font-weight:700;color:#1673ff;margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}.ins-author{font-size:12px;color:#7c8da5;margin-top:-12px;margin-bottom:18px}
+
         .ins-ttl {
             font-size: 17px;
             font-weight: 700;
@@ -3409,9 +3411,9 @@
     <section id="sec-insights">
         <div class="wrap sec reveal">
             <div class="sec-hd">
-                <h2 class="sec-title">Insights from Sakinzo</h2><a href="#" class="btn-blue">Browse More</a>
+                <h2 class="sec-title">Insights from Sakinzo</h2><a href="blog.html" class="btn-blue">Browse More</a>
             </div>
-            <div class="ins-grid">
+            <div class="ins-grid" id="main-insights-grid">
                 <div class="ins-card">
                     <div class="ins-ttl">Basic Security Testing for Web Applications: Tools, Techniques, and Best
                         Practices</div>
@@ -3430,7 +3432,7 @@
                     <a href="#" class="ins-lnk">Learn more <span class="arr-sm"></span></a>
                 </div>
             </div>
-            <div class="sec-btn-row"><a href="#" class="btn-blue">Browse More</a></div>
+            <div class="sec-btn-row"><a href="blog.html" class="btn-blue">Browse More</a></div>
         </div>
     </section>
 
@@ -3583,14 +3585,15 @@
 
         // ── ADMIN DATA DEFAULTS (same as admin.html) ──────────────────
         const API_BASE = window.API_BASE || 'https://sakinzo.onrender.com/api';
-        let WLDATA = { projects: [], clients: [], team: [], testimonials: [], stats: [], sections: {}, mapLocations: [], whatWeDoServices: {} };
-        const SITE_DATA_CACHE_KEY = 'sakinzo-site-data-v2';
+        let WLDATA = { projects: [], insights: [], clients: [], team: [], testimonials: [], stats: [], sections: {}, mapLocations: [], whatWeDoServices: {} };
+        const SITE_DATA_CACHE_KEY = 'sakinzo-site-data-v3';
         let feedbacks = [];
         let feedbackTimer;
         let clientsMapInstance;
         let fi = 0;
         const escapeHtml = (value = '') => String(value).replace(/[&<>"]/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[s]));
         const fullUrl = (url = '') => url && url.startsWith('/uploads/') ? API_BASE.replace('/api','') + url : url;
+        const safeHttpUrl = value => { try { const url=new URL(value); return ['http:','https:'].includes(url.protocol)?url.href:''; } catch { return ''; } };
 
         // ── PROJECTS: render + "View All Projects" load-more ──────────
         let ALL_PROJECTS = [];
@@ -3644,6 +3647,7 @@
 
         function renderStats() { const grid = document.getElementById('main-stats-grid'); if (!grid) return; const stats = (WLDATA.stats || []).filter(s => s.visible !== false).sort((a,b)=>(a.order||0)-(b.order||0)); if (!stats.length) return; grid.innerHTML = stats.map((s, i) => `<div class="stat" ${i > 0 ? 'style="border-left:2px solid #e2eaf4;padding-left:32px"' : ''}><div class="stat-num">${escapeHtml(s.value)}</div><div class="stat-lbl">${escapeHtml(s.label)}</div></div>`).join(''); }
         function renderClients() { const grid = document.getElementById('main-clients-grid') || document.querySelector('.clients-grid'); if (!grid) return; const clients = (WLDATA.clients || []).filter(c => c.visible !== false).sort((a,b)=>(a.order||0)-(b.order||0)); if (!clients.length) { return; } grid.innerHTML = clients.map(c => `<div class="cl-card">${c.logo ? `<img src="${fullUrl(c.logo)}" alt="${escapeHtml(c.name)}" style="max-width:130px;max-height:46px;object-fit:contain">` : `<span style="font-size:15px;font-weight:700;color:#0d1b2e">${escapeHtml(c.name)}</span>`}</div>`).join(''); }
+        function renderInsights() { const grid=document.getElementById('main-insights-grid'); if(!grid)return; const rows=(WLDATA.insights||[]).filter(x=>x.visible!==false).sort((a,b)=>(a.order||0)-(b.order||0)); if(!rows.length){grid.innerHTML='<p style="color:#7c8da5;grid-column:1/-1">No insights published yet.</p>';return;} grid.innerHTML=rows.map(item=>{const link=safeHttpUrl(item.articleUrl||''),date=item.publishedAt?new Intl.DateTimeFormat('en',{year:'numeric',month:'long',day:'numeric'}).format(new Date(item.publishedAt)):'';return `<article class="ins-card">${item.image?`<img class="ins-img" src="${escapeHtml(fullUrl(item.image))}" alt="${escapeHtml(item.title)}" loading="lazy">`:''}${item.category?`<div class="ins-meta">${escapeHtml(item.category)}</div>`:''}<div class="ins-ttl">${escapeHtml(item.title)}</div><div class="ins-desc">${escapeHtml(item.desc)}</div>${item.author?`<div class="ins-author">By ${escapeHtml(item.author)} · ${Number(item.readTime||5)} min read</div>`:''}<div class="ins-ft"><span class="ins-date">${escapeHtml(date)}</span>${Number(item.rating)>0?`<span class="ins-rating"><span class="star-ic">★</span> Avg ${Number(item.rating).toFixed(1)} / 5</span>`:''}</div>${link?`<a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer" class="ins-lnk">Learn more <span class="arr-sm"></span></a>`:''}</article>`}).join(''); }
         function applySectionVisibility() { const secs = WLDATA.sections || {}; const secMap = { why:'sec-why', clients:'sec-clients', whatwedo:'sec-whatwedo', projects:'sec-projects', services:'sec-services', cases:'sec-cases', map:'sec-map', feedback:'sec-feedback', insights:'sec-insights' }; Object.entries(secMap).forEach(([key, elId]) => { const el = document.getElementById(elId); if (el) el.style.display = (secs[key] !== false) ? '' : 'none'; }); }
         function applyWhatWeDoVisibility() {
             const states = WLDATA.whatWeDoServices || {};
@@ -3714,7 +3718,7 @@
                 }
             });
         }
-        function renderSiteData() { renderProjects(); renderStats(); renderClients(); applySectionVisibility(); applyWhatWeDoVisibility(); setupFeedback(); renderClientsMap(); }
+        function renderSiteData() { renderProjects(); renderInsights(); renderStats(); renderClients(); applySectionVisibility(); applyWhatWeDoVisibility(); setupFeedback(); renderClientsMap(); }
         async function loadSiteData() {
             try { const cached=JSON.parse(localStorage.getItem(SITE_DATA_CACHE_KEY)||'null'); if(cached?.data){WLDATA=cached.data;renderSiteData();} } catch { try { localStorage.removeItem(SITE_DATA_CACHE_KEY); } catch {} }
             setupPageInteractions();
