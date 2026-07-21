@@ -7,7 +7,13 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, path.join(__dirname, '../../uploads')),
   filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname.replace(/[^a-zA-Z0-9._-]/g, '_'))
 });
-const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
+const upload = multer({
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => file.mimetype.startsWith('image/')
+    ? cb(null, true)
+    : cb(Object.assign(new Error('Only image uploads are allowed'), { status: 400 }))
+});
 router.post('/', requireAuth, upload.single('file'), (req, res) => {
   if (!req.file) return res.status(400).json({ message: 'File is required' });
   res.status(201).json({ url: `/uploads/${req.file.filename}`, filename: req.file.originalname });

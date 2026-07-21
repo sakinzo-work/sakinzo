@@ -6,7 +6,6 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const path = require('path');
 
-const Project = require('./models/Project');
 const Client = require('./models/Client');
 const TeamMember = require('./models/TeamMember');
 const Testimonial = require('./models/Testimonial');
@@ -44,7 +43,7 @@ app.get('/api/health', (req, res) => res.json({ ok: true, service: 'sakinzo-api'
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/admins', require('./routes/admins'));
 app.use('/api/public', require('./routes/public'));
-app.use('/api/projects', crudRouter(Project));
+app.use('/api/projects', require('./routes/projects'));
 app.use('/api/clients', crudRouter(Client));
 app.use('/api/team', crudRouter(TeamMember));
 app.use('/api/testimonials', crudRouter(Testimonial));
@@ -58,7 +57,11 @@ app.use('/api/upload', require('./routes/upload'));
 app.use((req, res) => res.status(404).json({ message: 'Route not found' }));
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(err.status || 500).json({ message: err.message || 'Server error' });
+  const status = err.status || (err.name === 'ValidationError' || err.name === 'CastError' ? 400 : err.code === 11000 ? 409 : 500);
+  const validationMessage = err.name === 'ValidationError'
+    ? Object.values(err.errors || {}).map(item => item.message).join(', ')
+    : '';
+  res.status(status).json({ message: validationMessage || err.message || 'Server error' });
 });
 
 mongoose.connect(process.env.MONGODB_URI).then(async () => {

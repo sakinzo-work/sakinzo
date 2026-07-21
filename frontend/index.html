@@ -3584,7 +3584,10 @@
         // ── ADMIN DATA DEFAULTS (same as admin.html) ──────────────────
         const API_BASE = window.API_BASE || 'https://sakinzo.onrender.com/api';
         let WLDATA = { projects: [], clients: [], team: [], testimonials: [], stats: [], sections: {}, mapLocations: [], whatWeDoServices: {} };
+        const SITE_DATA_CACHE_KEY = 'sakinzo-site-data-v2';
         let feedbacks = [];
+        let feedbackTimer;
+        let clientsMapInstance;
         let fi = 0;
         const escapeHtml = (value = '') => String(value).replace(/[&<>"]/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[s]));
         const fullUrl = (url = '') => url && url.startsWith('/uploads/') ? API_BASE.replace('/api','') + url : url;
@@ -3663,13 +3666,13 @@
             });
             fillIncompleteRow();
         }
-        function setupFeedback() { feedbacks = (WLDATA.testimonials || []).filter(t => t.visible !== false).sort((a,b)=>(a.order||0)-(b.order||0)).map(t => ({ init: t.initials || (t.name || '').substring(0,2).toUpperCase(), name: t.name || '', role: t.role || '', txt: t.text || '' })); if (!feedbacks.length) { const sec = document.getElementById('sec-feedback'); if (sec) sec.style.display = 'none'; return; } renderFb(); setInterval(fbNext, 5000); }
+        function setupFeedback() { clearInterval(feedbackTimer); feedbacks = (WLDATA.testimonials || []).filter(t => t.visible !== false).sort((a,b)=>(a.order||0)-(b.order||0)).map(t => ({ init: t.initials || (t.name || '').substring(0,2).toUpperCase(), name: t.name || '', role: t.role || '', txt: t.text || '' })); if (!feedbacks.length) { const sec = document.getElementById('sec-feedback'); if (sec) sec.style.display = 'none'; return; } renderFb(); feedbackTimer=setInterval(fbNext, 5000); }
         function buildDots() { const d = document.getElementById('fbDots'); if (!d) return; d.innerHTML = ''; feedbacks.forEach((_, i) => { const dot = document.createElement('div'); dot.className = 'fb-dot' + (i === fi ? ' on' : ''); dot.onclick = () => { fi = i; renderFb(); }; d.appendChild(dot); }); }
         function renderFb() { if (!feedbacks.length) return; const f = feedbacks[fi]; ['fbInit','fbName','fbRole','fbTxt'].forEach((id,idx)=>{ const el=document.getElementById(id); if(el) el.textContent=[f.init,f.name,f.role,f.txt][idx]; }); const fill=document.getElementById('fbFill'); if(fill) fill.style.width=((fi+1)/feedbacks.length*100)+'%'; buildDots(); }
         function fbNext() { if (!feedbacks.length) return; fi = (fi + 1) % feedbacks.length; renderFb(); }
         function fbPrev() { if (!feedbacks.length) return; fi = (fi - 1 + feedbacks.length) % feedbacks.length; renderFb(); }
         window.fbNext = fbNext; window.fbPrev = fbPrev;
-        function renderClientsMap() { const el = document.getElementById('clientsMap'); const empty = document.getElementById('mapEmpty'); if (!el || typeof L === 'undefined') return; const points = (WLDATA.mapLocations || []).filter(m => m.visible !== false && Number.isFinite(Number(m.lat)) && Number.isFinite(Number(m.lng))); if (!points.length) { if (empty) empty.style.display = 'block'; return; } if (empty) empty.style.display = 'none'; const map = L.map('clientsMap', { scrollWheelZoom:false }).setView([20,0],2); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution:'&copy; OpenStreetMap contributors' }).addTo(map); const bounds=[]; points.forEach(p=>{ const marker=L.marker([Number(p.lat),Number(p.lng)]).addTo(map); marker.bindPopup(`<strong>${escapeHtml(p.name)}</strong><br>${escapeHtml([p.city,p.country].filter(Boolean).join(', '))}<br>${Number(p.clientsCount || 1)} client(s)`); bounds.push([Number(p.lat), Number(p.lng)]); }); if(bounds.length>1) map.fitBounds(bounds,{padding:[40,40]}); else map.setView(bounds[0],5); }
+        function renderClientsMap() { const el = document.getElementById('clientsMap'); const empty = document.getElementById('mapEmpty'); if (!el || typeof L === 'undefined') return; if(clientsMapInstance){clientsMapInstance.remove();clientsMapInstance=null;} const points = (WLDATA.mapLocations || []).filter(m => m.visible !== false && Number.isFinite(Number(m.lat)) && Number.isFinite(Number(m.lng))); if (!points.length) { if (empty) empty.style.display = 'block'; return; } if (empty) empty.style.display = 'none'; clientsMapInstance = L.map('clientsMap', { scrollWheelZoom:false }).setView([20,0],2); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution:'&copy; OpenStreetMap contributors' }).addTo(clientsMapInstance); const bounds=[]; points.forEach(p=>{ const marker=L.marker([Number(p.lat),Number(p.lng)]).addTo(clientsMapInstance); marker.bindPopup(`<strong>${escapeHtml(p.name)}</strong><br>${escapeHtml([p.city,p.country].filter(Boolean).join(', '))}<br>${Number(p.clientsCount || 1)} client(s)`); bounds.push([Number(p.lat), Number(p.lng)]); }); if(bounds.length>1) clientsMapInstance.fitBounds(bounds,{padding:[40,40]}); else clientsMapInstance.setView(bounds[0],5); }
         function setupIndexContactForm() {
             const form = document.getElementById('indexContactForm');
             if (!form || form.dataset.ready) return;
@@ -3711,10 +3714,12 @@
                 }
             });
         }
+        function renderSiteData() { renderProjects(); renderStats(); renderClients(); applySectionVisibility(); applyWhatWeDoVisibility(); setupFeedback(); renderClientsMap(); }
         async function loadSiteData() {
-            try { const res = await fetch(`${API_BASE}/public/site-data`); if (!res.ok) throw new Error('API unavailable'); WLDATA = await res.json(); }
+            try { const cached=JSON.parse(localStorage.getItem(SITE_DATA_CACHE_KEY)||'null'); if(cached?.data){WLDATA=cached.data;renderSiteData();} } catch { try { localStorage.removeItem(SITE_DATA_CACHE_KEY); } catch {} }
+            setupPageInteractions();
+            try { const res = await fetch(`${API_BASE}/public/site-data`); if (!res.ok) throw new Error('API unavailable'); WLDATA = await res.json(); try { localStorage.setItem(SITE_DATA_CACHE_KEY,JSON.stringify({data:WLDATA,savedAt:Date.now()})); } catch {} renderSiteData(); }
             catch (error) { console.warn('Unable to load API data:', error.message); }
-            renderProjects(); renderStats(); renderClients(); applySectionVisibility(); applyWhatWeDoVisibility(); setupFeedback(); renderClientsMap(); setupPageInteractions();
         }
         function setupPageInteractions() { const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } }); }, { threshold:.08 }); document.querySelectorAll('.reveal').forEach(el => obs.observe(el)); document.querySelectorAll('a[href="#contact"]').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); document.getElementById('contact').scrollIntoView({ behavior:'smooth' }); }); }); setupIndexContactForm(); }
         document.addEventListener('DOMContentLoaded', loadSiteData);

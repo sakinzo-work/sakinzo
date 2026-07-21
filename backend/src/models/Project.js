@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 function isIotProject() {
   return (typeof this.get === 'function' ? this.get('category') : this.category) === 'IoT';
 }
-module.exports = mongoose.model('Project', new mongoose.Schema({
+const projectSchema = new mongoose.Schema({
   title: { type: String, required: true, trim: true },
   category: {
     type: String,
@@ -43,4 +43,7 @@ module.exports = mongoose.model('Project', new mongoose.Schema({
   tags: [{ type: String }],
   order: { type: Number, default: 0 },
   visible: { type: Boolean, default: true }
-}, { timestamps: true }));
+}, { timestamps: true });
+
+projectSchema.index({ visible: 1, order: 1 });
+module.exports = mongoose.model('Project', projectSchema);
