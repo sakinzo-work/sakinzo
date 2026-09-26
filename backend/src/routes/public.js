@@ -13,7 +13,7 @@ const router = express.Router();
 router.get('/site-data', async (req, res, next) => {
   try {
     const [projects, clients, team, testimonials, stats, sectionRows, mapLocations, whatWeDoRows, insights] = await Promise.all([
-      Project.find({ visible: { $ne: false } }).select('title category desc img tags order').sort({ order: 1 }).lean(),
+      Project.find({ visible: { $ne: false } }).select('title category desc img images tags order createdAt').sort({ order: 1, createdAt: -1 }).lean(),
       Client.find({ visible: { $ne: false } }).select('name logo website order').sort({ order: 1 }).lean(),
       TeamMember.find({ visible: { $ne: false } }).sort({ order: 1 }).lean(),
       Testimonial.find({ visible: { $ne: false } }).select('name role initials text order').sort({ order: 1 }).lean(),

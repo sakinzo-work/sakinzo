@@ -2037,9 +2037,40 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 24px;
             width: 100%;
+            align-items: stretch;
+        }
+
+        .project-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: -16px 0 28px;
+        }
+
+        .project-filter {
+            appearance: none;
+            border: 1px solid #dce6f3;
+            background: #fff;
+            color: #526078;
+            min-height: 38px;
+            padding: 0 15px;
+            border-radius: 999px;
+            font: 750 12px Inter, Arial, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            cursor: pointer;
+            transition: color .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+        }
+
+        .project-filter:hover,
+        .project-filter.active {
+            border-color: #1673ff;
+            background: #1673ff;
+            color: #fff;
+            box-shadow: 0 10px 24px rgba(22, 115, 255, .22);
         }
 
         /* Card = full-bleed image with a bottom gradient + text overlay.
@@ -2049,18 +2080,22 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            border-radius: 20px;
+            height: 100%;
+            border-radius: 22px;
             overflow: hidden;
-            background: #0b1830;
+            background: #fff;
             text-decoration: none;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            transition: transform .3s ease, box-shadow .3s ease;
+            border: 1px solid #e6edf7;
+            box-shadow: 0 18px 44px rgba(13, 27, 46, 0.12);
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+            padding: 10px;
         }
 
         .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 44px rgba(0, 0, 0, 0.18);
+            transform: translateY(-6px);
+            border-color: rgba(22, 115, 255, .28);
+            box-shadow: 0 22px 54px rgba(13, 27, 46, 0.18);
         }
 
         /* Fixed-ratio image window (not the whole card) so the card
@@ -2068,9 +2103,10 @@
         .project-media {
             position: relative;
             width: 100%;
-            aspect-ratio: 16 / 10;
+            aspect-ratio: 16 / 9;
             overflow: hidden;
-            background: #0b1830;
+            background: #071426;
+            border-radius: 16px;
             flex-shrink: 0;
         }
 
@@ -2079,14 +2115,46 @@
             inset: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            object-position: center top;
+            object-fit: cover;
+            object-position: top center;
             display: block;
-            transition: transform .5s ease;
+            opacity: 0;
+            transition: opacity .35s ease, transform .4s ease;
+        }
+
+        .project-img.active {
+            opacity: 1;
         }
 
         .project-card:hover .project-img {
-            transform: scale(1.03);
+            transform: scale(1.025);
+        }
+
+        .project-dots {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 12px;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            pointer-events: none;
+        }
+
+        .project-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .55);
+            box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+            transition: width .25s ease, background .25s ease;
+        }
+
+        .project-dot.active {
+            width: 16px;
+            border-radius: 999px;
+            background: #fff;
         }
 
         .project-img-fallback {
@@ -2104,15 +2172,17 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            padding: 22px 26px 26px;
-            background: #0b1830;
+            flex: 1;
+            min-height: 220px;
+            padding: 18px 10px 0;
+            background: #fff;
         }
 
         .project-category {
             display: inline-block;
-            background: rgba(22, 115, 255, 0.22);
-            border: 1px solid rgba(125, 184, 255, 0.5);
-            color: #bcdcff;
+            background: #eaf3ff;
+            border: 1px solid #b9d6ff;
+            color: #1268dc;
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
@@ -2125,24 +2195,23 @@
         }
 
         .project-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 800;
-            color: #fff;
-            line-height: 1.3;
+            color: #0d1b2e;
+            line-height: 1.28;
             margin-bottom: 8px;
             letter-spacing: -0.02em;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            text-shadow: 0 2px 12px rgba(0, 0, 0, .35);
         }
 
         .project-desc {
             font-size: 13.5px;
-            color: rgba(255, 255, 255, 0.82);
-            line-height: 1.6;
-            margin-bottom: 16px;
+            color: #5f6f84;
+            line-height: 1.5;
+            margin-bottom: 14px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -2153,37 +2222,55 @@
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            margin-bottom: 14px;
+            max-height: 64px;
+            margin: 0 0 14px;
+            overflow: hidden;
         }
 
         .tech-tag {
-            background: rgba(255, 255, 255, 0.14);
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            color: rgba(255, 255, 255, 0.9);
+            background: #f1f4f8;
+            border: 1px solid #dce4ee;
+            color: #405167;
             font-size: 11px;
             font-weight: 600;
             padding: 4px 10px;
             border-radius: 6px;
             backdrop-filter: blur(4px);
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .project-link {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            color: #fff;
+            justify-content: space-between;
+            width: 100%;
+            color: #0d1b2e;
             font-size: 13px;
             font-weight: 700;
-            transition: gap .2s ease;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid #e5edf6;
         }
 
-        .project-card:hover .project-link {
-            gap: 12px;
+        .project-link::after {
+            content: "->";
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #0d1b2e;
+            color: #fff;
+            transition: transform .2s ease, background .2s ease;
         }
 
-        .project-link svg {
-            width: 16px;
-            height: 16px;
+        .project-card:hover .project-link::after {
+            transform: translateX(4px);
+            background: #1673ff;
         }
 
         /* RESPONSIVE */
@@ -2208,11 +2295,27 @@
                 gap: 18px;
             }
 
+            .project-filters {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 4px;
+                scrollbar-width: none;
+            }
+
+            .project-filters::-webkit-scrollbar {
+                display: none;
+            }
+
+            .project-filter {
+                flex: 0 0 auto;
+            }
+
             .project-media {
-                aspect-ratio: 4 / 3;
+                aspect-ratio: 16 / 10;
             }
 
             .project-overlay {
+                min-height: 0;
                 padding: 20px;
             }
 
@@ -2703,6 +2806,7 @@
                 <h2 class="sec-title">Our Projects</h2>
                 <a href="#" class="btn-blue projects-view-all" onclick="handleProjectsViewAll(event)">View All Projects</a>
             </div>
+            <div class="project-filters" id="project-filters" aria-label="Project category filters"></div>
             <div class="projects-grid" id="main-projects-grid">
                 <!-- Dynamically rendered from admin panel -->
             </div>
@@ -3586,7 +3690,7 @@
         // ── ADMIN DATA DEFAULTS (same as admin.html) ──────────────────
         const API_BASE = window.API_BASE || 'https://sakinzo.onrender.com/api';
         let WLDATA = { projects: [], insights: [], clients: [], team: [], testimonials: [], stats: [], sections: {}, mapLocations: [], whatWeDoServices: {} };
-        const SITE_DATA_CACHE_KEY = 'sakinzo-site-data-v3';
+        const SITE_DATA_CACHE_KEY = 'sakinzo-site-data-v5';
         let feedbacks = [];
         let feedbackTimer;
         let clientsMapInstance;
@@ -3597,48 +3701,154 @@
 
         // ── PROJECTS: render + "View All Projects" load-more ──────────
         let ALL_PROJECTS = [];
-        let projectsShown = 6;
-        const PROJECTS_PAGE_SIZE = 6;
+        let FILTERED_PROJECTS = [];
+        let ACTIVE_PROJECT_FILTER = 'all';
+        let projectsShown = 3;
+        const PROJECTS_PAGE_SIZE = 3;
 
         window.projectImgError = function (img) {
             img.outerHTML = '<div class="project-img-fallback"><span style="color:rgba(255,255,255,.35);font-size:12px;font-weight:600;letter-spacing:.05em">NO IMAGE</span></div>';
         };
         function projectCardHtml(p) {
             const fallbackMarkup = `<div class="project-img-fallback"><span style="color:rgba(255,255,255,.35);font-size:12px;font-weight:600;letter-spacing:.05em">NO IMAGE</span></div>`;
-            const imgTag = p.img
-                ? `<img src="${fullUrl(p.img)}" alt="${escapeHtml(p.title)}" class="project-img" loading="lazy" onerror="projectImgError(this)">`
+            const images = [p.img, ...(Array.isArray(p.images) ? p.images : [])].filter(Boolean).filter((img, i, arr) => arr.indexOf(img) === i);
+            const imgTag = images.length
+                ? images.map((img, i) => `<img src="${fullUrl(img)}" alt="${escapeHtml(p.title)} image ${i + 1}" class="project-img ${i === 0 ? 'active' : ''}" loading="lazy" onerror="projectImgError(this)">`).join('')
                 : fallbackMarkup;
-            return `<a href="project.html?id=${encodeURIComponent(p._id)}" class="project-card"><div class="project-media">${imgTag}</div><div class="project-overlay"><span class="project-category">${escapeHtml(p.category || '')}</span><h3 class="project-title">${escapeHtml(p.title || '')}</h3><p class="project-desc">${escapeHtml(p.desc || '')}</p><div class="project-tech">${(p.tags || []).map(t => `<span class="tech-tag">${escapeHtml(t)}</span>`).join('')}</div><span class="project-link">View project</span></div></a>`;
+            const dots = images.length > 1 ? `<div class="project-dots">${images.map((_, i) => `<span class="project-dot ${i === 0 ? 'active' : ''}"></span>`).join('')}</div>` : '';
+            const displayCategory = projectCategoryLabel(p.category || '');
+            const category = displayCategory ? `<span class="project-category">${escapeHtml(displayCategory)}</span>` : '';
+            const tagList = p.tags || [];
+            const tags = tagList.slice(0, 3).map(t => `<span class="tech-tag">${escapeHtml(t)}</span>`).join('');
+            const moreTags = tagList.length > 3 ? `<span class="tech-tag">+${tagList.length - 3}</span>` : '';
+            const tech = tags ? `<div class="project-tech">${tags}${moreTags}</div>` : '<div class="project-tech" aria-hidden="true"></div>';
+            return `<a href="project.html?id=${encodeURIComponent(p._id)}" class="project-card" ${images.length > 1 ? 'data-gallery-card="true"' : ''} aria-label="View ${escapeHtml(p.title || 'project')} project"><div class="project-media">${imgTag}${dots}</div><div class="project-overlay">${category}<h3 class="project-title">${escapeHtml(p.title || 'Untitled project')}</h3><p class="project-desc">${escapeHtml(p.desc || 'Project details coming soon.')}</p>${tech}<span class="project-link">View project</span></div></a>`;
         }
+
+        function setProjectSlide(card, index) {
+            const images = [...card.querySelectorAll('.project-img')];
+            const dots = [...card.querySelectorAll('.project-dot')];
+            if (!images.length) return;
+            const next = ((index % images.length) + images.length) % images.length;
+            images.forEach((img, i) => img.classList.toggle('active', i === next));
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === next));
+            card.dataset.slideIndex = String(next);
+        }
+
+        function setupProjectSlides() {
+            document.querySelectorAll('.project-card[data-gallery-card="true"]').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    clearInterval(card._projectSlideTimer);
+                    card._projectSlideTimer = setInterval(() => {
+                        setProjectSlide(card, Number(card.dataset.slideIndex || 0) + 1);
+                    }, 2400);
+                });
+                card.addEventListener('mouseleave', () => {
+                    clearInterval(card._projectSlideTimer);
+                    setProjectSlide(card, 0);
+                });
+            });
+        }
+
+        const projectOrderValue = p => Number.isFinite(Number(p.order)) ? Number(p.order) : Number.MAX_SAFE_INTEGER;
+        function projectSort(a, b) {
+            const byOrder = projectOrderValue(a) - projectOrderValue(b);
+            if (byOrder) return byOrder;
+            return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+        }
+
+        const PROJECT_CATEGORY_ORDER = ['IoT', 'Web Development', 'Android App', 'iOS App', 'AI / ML', 'Desktop App', 'Blockchain', 'Game Development', 'Other'];
+
+        function categoryKey(category = '') {
+            const key = category.trim().toLowerCase().replace(/\s+/g, ' ');
+            const aliases = {
+                'web developement': 'web development',
+                'website development': 'web development',
+                'web app': 'web development',
+                'web application': 'web development',
+                'ai/ml': 'ai / ml',
+                'ai-ml': 'ai / ml',
+                'aiml': 'ai / ml',
+                'ios app': 'ios app',
+                'i os app': 'ios app',
+                'game': 'game development',
+                'games': 'game development'
+            };
+            return aliases[key] || key;
+        }
+
+        function projectCategoryLabel(category = '') {
+            const key = categoryKey(category);
+            return PROJECT_CATEGORY_ORDER.find(known => categoryKey(known) === key) || category.trim();
+        }
+
+        function renderProjectFilters() {
+            const filters = document.getElementById('project-filters');
+            if (!filters) return;
+            const categoryMap = new Map(ALL_PROJECTS.map(p => projectCategoryLabel(p.category || '')).filter(Boolean).map(category => [categoryKey(category), category]));
+            const customCategories = [...categoryMap.values()].filter(category => !PROJECT_CATEGORY_ORDER.some(known => categoryKey(known) === categoryKey(category))).sort((a, b) => a.localeCompare(b));
+            const categories = [...PROJECT_CATEGORY_ORDER, ...customCategories];
+            if (ACTIVE_PROJECT_FILTER !== 'all' && !categories.some(c => categoryKey(c) === ACTIVE_PROJECT_FILTER)) ACTIVE_PROJECT_FILTER = 'all';
+            filters.innerHTML = [`<button type="button" class="project-filter ${ACTIVE_PROJECT_FILTER === 'all' ? 'active' : ''}" data-project-filter="all" aria-pressed="${ACTIVE_PROJECT_FILTER === 'all'}">All</button>`, ...categories.map(category => {
+                const key = categoryKey(category);
+                return `<button type="button" class="project-filter ${ACTIVE_PROJECT_FILTER === key ? 'active' : ''}" data-project-filter="${escapeHtml(key)}" aria-pressed="${ACTIVE_PROJECT_FILTER === key}">${escapeHtml(category)}</button>`;
+            })].join('');
+            filters.onclick = event => {
+                const button = event.target.closest('[data-project-filter]');
+                if (!button) return;
+                filterProjects(button.dataset.projectFilter || 'all');
+            };
+        }
+
+        function applyProjectFilter(resetCount = true) {
+            FILTERED_PROJECTS = ACTIVE_PROJECT_FILTER === 'all'
+                ? [...ALL_PROJECTS]
+                : ALL_PROJECTS.filter(p => categoryKey(p.category || '') === ACTIVE_PROJECT_FILTER);
+            if (resetCount) projectsShown = Math.min(PROJECTS_PAGE_SIZE, FILTERED_PROJECTS.length);
+            else projectsShown = Math.min(projectsShown, FILTERED_PROJECTS.length);
+            renderProjectFilters();
+            paintProjects();
+        }
+
+        function filterProjects(filter) {
+            ACTIVE_PROJECT_FILTER = filter || 'all';
+            applyProjectFilter(true);
+        }
+        window.filterProjects = filterProjects;
 
         function renderProjects() {
             const grid = document.getElementById('main-projects-grid'); if (!grid) return;
-            ALL_PROJECTS = (WLDATA.projects || []).filter(p => p.visible !== false).sort((a, b) => (a.order || 0) - (b.order || 0));
-            if (!ALL_PROJECTS.length) { grid.innerHTML = '<p style="color:#999;text-align:center;padding:40px 0;grid-column:1/-1">No projects added yet.</p>'; toggleProjectsButtons(false); return; }
-            projectsShown = Math.min(PROJECTS_PAGE_SIZE, ALL_PROJECTS.length);
-            paintProjects();
+            ALL_PROJECTS = (WLDATA.projects || []).filter(p => p.visible !== false).sort(projectSort);
+            if (!ALL_PROJECTS.length) { document.getElementById('project-filters')?.replaceChildren(); grid.innerHTML = '<p style="color:#999;text-align:center;padding:40px 0;grid-column:1/-1">No projects added yet.</p>'; toggleProjectsButtons(false); return; }
+            applyProjectFilter(true);
         }
 
         function paintProjects() {
             const grid = document.getElementById('main-projects-grid'); if (!grid) return;
-            grid.innerHTML = ALL_PROJECTS.slice(0, projectsShown).map(projectCardHtml).join('');
-            toggleProjectsButtons(ALL_PROJECTS.length > PROJECTS_PAGE_SIZE);
+            if (!FILTERED_PROJECTS.length) {
+                grid.innerHTML = '<p style="color:#7c8da5;text-align:center;padding:34px 0;grid-column:1/-1">No projects in this category yet.</p>';
+                toggleProjectsButtons(false);
+                return;
+            }
+            grid.innerHTML = FILTERED_PROJECTS.slice(0, projectsShown).map(projectCardHtml).join('');
+            setupProjectSlides();
+            toggleProjectsButtons(FILTERED_PROJECTS.length > PROJECTS_PAGE_SIZE);
         }
 
         function toggleProjectsButtons(hasMore) {
             document.querySelectorAll('.projects-view-all').forEach(btn => {
                 if (!hasMore) { btn.style.display = 'none'; return; }
                 btn.style.display = '';
-                btn.textContent = projectsShown < ALL_PROJECTS.length ? 'View All Projects' : 'Show Less';
+                btn.textContent = projectsShown < FILTERED_PROJECTS.length ? 'Show More' : 'Show Less';
             });
         }
 
         function handleProjectsViewAll(e) {
             e.preventDefault();
-            if (projectsShown < ALL_PROJECTS.length) {
-                projectsShown = ALL_PROJECTS.length;
+            if (projectsShown < FILTERED_PROJECTS.length) {
+                projectsShown = FILTERED_PROJECTS.length;
             } else {
-                projectsShown = Math.min(PROJECTS_PAGE_SIZE, ALL_PROJECTS.length);
+                projectsShown = Math.min(PROJECTS_PAGE_SIZE, FILTERED_PROJECTS.length);
                 document.getElementById('sec-projects')?.scrollIntoView({ behavior: 'smooth' });
             }
             paintProjects();
@@ -3722,7 +3932,7 @@
         async function loadSiteData() {
             try { const cached=JSON.parse(localStorage.getItem(SITE_DATA_CACHE_KEY)||'null'); if(cached?.data){WLDATA=cached.data;renderSiteData();} } catch { try { localStorage.removeItem(SITE_DATA_CACHE_KEY); } catch {} }
             setupPageInteractions();
-            try { const res = await fetch(`${API_BASE}/public/site-data`); if (!res.ok) throw new Error('API unavailable'); WLDATA = await res.json(); try { localStorage.setItem(SITE_DATA_CACHE_KEY,JSON.stringify({data:WLDATA,savedAt:Date.now()})); } catch {} renderSiteData(); }
+            try { const res = await fetch(`${API_BASE}/public/site-data`, { cache: 'no-store' }); if (!res.ok) throw new Error('API unavailable'); WLDATA = await res.json(); try { localStorage.setItem(SITE_DATA_CACHE_KEY,JSON.stringify({data:WLDATA,savedAt:Date.now()})); } catch {} renderSiteData(); }
             catch (error) { console.warn('Unable to load API data:', error.message); }
         }
         function setupPageInteractions() { const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } }); }, { threshold:.08 }); document.querySelectorAll('.reveal').forEach(el => obs.observe(el)); document.querySelectorAll('a[href="#contact"]').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); document.getElementById('contact').scrollIntoView({ behavior:'smooth' }); }); }); setupIndexContactForm(); }
