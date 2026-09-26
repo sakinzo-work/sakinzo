@@ -2,6 +2,7 @@ const express = require('express');
 const Admin = require('../models/Admin');
 const requireAuth = require('../middleware/auth');
 const router = express.Router();
+const DEFAULT_OWNER_EMAIL = 'alishafaq782@gmail.com';
 
 router.use(requireAuth);
 
@@ -40,8 +41,9 @@ router.put('/:id', async (req, res, next) => {
     if (!canManage && String(req.admin.id) !== req.params.id) return res.status(403).json({ message: 'You can only update your own account' });
     const admin = await Admin.findById(req.params.id);
     if (!admin) return res.status(404).json({ message: 'Admin user not found' });
+    const isDefaultOwner = admin.email === DEFAULT_OWNER_EMAIL;
     if (req.body.name !== undefined) admin.name = String(req.body.name).trim();
-    if (req.body.email !== undefined) admin.email = String(req.body.email).toLowerCase().trim();
+    if (req.body.email !== undefined && !isDefaultOwner) admin.email = String(req.body.email).toLowerCase().trim();
     if (canManage && req.body.employeeId !== undefined) admin.employeeId = String(req.body.employeeId).trim() || admin.employeeId;
     if (canManage && req.body.position !== undefined) admin.position = String(req.body.position).trim() || 'Employee';
     if (req.body.password) {
@@ -51,12 +53,13 @@ router.put('/:id', async (req, res, next) => {
     if (canManage) {
       if (req.body.role !== undefined) {
         if (admin.role === 'owner' && req.admin.role !== 'owner') return res.status(403).json({ message: 'Only an owner can edit an owner account' });
-        admin.role = req.admin.role === 'owner' && req.body.role === 'owner'
+        admin.role = isDefaultOwner || (req.admin.role === 'owner' && req.body.role === 'owner')
           ? 'owner'
           : req.body.role === 'admin' ? 'admin' : 'employee';
       }
-      if (req.body.active !== undefined) admin.active = req.body.active !== false;
+      if (req.body.active !== undefined) admin.active = isDefaultOwner ? true : req.body.active !== false;
     }
+    if (isDefaultOwner) { admin.role = 'owner'; admin.active = true; }
     await admin.save();
     res.json({ _id: admin._id, name: admin.name, employeeId: admin.employeeId, position: admin.position, email: admin.email, role: admin.role, active: admin.active });
   } catch (err) {
@@ -71,6 +74,7 @@ router.delete('/:id', async (req, res, next) => {
     if (String(req.admin.id) === req.params.id) return res.status(400).json({ message: 'You cannot delete your own account' });
     const admin = await Admin.findById(req.params.id);
     if (!admin) return res.status(404).json({ message: 'Admin user not found' });
+    if (admin.email === DEFAULT_OWNER_EMAIL) return res.status(400).json({ message: 'Default owner account cannot be removed' });
     if (admin.role === 'owner' && req.admin.role !== 'owner') return res.status(403).json({ message: 'Only an owner can remove an owner account' });
     await admin.deleteOne();
     res.json({ ok: true });

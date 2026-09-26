@@ -71,14 +71,14 @@ app.use((err, req, res, next) => {
 
 mongoose.connect(process.env.MONGODB_URI).then(async () => {
   console.log('MongoDB connected');
-  const bootstrapEmail = String(process.env.ADMIN_EMAIL || '').toLowerCase().trim();
-  if (bootstrapEmail) {
+  const bootstrapEmails = [...new Set(['alishafaq782@gmail.com', process.env.ADMIN_EMAIL].map(email => String(email || '').toLowerCase().trim()).filter(Boolean))];
+  for (const bootstrapEmail of bootstrapEmails) {
     const existing = await Admin.findOne({ email: bootstrapEmail });
     if (existing) {
       if (existing.role !== 'owner' || existing.active === false) {
         existing.role = 'owner'; existing.active = true; await existing.save();
       }
-    } else if (process.env.ADMIN_PASSWORD) {
+    } else if (process.env.ADMIN_PASSWORD && bootstrapEmail === String(process.env.ADMIN_EMAIL || '').toLowerCase().trim()) {
       await Admin.create({ name: process.env.ADMIN_NAME || 'Admin', email: bootstrapEmail, password: process.env.ADMIN_PASSWORD, role: 'owner', active: true });
       console.log('Bootstrap owner account created');
     }

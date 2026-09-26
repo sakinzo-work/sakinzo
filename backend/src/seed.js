@@ -6,7 +6,7 @@ const Section = require('./models/Section');
 const sectionKeys = ['hero','why','clients','whatwedo','projects','services','cases','map','feedback','insights'];
 (async () => {
   await mongoose.connect(process.env.MONGODB_URI);
-  const email = (process.env.ADMIN_EMAIL || 'admin@sakinzo.local').toLowerCase();
+  const email = (process.env.ADMIN_EMAIL || 'alishafaq782@gmail.com').toLowerCase();
   const existing = await Admin.findOne({ email });
   if (!existing) {
     await Admin.create({ name: process.env.ADMIN_NAME || 'Admin', email, password: process.env.ADMIN_PASSWORD || 'ChangeMe@123', role: 'owner', active: true });
