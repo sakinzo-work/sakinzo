@@ -2429,7 +2429,7 @@
                 </div>
                 <div class="foffices">
                     <h4>Our Offices</h4>
-                    <div class="foffices-cols">
+                    <div class="foffices-cols" id="footerOfficesList">
                         <address>Maharashtra,<br>Mumbai, India</address>
                     </div>
                 </div>
@@ -2534,30 +2534,32 @@
         // Now pulls every visible location from the admin panel's
         // "Map Locations" collection, sorted the same way Team is. ──
         function officeMapUrl(o) {
-            if (Number.isFinite(Number(o.lat)) && Number.isFinite(Number(o.lng))) {
-                return `https://www.google.com/maps/search/?api=1&query=${o.lat},${o.lng}`;
-            }
-            const q = encodeURIComponent([o.city, o.country].filter(Boolean).join(', ') || o.name || '');
-            return `https://www.google.com/maps/search/?api=1&query=${q}`;
+            if (o.mapUrl) return o.mapUrl;
+            const q = encodeURIComponent([o.address, o.country, o.name].filter(Boolean).join(', '));
+            return `https://www.google.com/maps/search/?api=1&query=${q || 'Mumbai%2C%20Maharashtra%2C%20India'}`;
+        }
+
+        function officeAddressHtml(o) {
+            const address = o.address || [o.name, o.country].filter(Boolean).join(', ');
+            return escapeHtml(address || 'Mumbai, India').replace(/\n/g, '<br>');
         }
 
         async function renderOffices() {
             const container = document.getElementById('officesList');
-            if (!container) return;
+            const footer = document.getElementById('footerOfficesList');
+            if (!container && !footer) return;
             try {
                 const data = await getSiteData();
-                const offices = ((data.mapLocations) || []).filter(o => o.visible !== false).sort((a, b) => (a.order || 0) - (b.order || 0));
+                const offices = ((data.contactOffices) || []).filter(o => o.visible !== false).sort((a, b) => (a.order || 0) - (b.order || 0));
                 if (!offices.length) return; // keep the static fallback markup already in the HTML
 
-                container.innerHTML = offices.map(o => {
-                    const addrLines = [o.city, o.name].filter(Boolean);
-                    const addrHtml = addrLines.length ? escapeHtml(addrLines.join(', ')) : escapeHtml(o.name || '');
-                    return `<div class="office-item">
-                        <div class="office-country">${escapeHtml(o.country || '')}</div>
-                        <address>${addrHtml}</address>
-                        <a href="${officeMapUrl(o)}" target="_blank" rel="noopener" class="map-link">Find on the map</a>
-                    </div>`;
-                }).join('<hr class="office-hr">');
+                const officeCards = offices.map(o => `<div class="office-item">
+                    <div class="office-country">${escapeHtml(o.country || '')}</div>
+                    <address>${officeAddressHtml(o)}</address>
+                    <a href="${officeMapUrl(o)}" target="_blank" rel="noopener" class="map-link">Find on the map</a>
+                </div>`).join('<hr class="office-hr">');
+                if (container) container.innerHTML = officeCards;
+                if (footer) footer.innerHTML = offices.map(o => `<address>${officeAddressHtml(o)}</address>`).join('');
             } catch (err) {
                 // keep the static fallback markup already in the HTML
             }
