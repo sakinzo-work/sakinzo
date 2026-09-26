@@ -2065,7 +2065,7 @@
                     </svg>
                 </button>
                 <a href="index.html" class="btn-cta btn-home">Home</a>
-                <a href="#form-section" class="btn-cta">Get in touch</a>
+                <a href="#form-section" class="btn-cta" id="contactHeaderCtaButton">Get in touch</a>
             </div>
 
             <button class="hamburger" id="hambtn" onclick="toggleMobile()" aria-label="Menu">
@@ -2169,8 +2169,8 @@
         <!-- FORM -->
         <div class="form-card">
             <div id="formBody">
-                <h2>Tell us about your project</h2>
-                <p class="form-sub">Fill in the details below and our team will get back to you within one business day.
+                <h2 id="contactFormTitle">Tell us about your project</h2>
+                <p class="form-sub" id="contactFormSubtitle">Fill in the details below and our team will get back to you within one business day.
                 </p>
 
                 <form id="cForm" novalidate>
@@ -2263,26 +2263,26 @@
         </div>
 
         <!-- SIDEBAR -->
-        <div class="sidebar-label">Contact details</div>
+        <div class="sidebar-label" id="contactSidebarLabel">Contact details</div>
         <div class="sidebar">
 
             <!-- Team Card — rendered dynamically from admin data -->
             <div class="card-team" id="teamCard">
                 <div class="card-team-bg"></div>
-                <h3>Meet the team</h3>
-                <p>Ready to discuss your project</p>
+                <h3 id="contactTeamTitle">Meet the team</h3>
+                <p id="contactTeamSubtitle">Ready to discuss your project</p>
                 <div class="avatars" id="teamAvatars">
                     <!-- rendered by JS -->
                 </div>
                 <div class="online-row">
                     <div class="online-dot"></div>
-                    <span>Team is <strong>online</strong> · Responds in &lt; 24 h</span>
+                    <span id="contactTeamStatus">Team is <strong>online</strong> &middot; Responds in &lt; 24 h</span>
                 </div>
             </div>
 
             <!-- Offices — rendered dynamically from admin map-locations data -->
             <div class="card-offices" id="offices">
-                <h3>Our Offices</h3>
+                <h3 id="contactOfficesTitle">Our Offices</h3>
                 <div id="officesList">
                     <div class="office-item">
                         <div class="office-country">India</div>
@@ -2295,19 +2295,19 @@
 
             <!-- Contact methods -->
             <div class="card-methods">
-                <h3>Other Ways to Reach Us</h3>
-                <a class="method" href="mailto:hello@sakinzo.com">
+                <h3 id="contactMethodsTitle">Other Ways to Reach Us</h3>
+                <a class="method" id="contactEmailMethod" href="mailto:hello@sakinzo.com">
                     <div class="method-ico email">✉️</div>
                     <div>
-                        <strong>hello@sakinzo.com</strong>
-                        <span>Email us directly</span>
+                        <strong id="contactEmailText">hello@sakinzo.com</strong>
+                        <span id="contactEmailLabel">Email us directly</span>
                     </div>
                 </a>
-                <a class="method" href="https://www.linkedin.com/company/sakinzo" target="_blank" rel="noopener">
+                <a class="method" id="contactLinkedinMethod" href="https://www.linkedin.com/company/sakinzo" target="_blank" rel="noopener">
                     <div class="method-ico social">in</div>
                     <div>
                         <strong>linkedin.com/company/sakinzo</strong>
-                        <span>Connect on LinkedIn</span>
+                        <span id="contactLinkedinLabel">Connect on LinkedIn</span>
                     </div>
                 </a>
             </div>
@@ -2423,9 +2423,9 @@
 
             <div class="footer-bottom">
                 <div class="fcta">
-                    <h3>Ready to start your project?</h3>
-                    <p>Get a free consultation from our experts.</p>
-                    <a href="#form-section" class="btn-cta">Get in touch →</a>
+                    <h3 id="contactFooterCtaTitle">Ready to start your project?</h3>
+                    <p id="contactFooterCtaSubtitle">Get a free consultation from our experts.</p>
+                    <a href="#form-section" class="btn-cta" id="contactFooterCtaButton">Get in touch →</a>
                 </div>
                 <div class="foffices">
                     <h4>Our Offices</h4>
@@ -2487,6 +2487,47 @@
             if (!res.ok) throw new Error('API unavailable');
             SITE_DATA = await res.json();
             return SITE_DATA;
+        }
+
+        const setText = (id, value) => {
+            const el = document.getElementById(id);
+            if (el && value) el.textContent = value;
+        };
+
+        function displayUrl(url = '') {
+            return String(url).replace(/^https?:\/\//, '').replace(/\/$/, '');
+        }
+
+        async function renderContactPageSettings() {
+            try {
+                const data = await getSiteData();
+                const c = data.contactPage || {};
+                setText('contactFormTitle', c.formTitle);
+                setText('contactFormSubtitle', c.formSubtitle);
+                setText('contactSidebarLabel', c.sidebarLabel);
+                setText('contactTeamTitle', c.teamTitle);
+                setText('contactTeamSubtitle', c.teamSubtitle);
+                setText('contactTeamStatus', c.teamStatus);
+                setText('contactOfficesTitle', c.officesTitle);
+                setText('contactMethodsTitle', c.methodsTitle);
+                setText('contactEmailText', c.email);
+                setText('contactEmailLabel', c.emailLabel);
+                setText('contactLinkedinLabel', c.linkedinLabel);
+                setText('contactFooterCtaTitle', c.footerCtaTitle);
+                setText('contactFooterCtaSubtitle', c.footerCtaSubtitle);
+                setText('contactFooterCtaButton', c.footerCtaButton);
+                setText('contactHeaderCtaButton', c.footerCtaButton);
+                const emailMethod = document.getElementById('contactEmailMethod');
+                if (emailMethod && c.email) emailMethod.href = `mailto:${c.email}`;
+                const linkedinMethod = document.getElementById('contactLinkedinMethod');
+                if (linkedinMethod && c.linkedinUrl) {
+                    linkedinMethod.href = c.linkedinUrl;
+                    const strong = linkedinMethod.querySelector('strong');
+                    if (strong) strong.textContent = displayUrl(c.linkedinUrl);
+                }
+            } catch (err) {
+                // keep static fallback content
+            }
         }
 
         async function renderTeam() {
@@ -2566,6 +2607,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            renderContactPageSettings();
             renderTeam();
             renderOffices();
         });

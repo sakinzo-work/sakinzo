@@ -7,13 +7,14 @@ const Stat = require('../models/Stat');
 const Section = require('../models/Section');
 const MapLocation = require('../models/MapLocation');
 const ContactOffice = require('../models/ContactOffice');
+const { getSettings: getContactPageSettings } = require('./contactPage');
 const WhatWeDoService = require('../models/WhatWeDoService');
 const Insight = require('../models/Insight');
 const router = express.Router();
 
 router.get('/site-data', async (req, res, next) => {
   try {
-    const [projects, clients, team, testimonials, stats, sectionRows, mapLocations, contactOffices, whatWeDoRows, insights] = await Promise.all([
+    const [projects, clients, team, testimonials, stats, sectionRows, mapLocations, contactOffices, contactPage, whatWeDoRows, insights] = await Promise.all([
       Project.find({ visible: { $ne: false } }).select('title category desc img images tags order createdAt').sort({ order: 1, createdAt: -1 }).lean(),
       Client.find({ visible: { $ne: false } }).select('name logo website order').sort({ order: 1 }).lean(),
       TeamMember.find({ visible: { $ne: false } }).sort({ order: 1 }).lean(),
@@ -22,6 +23,7 @@ router.get('/site-data', async (req, res, next) => {
       Section.find().select('key enabled').lean(),
       MapLocation.find({ visible: { $ne: false } }).select('name country city lat lng clientsCount order').sort({ order: 1 }).lean(),
       ContactOffice.find({ visible: { $ne: false } }).select('name country address mapUrl email phone order').sort({ order: 1 }).lean(),
+      getContactPageSettings(),
       WhatWeDoService.find().select('key enabled').lean(),
       Insight.find({ visible: { $ne: false } }).select('title desc category author image articleUrl publishedAt rating readTime order').sort({ order: 1, publishedAt: -1 }).lean()
     ]);
@@ -30,7 +32,7 @@ router.get('/site-data', async (req, res, next) => {
     const whatWeDoServices = {};
     whatWeDoRows.forEach(service => { whatWeDoServices[service.key] = service.enabled; });
     res.set('Cache-Control', 'public, max-age=30, stale-while-revalidate=120');
-    res.json({ projects, clients, team, testimonials, stats, sections, mapLocations, contactOffices, whatWeDoServices, insights });
+    res.json({ projects, clients, team, testimonials, stats, sections, mapLocations, contactOffices, contactPage, whatWeDoServices, insights });
   } catch (err) { next(err); }
 });
 module.exports = router;
