@@ -1,5 +1,6 @@
 const express = require('express');
 const requireAuth = require('../middleware/auth');
+const requireAdmin = require('../middleware/auth').requireAdmin;
 
 module.exports = function crudRouter(Model, options = {}) {
   const router = express.Router();
@@ -20,7 +21,7 @@ module.exports = function crudRouter(Model, options = {}) {
     });
   }
 
-  router.get('/admin/all', requireAuth, async (req, res, next) => {
+  router.get('/admin/all', requireAuth, requireAdmin, async (req, res, next) => {
     try { res.json(await Model.find().sort({ order: 1, createdAt: -1 })); }
     catch (err) { next(err); }
   });
@@ -34,12 +35,12 @@ module.exports = function crudRouter(Model, options = {}) {
     } catch (err) { next(err); }
   });
 
-  router.post('/', requireAuth, async (req, res, next) => {
+  router.post('/', requireAuth, requireAdmin, async (req, res, next) => {
     try { res.status(201).json(await Model.create(req.body)); }
     catch (err) { next(err); }
   });
 
-  router.put('/:id', requireAuth, async (req, res, next) => {
+  router.put('/:id', requireAuth, requireAdmin, async (req, res, next) => {
     try {
       const doc = await Model.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
       if (!doc) return res.status(404).json({ message: 'Item not found' });
@@ -47,7 +48,7 @@ module.exports = function crudRouter(Model, options = {}) {
     } catch (err) { next(err); }
   });
 
-  router.delete('/:id', requireAuth, async (req, res, next) => {
+  router.delete('/:id', requireAuth, requireAdmin, async (req, res, next) => {
     try {
       const doc = await Model.findByIdAndDelete(req.params.id);
       if (!doc) return res.status(404).json({ message: 'Item not found' });
@@ -55,7 +56,7 @@ module.exports = function crudRouter(Model, options = {}) {
     } catch (err) { next(err); }
   });
 
-  router.post('/reorder', requireAuth, async (req, res, next) => {
+  router.post('/reorder', requireAuth, requireAdmin, async (req, res, next) => {
     try {
       const items = Array.isArray(req.body.items) ? req.body.items : [];
       await Promise.all(items.map((item, index) => Model.findByIdAndUpdate(item.id || item._id, { order: item.order ?? index })));

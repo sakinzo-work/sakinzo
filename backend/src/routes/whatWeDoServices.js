@@ -1,6 +1,7 @@
 const express = require('express');
 const WhatWeDoService = require('../models/WhatWeDoService');
 const requireAuth = require('../middleware/auth');
+const requireAdmin = require('../middleware/auth').requireAdmin;
 const router = express.Router();
 
 const services = [
@@ -13,7 +14,7 @@ const services = [
 ];
 const labels = Object.fromEntries(services);
 
-router.get('/', requireAuth, async (req, res, next) => {
+router.get('/', requireAuth, requireAdmin, async (req, res, next) => {
   try {
     const rows = await WhatWeDoService.find();
     const saved = Object.fromEntries(rows.map(row => [row.key, row]));
@@ -21,7 +22,7 @@ router.get('/', requireAuth, async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-router.put('/:key', requireAuth, async (req, res, next) => {
+router.put('/:key', requireAuth, requireAdmin, async (req, res, next) => {
   try {
     if (!labels[req.params.key]) return res.status(400).json({ message: 'Unknown service key' });
     const doc = await WhatWeDoService.findOneAndUpdate(

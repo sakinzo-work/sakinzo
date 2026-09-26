@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const requireAuth = require('../middleware/auth');
+const requireAdmin = require('../middleware/auth').requireAdmin;
 const router = express.Router();
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -9,7 +10,7 @@ const upload = multer({
     ? cb(null, true)
     : cb(Object.assign(new Error('Only image uploads are allowed'), { status: 400 }))
 });
-router.post('/', requireAuth, upload.single('file'), (req, res) => {
+router.post('/', requireAuth, requireAdmin, upload.single('file'), (req, res) => {
   if (!req.file) return res.status(400).json({ message: 'File is required' });
   const dataUrl = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
   res.status(201).json({ url: dataUrl, filename: req.file.originalname });

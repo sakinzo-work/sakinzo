@@ -1,6 +1,7 @@
 const express = require('express');
 const ContactPageSetting = require('../models/ContactPageSetting');
 const requireAuth = require('../middleware/auth');
+const requireAdmin = require('../middleware/auth').requireAdmin;
 const router = express.Router();
 
 const defaults = {
@@ -27,11 +28,11 @@ const getSettings = async () => {
   return { ...defaults, ...(doc || {}) };
 };
 
-router.get('/', requireAuth, async (req, res, next) => {
+router.get('/', requireAuth, requireAdmin, async (req, res, next) => {
   try { res.json(await getSettings()); } catch (err) { next(err); }
 });
 
-router.put('/', requireAuth, async (req, res, next) => {
+router.put('/', requireAuth, requireAdmin, async (req, res, next) => {
   try {
     const payload = { ...req.body, key: 'main' };
     delete payload._id;
