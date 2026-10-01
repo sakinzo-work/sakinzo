@@ -13,6 +13,7 @@ const Stat = require('./models/Stat');
 const MapLocation = require('./models/MapLocation');
 const ContactOffice = require('./models/ContactOffice');
 const Insight = require('./models/Insight');
+const Blog = require('./models/Blog');
 const Admin = require('./models/Admin');
 const crudRouter = require('./utils/crudRouter');
 
@@ -54,6 +55,7 @@ app.use('/api/map-locations', crudRouter(MapLocation));
 app.use('/api/contact-offices', crudRouter(ContactOffice));
 app.use('/api/contact-page', require('./routes/contactPage').router);
 app.use('/api/insights', crudRouter(Insight));
+app.use('/api/blogs', crudRouter(Blog));
 app.use('/api/sections', require('./routes/sections'));
 app.use('/api/what-we-do-services', require('./routes/whatWeDoServices'));
 app.use('/api/submissions', require('./routes/submissions'));
