@@ -10,8 +10,17 @@ const writableFields = [
   'demoUrl', 'creatorName', 'creatorPortfolio', 'tags', 'order', 'visible'
 ];
 
+function cleanList(value) {
+  if (Array.isArray(value)) return value.map(item => String(item).trim()).filter(Boolean);
+  if (typeof value === 'string') return value.split(',').map(item => item.trim()).filter(Boolean);
+  return [];
+}
+
 function cleanPayload(body = {}) {
-  return Object.fromEntries(writableFields.filter(key => body[key] !== undefined).map(key => [key, body[key]]));
+  const payload = Object.fromEntries(writableFields.filter(key => body[key] !== undefined).map(key => [key, body[key]]));
+  if (payload.images !== undefined) payload.images = cleanList(payload.images);
+  if (payload.tags !== undefined) payload.tags = cleanList(payload.tags);
+  return payload;
 }
 
 function validId(req, res, next) {

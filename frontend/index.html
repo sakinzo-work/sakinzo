@@ -3709,9 +3709,11 @@
         window.projectImgError = function (img) {
             img.outerHTML = '<div class="project-img-fallback"><span style="color:rgba(255,255,255,.35);font-size:12px;font-weight:600;letter-spacing:.05em">NO IMAGE</span></div>';
         };
+        const cleanList = value => Array.isArray(value) ? value.map(String) : typeof value === 'string' ? value.split(',') : [];
+        const projectImages = p => [p.img, ...cleanList(p.images)].map(x => String(x || '').trim()).filter(Boolean).filter((img, i, arr) => arr.indexOf(img) === i);
         function projectCardHtml(p) {
             const fallbackMarkup = `<div class="project-img-fallback"><span style="color:rgba(255,255,255,.35);font-size:12px;font-weight:600;letter-spacing:.05em">NO IMAGE</span></div>`;
-            const images = [p.img, ...(Array.isArray(p.images) ? p.images : [])].filter(Boolean).filter((img, i, arr) => arr.indexOf(img) === i);
+            const images = projectImages(p);
             const imgTag = images.length
                 ? images.map((img, i) => `<img src="${fullUrl(img)}" alt="${escapeHtml(p.title)} image ${i + 1}" class="project-img ${i === 0 ? 'active' : ''}" loading="lazy" onerror="projectImgError(this)">`).join('')
                 : fallbackMarkup;
