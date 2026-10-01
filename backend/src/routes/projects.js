@@ -11,15 +11,28 @@ const writableFields = [
 ];
 
 function cleanList(value) {
-  if (Array.isArray(value)) return value.map(item => String(item).trim()).filter(Boolean);
-  if (typeof value === 'string') return value.split(',').map(item => item.trim()).filter(Boolean);
-  return [];
+  const values = Array.isArray(value) ? value : [value];
+  return values.flatMap(item => {
+    const text = String(item || '').trim();
+    if (!text) return [];
+    if (text.startsWith('/uploads/') || text.startsWith('data:image/')) return [text];
+    const urls = [...text.matchAll(/https?:\/\/[^\s,'"<>()[\]]+/g)].map(match => match[0].replace(/[.,;]+$/g, ''));
+    return urls.length ? urls : text.split(/[\n,]+/).map(part => part.trim()).filter(Boolean);
+  }).filter((item, index, list) => list.indexOf(item) === index);
+}
+
+function cleanUrl(value) {
+  const text = String(value || '').trim();
+  if (!text || text.startsWith('/uploads/') || text.startsWith('data:image/')) return text;
+  return cleanList(text)[0] || text;
 }
 
 function cleanPayload(body = {}) {
   const payload = Object.fromEntries(writableFields.filter(key => body[key] !== undefined).map(key => [key, body[key]]));
   if (payload.images !== undefined) payload.images = cleanList(payload.images);
   if (payload.tags !== undefined) payload.tags = cleanList(payload.tags);
+  if (payload.img !== undefined) payload.img = cleanUrl(payload.img);
+  if (payload.modelImage !== undefined) payload.modelImage = cleanUrl(payload.modelImage);
   return payload;
 }
 

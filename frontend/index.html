@@ -2115,8 +2115,8 @@
             inset: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            object-position: top center;
+            object-fit: contain;
+            object-position: center;
             display: block;
             opacity: 0;
             transition: opacity .35s ease, transform .4s ease;
@@ -3709,8 +3709,14 @@
         window.projectImgError = function (img) {
             img.outerHTML = '<div class="project-img-fallback"><span style="color:rgba(255,255,255,.35);font-size:12px;font-weight:600;letter-spacing:.05em">NO IMAGE</span></div>';
         };
-        const cleanList = value => Array.isArray(value) ? value.map(String) : typeof value === 'string' ? value.split(',') : [];
-        const projectImages = p => [p.img, ...cleanList(p.images)].map(x => String(x || '').trim()).filter(Boolean).filter((img, i, arr) => arr.indexOf(img) === i);
+        const cleanMediaList = value => (Array.isArray(value) ? value : [value]).flatMap(item => {
+            const text = String(item || '').trim();
+            if (!text) return [];
+            if (text.startsWith('/uploads/') || text.startsWith('data:image/')) return [text];
+            const urls = [...text.matchAll(/https?:\/\/[^\s,'"<>()[\]]+/g)].map(match => match[0].replace(/[.,;]+$/g, ''));
+            return urls.length ? urls : text.split(/[\n,]+/).map(part => part.trim()).filter(Boolean);
+        }).filter((img, i, arr) => arr.indexOf(img) === i);
+        const projectImages = p => [...cleanMediaList(p.img), ...cleanMediaList(p.images)].filter((img, i, arr) => arr.indexOf(img) === i);
         function projectCardHtml(p) {
             const fallbackMarkup = `<div class="project-img-fallback"><span style="color:rgba(255,255,255,.35);font-size:12px;font-weight:600;letter-spacing:.05em">NO IMAGE</span></div>`;
             const images = projectImages(p);
