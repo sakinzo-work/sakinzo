@@ -63,11 +63,6 @@
             flex-shrink: 0
         }
 
-        .logo svg {
-            width: 36px;
-            height: 36px
-        }
-
         .logo-txt {
             font-size: 21px;
             font-weight: 700;
@@ -327,29 +322,14 @@
         /* HERO */
         .hero {
             min-height: 100vh;
-            min-height: 100svh;
-            background:
-                radial-gradient(circle at 50% 34%, rgba(20, 92, 180, 0.32) 0%, rgba(4, 12, 28, 0) 45%),
-                radial-gradient(circle at 50% 58%, rgba(0, 156, 255, 0.16) 0%, rgba(4, 12, 28, 0) 34%),
-                linear-gradient(180deg, #071a38 0%, #030a18 43%, #041127 100%);
+            background: #040c1c;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding-top: 82px
-        }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background:
-                linear-gradient(90deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0) 22%, rgba(0, 0, 0, 0) 78%, rgba(0, 0, 0, 0.24)),
-                radial-gradient(circle at 50% 50%, rgba(0, 170, 255, 0.1), rgba(0, 0, 0, 0) 42%);
-            pointer-events: none;
-            z-index: 1
+            padding-top: 68px
         }
 
         .hero-bg-canvas {
@@ -357,65 +337,27 @@
             inset: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 0
-        }
-
-        .hero-network {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%
+            overflow: hidden
         }
 
         .hero-glow {
             position: absolute;
-            width: 760px;
-            height: 760px;
+            width: 700px;
+            height: 700px;
             left: 50%;
-            top: 42%;
-            transform: translate(-50%, -50%);
-            background: radial-gradient(circle, rgba(23, 116, 255, 0.24) 0%, rgba(23, 116, 255, 0.1) 34%, transparent 70%);
+            top: 50%;
+            transform: translate(-50%, -58%);
+            background: radial-gradient(circle, rgba(22, 115, 255, 0.22) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none
         }
 
         .hero-content {
             position: relative;
-            z-index: 3;
+            z-index: 2;
             text-align: center;
-            padding: 34px 40px 146px;
-            width: 100%;
-            max-width: 1120px;
-            margin: 0 auto
-        }
-
-        .hero-kicker {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin: 0 auto 34px;
-            color: #18d4ff;
-            font-size: 15px;
-            line-height: 1.3;
-            font-weight: 800;
-            letter-spacing: 0;
-            text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(0, 213, 255, 0.48);
-            animation: fadeUp .8s cubic-bezier(.16, 1, .3, 1) both
-        }
-
-        .kicker-success {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px
-        }
-
-        .kicker-success::before {
-            content: "\2022";
-            color: #15caff
+            padding: 60px 40px 160px;
+            width: 100%
         }
 
         .hero h1 {
@@ -426,63 +368,22 @@
             letter-spacing: -0.02em;
             text-transform: uppercase;
             max-width: 1020px;
-            margin: 0 auto 34px;
-            text-shadow: 0 4px 0 rgba(0, 0, 0, 0.08), 0 0 26px rgba(255, 255, 255, 0.1);
+            margin: 0 auto 48px;
             animation: fadeUp .8s cubic-bezier(.16, 1, .3, 1) both
         }
 
-        .hero-desktop-line,
-        .hero-mobile-line {
-            display: block
-        }
-
-        .hero-mobile-line {
-            display: none
-        }
-
-        .hero-title-blue {
-            color: #19b6ff;
-            background: linear-gradient(180deg, #72e4ff 0%, #1db9ff 48%, #0879f8 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: none
-        }
-
-        .hero-copy {
-            max-width: 720px;
-            margin: 0 auto 42px;
-            color: #dce8ff;
-            font-size: 20px;
-            line-height: 1.48;
-            font-weight: 500;
-            text-shadow: 0 0 18px rgba(20, 92, 180, 0.18);
-            animation: fadeUp .8s .08s cubic-bezier(.16, 1, .3, 1) both
-        }
-
         .hero-cta {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 24px;
-            min-width: 214px;
-            min-height: 58px;
-            background: linear-gradient(180deg, #18a5ff 0%, #0876ff 100%);
+            display: inline-block;
+            background: #1673FF;
             color: #fff;
             text-decoration: none;
             border-radius: 100px;
-            padding: 15px 30px;
+            padding: 18px 58px;
             font-size: 18px;
-            font-weight: 800;
-            box-shadow: 0 0 0 1px rgba(110, 220, 255, 0.22) inset, 0 0 30px rgba(0, 140, 255, 0.58), 0 18px 34px rgba(0, 70, 180, 0.28);
+            font-weight: 600;
+            box-shadow: 0 6px 30px rgba(22, 115, 255, 0.4);
             animation: fadeUp .8s .12s cubic-bezier(.16, 1, .3, 1) both;
             transition: .2s
-        }
-
-        .hero-cta svg {
-            width: 28px;
-            height: 28px;
-            flex-shrink: 0
         }
 
         .hero-cta:hover {
@@ -495,58 +396,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            pointer-events: none;
-            z-index: 2
-        }
-
-        .hero-wave-wrap svg {
-            display: block;
-            width: 100%;
-            height: 260px
-        }
-
-        /* Reference-image hero: desktop uses the clean background PNG, with live UI above it. */
-        .hero {
-            height: 100vh;
-            height: 100svh;
-            min-height: 100svh;
-            background: #030b19 url("assets/sakinzo-hero-desktop-waves.png") center bottom / cover no-repeat;
-            padding-top: 68px
-        }
-
-        .hero::before,
-        .hero-bg-canvas,
-        .hero-wave-wrap {
-            display: none
-        }
-
-        .hero-content {
-            opacity: 1
-        }
-
-        @media (min-width: 901px) {
-            .hero-content {
-                transform: translateY(-58px)
-            }
-        }
-
-        @media (max-width: 1180px) {
-            .logo {
-                margin-right: 22px
-            }
-
-            nav {
-                gap: 8px
-            }
-
-            .nbtn {
-                font-size: 14px;
-                padding: 9px 8px
-            }
-
-            .hero h1 {
-                font-size: 62px
-            }
+            pointer-events: none
         }
 
         @keyframes fadeUp {
@@ -1742,56 +1592,17 @@
                 display: none
             }
 
+            .hdr-right .lang,
             .hdr-right .btn-git {
                 display: none
             }
 
-            .hdr-right .lang {
+            .hamburger {
                 display: flex
             }
 
-            .hamburger {
-                display: flex;
-                margin-left: 0
-            }
-
             .hdr-inner {
-                height: 76px;
-                padding: 0 24px;
-                gap: 16px
-            }
-
-            .logo {
-                margin-right: 0
-            }
-
-            .logo svg {
-                width: 48px;
-                height: 48px
-            }
-
-            .logo-txt {
-                font-size: 28px
-            }
-
-            .mobile-menu {
-                top: 76px
-            }
-
-            .hero {
-                padding-top: 76px
-            }
-
-            .hero-content {
-                padding: 90px 30px 210px
-            }
-
-            .hero h1 {
-                font-size: 56px
-            }
-
-            .hero-copy {
-                font-size: 20px
+                padding: 0 24px
             }
 
             .wrap {
@@ -1939,143 +1750,19 @@
             }
 
             /* ---- HERO ---- */
-            .hdr {
-                background: rgba(4, 15, 35, 0.95)
-            }
-
-            .hdr-inner {
-                height: 68px;
-                padding: 0 20px;
-                gap: 12px
-            }
-
-            .logo {
-                gap: 10px
-            }
-
-            .logo svg {
-                width: 36px;
-                height: 36px
-            }
-
-            .logo-txt {
-                font-size: 24px
-            }
-
-            .hdr-right {
-                gap: 16px
-            }
-
-            .lang {
-                font-size: 15px;
-                gap: 7px
-            }
-
-            .lang svg {
-                width: 12px;
-                height: 8px
-            }
-
-            .hamburger {
-                width: 38px;
-                height: 38px;
-                gap: 6px
-            }
-
-            .hamburger span {
-                width: 26px;
-                height: 3px
-            }
-
-            .mobile-menu {
-                top: 68px
-            }
-
-            .hero {
-                min-height: 100vh;
-                min-height: 100svh;
-                height: max(100svh, calc(100vw * 1672 / 941));
-                background-image: url("assets/sakinzo-hero-mobile.png");
-                background-size: cover;
-                background-position: center top;
-                padding-top: 68px
-            }
-
-            .hero-glow {
-                width: 520px;
-                height: 520px;
-                top: 36%
-            }
-
             .hero-content {
-                padding: 74px 20px 242px;
-                opacity: 0
-            }
-
-            .hero-kicker {
-                display: grid;
-                gap: 8px;
-                margin-bottom: 26px;
-                font-size: 15px;
-                line-height: 1.45;
-                max-width: 360px;
-                width: 100%
-            }
-
-            .kicker-success {
-                justify-content: center;
-                gap: 14px
-            }
-
-            .kicker-success::before,
-            .kicker-success::after {
-                content: "";
-                width: 82px;
-                height: 1px;
-                background: linear-gradient(90deg, rgba(24, 190, 255, 0), rgba(24, 190, 255, 0.9))
-            }
-
-            .kicker-success::after {
-                background: linear-gradient(90deg, rgba(24, 190, 255, 0.9), rgba(24, 190, 255, 0))
+                padding: 56px 20px 140px
             }
 
             .hero h1 {
-                font-size: 36px;
-                line-height: 1.13;
-                margin-bottom: 28px;
-                max-width: 330px
-            }
-
-            .hero-desktop-line {
-                display: none
-            }
-
-            .hero-mobile-line {
-                display: block
-            }
-
-            .hero-copy {
-                max-width: 300px;
-                margin-bottom: 36px;
-                font-size: 16px;
-                line-height: 1.52
+                font-size: clamp(22px, 6.8vw, 34px);
+                line-height: 1.15;
+                margin-bottom: 32px;
             }
 
             .hero-cta {
-                min-width: 190px;
-                min-height: 56px;
-                padding: 13px 24px;
-                font-size: 18px;
-                gap: 18px
-            }
-
-            .hero-cta svg {
-                width: 28px;
-                height: 28px
-            }
-
-            .hero-wave-wrap svg {
-                height: 310px
+                padding: 14px 36px;
+                font-size: 15px
             }
 
             /* ---- Why ---- */
@@ -2658,61 +2345,17 @@
                 padding: 0 16px
             }
 
-            .logo svg {
-                width: 34px;
-                height: 34px
-            }
-
-            .logo-txt {
-                font-size: 22px
-            }
-
-            .lang {
-                font-size: 14px
-            }
-
-            .hamburger {
-                width: 40px;
-                height: 40px
-            }
-
-            .hamburger span {
-                width: 24px
-            }
-
             .hero-content {
-                padding: 68px 16px 230px
-            }
-
-            .hero-kicker {
-                font-size: 14px;
-                margin-bottom: 24px
-            }
-
-            .kicker-success::before,
-            .kicker-success::after {
-                width: 66px
+                padding: 48px 16px 120px
             }
 
             .hero h1 {
-                font-size: 33px;
-                margin-bottom: 24px
-            }
-
-            .hero-copy {
-                font-size: 15px;
-                margin-bottom: 32px
+                font-size: 20px
             }
 
             .hero-cta {
-                min-width: 184px;
-                min-height: 54px;
-                padding: 12px 22px;
-                font-size: 17px
-            }
-
-            .hero-wave-wrap svg {
-                height: 292px
+                padding: 12px 28px;
+                font-size: 14px
             }
 
             .sec {
@@ -2850,147 +2493,134 @@
 
     <!-- HERO -->
     <section class="hero" id="home">
-        <div class="hero-bg-canvas" aria-hidden="true">
-            <svg class="hero-network" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                <defs>
-                    <filter id="heroNodeGlow" x="-80%" y="-80%" width="260%" height="260%">
-                        <feGaussianBlur stdDeviation="5" result="blur" />
-                        <feMerge>
-                            <feMergeNode in="blur" />
-                            <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                    </filter>
-                    <linearGradient id="heroLineBlue" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stop-color="#00d9ff" stop-opacity=".95" />
-                        <stop offset="52%" stop-color="#147cff" stop-opacity=".54" />
-                        <stop offset="100%" stop-color="#0a2b88" stop-opacity=".12" />
-                    </linearGradient>
-                </defs>
-                <g fill="none" stroke="url(#heroLineBlue)" stroke-width="1" opacity=".72">
-                    <path d="M-40 150 L112 250 L48 360 L126 506 L24 642 L122 752 L-20 808" />
-                    <path d="M112 250 L196 368 L126 506 L270 586 L242 742" />
-                    <path d="M48 360 L196 368 L304 512 L270 586 L384 690" />
-                    <path d="M126 506 L24 642 L242 742 L384 690" />
-                    <path d="M1440 160 L1310 276 L1374 404 L1298 544 L1418 666 L1320 758 L1460 824" />
-                    <path d="M1310 276 L1214 372 L1298 544 L1168 646 L1196 788" />
-                    <path d="M1374 404 L1214 372 L1120 518 L1168 646 L1048 718" />
-                    <path d="M1298 544 L1418 666 L1196 788 L1048 718" />
-                    <path d="M58 778 C260 688 438 788 602 734 C800 668 946 740 1094 700 C1248 658 1326 702 1448 650" opacity=".28" />
+        <div class="hero-bg-canvas">
+            <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 1440 900"
+                xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                <rect width="1440" height="900" fill="#040c1c" />
+                <g stroke="#1a5acc" stroke-width=".8" fill="none">
+                    <line x1="180" y1="580" x2="360" y2="500">
+                        <animate attributeName="stroke-opacity" values=".4;.08;.4" dur="4s" repeatCount="indefinite" />
+                    </line>
+                    <line x1="360" y1="500" x2="520" y2="600">
+                        <animate attributeName="stroke-opacity" values=".08;.4;.08" dur="3.5s"
+                            repeatCount="indefinite" />
+                    </line>
+                    <line x1="520" y1="600" x2="700" y2="520">
+                        <animate attributeName="stroke-opacity" values=".4;.12;.4" dur="5s" repeatCount="indefinite" />
+                    </line>
+                    <line x1="700" y1="520" x2="920" y2="570">
+                        <animate attributeName="stroke-opacity" values=".12;.4;.12" dur="4.2s"
+                            repeatCount="indefinite" />
+                    </line>
+                    <line x1="920" y1="570" x2="1100" y2="490">
+                        <animate attributeName="stroke-opacity" values=".4;.1;.4" dur="3.8s" repeatCount="indefinite" />
+                    </line>
+                    <line x1="1100" y1="490" x2="1280" y2="530">
+                        <animate attributeName="stroke-opacity" values=".1;.35;.1" dur="4.5s"
+                            repeatCount="indefinite" />
+                    </line>
+                    <line x1="280" y1="660" x2="450" y2="590" stroke-opacity=".2" />
+                    <line x1="450" y1="590" x2="620" y2="670" stroke-opacity=".2" />
+                    <line x1="620" y1="670" x2="820" y2="620" stroke-opacity=".2" />
+                    <line x1="820" y1="620" x2="1020" y2="650" stroke-opacity=".15" />
+                    <line x1="360" y1="500" x2="280" y2="660" stroke-opacity=".15" />
+                    <line x1="520" y1="600" x2="450" y2="590" stroke-opacity=".15" />
+                    <line x1="700" y1="520" x2="620" y2="670" stroke-opacity=".15" />
+                    <line x1="920" y1="570" x2="820" y2="620" stroke-opacity=".15" />
                 </g>
-                <g fill="#08cfff" filter="url(#heroNodeGlow)">
-                    <circle cx="112" cy="250" r="5">
-                        <animate attributeName="opacity" values=".65;1;.65" dur="2.4s" repeatCount="indefinite" />
+                <g fill="#1a6fff">
+                    <circle cx="180" cy="580" r="3.5" opacity=".5">
+                        <animate attributeName="opacity" values=".5;1;.5" dur="2.2s" repeatCount="indefinite" />
                     </circle>
-                    <circle cx="48" cy="360" r="4" opacity=".9" />
-                    <circle cx="126" cy="506" r="5">
-                        <animate attributeName="opacity" values=".45;1;.45" dur="3s" repeatCount="indefinite" />
+                    <circle cx="360" cy="500" r="5" opacity=".6">
+                        <animate attributeName="opacity" values=".6;.2;.6" dur="2.7s" repeatCount="indefinite" />
                     </circle>
-                    <circle cx="24" cy="642" r="4" opacity=".72" />
-                    <circle cx="242" cy="742" r="5" opacity=".86" />
-                    <circle cx="384" cy="690" r="4" opacity=".78" />
-                    <circle cx="1310" cy="276" r="4" opacity=".78" />
-                    <circle cx="1374" cy="404" r="5">
-                        <animate attributeName="opacity" values=".48;1;.48" dur="2.7s" repeatCount="indefinite" />
+                    <circle cx="520" cy="600" r="3.5" opacity=".4">
+                        <animate attributeName="opacity" values=".4;.9;.4" dur="3.1s" repeatCount="indefinite" />
                     </circle>
-                    <circle cx="1298" cy="544" r="5" opacity=".9" />
-                    <circle cx="1418" cy="666" r="4" opacity=".72" />
-                    <circle cx="1196" cy="788" r="5" opacity=".86" />
-                    <circle cx="1048" cy="718" r="4" opacity=".78" />
-                </g>
-                <g fill="#126dff" opacity=".48">
-                    <circle cx="196" cy="368" r="3" />
-                    <circle cx="270" cy="586" r="3" />
-                    <circle cx="602" cy="734" r="3" />
-                    <circle cx="1094" cy="700" r="3" />
-                    <circle cx="1214" cy="372" r="3" />
-                    <circle cx="1168" cy="646" r="3" />
+                    <circle cx="700" cy="520" r="6" opacity=".55">
+                        <animate attributeName="opacity" values=".55;.2;.55" dur="2.4s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="920" cy="570" r="4" opacity=".5">
+                        <animate attributeName="opacity" values=".5;1;.5" dur="1.9s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="1100" cy="490" r="3.5" opacity=".4">
+                        <animate attributeName="opacity" values=".4;.85;.4" dur="2.9s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="1280" cy="530" r="3" opacity=".35">
+                        <animate attributeName="opacity" values=".35;.8;.35" dur="3.3s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="280" cy="660" r="2.5" opacity=".3" />
+                    <circle cx="620" cy="670" r="3" opacity=".35" />
+                    <circle cx="820" cy="620" r="3.5" opacity=".3" />
                 </g>
             </svg>
             <div class="hero-glow"></div>
         </div>
 
         <div class="hero-content">
-            <div class="hero-kicker">
-                <span>Innovation &bull; Technology</span>
-                <span class="kicker-success">Your Success</span>
-            </div>
-            <h1 aria-label="Developing solutions that transform business">
-                <span class="hero-desktop-line" aria-hidden="true">Developing Solutions</span>
-                <span class="hero-desktop-line" aria-hidden="true">That <span class="hero-title-blue">Transform</span></span>
-                <span class="hero-desktop-line" aria-hidden="true">Business</span>
-                <span class="hero-mobile-line" aria-hidden="true">Developing</span>
-                <span class="hero-mobile-line" aria-hidden="true">Solutions That</span>
-                <span class="hero-mobile-line hero-title-blue" aria-hidden="true">Transform</span>
-                <span class="hero-mobile-line" aria-hidden="true">Business</span>
-            </h1>
-            <p class="hero-copy">We build modern, scalable and intelligent digital solutions that help businesses grow, innovate and stay ahead.</p>
-            <a href="contactus.html#form-section" class="hero-cta">
-                <span>Get in touch</span>
-                <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
-                    <path d="M5 16H26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
-                    <path d="M17.5 7.5L26 16L17.5 24.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-            </a>
+            <h1>Developing Solutions<br>That Transform Business</h1>
+            <a href="contactus.html#form-section" class="hero-cta">Get in touch</a>
         </div>
 
         <div class="hero-wave-wrap">
             <svg viewBox="0 0 1440 260" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
-                aria-hidden="true">
+                style="display:block;width:100%;height:260px">
                 <defs>
-                    <filter id="heroWaveGlow" x="-8%" y="-80%" width="116%" height="260%">
+                    <filter id="glow">
                         <feGaussianBlur stdDeviation="8" result="blur" />
                         <feMerge>
                             <feMergeNode in="blur" />
                             <feMergeNode in="SourceGraphic" />
                         </feMerge>
                     </filter>
-                    <linearGradient id="heroWaveCyan" x1="0" y1="0" x2="1" y2="0">
+                    <linearGradient id="wg1" x1="0" y1="0" x2="1" y2="0">
                         <stop offset="0%" stop-color="#00aaff" stop-opacity=".0" />
                         <stop offset="25%" stop-color="#00cfff" stop-opacity=".7" />
                         <stop offset="50%" stop-color="#0088ff" stop-opacity=".9" />
                         <stop offset="75%" stop-color="#00cfff" stop-opacity=".7" />
                         <stop offset="100%" stop-color="#00aaff" stop-opacity=".0" />
                     </linearGradient>
-                    <linearGradient id="heroWaveBlue" x1="0" y1="0" x2="1" y2="0">
+                    <linearGradient id="wg2" x1="0" y1="0" x2="1" y2="0">
                         <stop offset="0%" stop-color="#1673FF" stop-opacity=".0" />
                         <stop offset="30%" stop-color="#1673FF" stop-opacity=".5" />
                         <stop offset="70%" stop-color="#1673FF" stop-opacity=".5" />
                         <stop offset="100%" stop-color="#1673FF" stop-opacity=".0" />
                     </linearGradient>
                 </defs>
-                <rect y="145" width="1440" height="115" fill="#031026" opacity=".72" />
+                <rect y="160" width="1440" height="100" fill="#040c1c" />
                 <path
-                    d="M0,166 C210,96 362,172 548,136 C744,98 900,176 1088,132 C1268,92 1358,134 1440,126 L1440,260 L0,260Z"
-                    fill="#031026" opacity=".58" />
-                <path d="M0,166 C210,96 362,172 548,136 C744,98 900,176 1088,132 C1268,92 1358,134 1440,126"
-                    fill="none" stroke="url(#heroWaveCyan)" stroke-width="3" filter="url(#heroWaveGlow)" opacity=".95">
-                    <animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0,166 C210,96 362,172 548,136 C744,98 900,176 1088,132 C1268,92 1358,134 1440,126;
-                  M0,148 C198,188 386,110 560,154 C734,196 920,118 1094,148 C1264,178 1356,108 1440,142;
-                  M0,166 C210,96 362,172 548,136 C744,98 900,176 1088,132 C1268,92 1358,134 1440,126" />
+                    d="M0,180 C180,120 360,200 540,155 C720,110 900,185 1080,145 C1260,105 1360,160 1440,150 L1440,260 L0,260Z"
+                    fill="#040c1c" />
+                <path d="M0,178 C180,118 360,198 540,153 C720,108 900,183 1080,143 C1260,103 1360,158 1440,148"
+                    fill="none" stroke="url(#wg1)" stroke-width="2.5" filter="url(#glow)" opacity=".9">
+                    <animate attributeName="d" dur="6s" repeatCount="indefinite" values="M0,178 C180,118 360,198 540,153 C720,108 900,183 1080,143 C1260,103 1360,158 1440,148;
+                  M0,165 C180,198 360,130 540,168 C720,198 900,130 1080,165 C1260,195 1360,138 1440,160;
+                  M0,178 C180,118 360,198 540,153 C720,108 900,183 1080,143 C1260,103 1360,158 1440,148" />
                 </path>
-                <path d="M0,188 C192,138 380,210 604,172 C812,136 1004,204 1210,164 C1328,142 1390,172 1440,162"
-                    fill="none" stroke="url(#heroWaveBlue)" stroke-width="1.8" filter="url(#heroWaveGlow)" opacity=".62">
-                    <animate attributeName="d" dur="9s" repeatCount="indefinite" values="M0,188 C192,138 380,210 604,172 C812,136 1004,204 1210,164 C1328,142 1390,172 1440,162;
-                  M0,204 C206,180 404,136 606,190 C810,222 1010,152 1208,190 C1326,214 1392,154 1440,178;
-                  M0,188 C192,138 380,210 604,172 C812,136 1004,204 1210,164 C1328,142 1390,172 1440,162" />
+                <path d="M0,195 C200,155 400,215 600,180 C800,145 1000,205 1200,170 C1320,152 1400,185 1440,178"
+                    fill="none" stroke="url(#wg2)" stroke-width="1.5" filter="url(#glow)" opacity=".5">
+                    <animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0,195 C200,155 400,215 600,180 C800,145 1000,205 1200,170 C1320,152 1400,185 1440,178;
+                  M0,210 C200,185 400,155 600,198 C800,218 1000,165 1200,195 C1320,210 1400,172 1440,190;
+                  M0,195 C200,155 400,215 600,180 C800,145 1000,205 1200,170 C1320,152 1400,185 1440,178" />
                 </path>
-                <path d="M0,210 C260,166 528,224 786,194 C1010,168 1218,206 1440,188" fill="none" stroke="url(#heroWaveCyan)"
+                <path d="M0,210 C300,175 600,225 900,190 C1100,170 1280,205 1440,195" fill="none" stroke="url(#wg1)"
                     stroke-width="1" opacity=".3">
-                    <animate attributeName="d" dur="11s" repeatCount="indefinite" values="M0,210 C260,166 528,224 786,194 C1010,168 1218,206 1440,188;
-                  M0,228 C260,204 528,172 786,214 C1010,232 1218,176 1440,206;
-                  M0,210 C260,166 528,224 786,194 C1010,168 1218,206 1440,188" />
+                    <animate attributeName="d" dur="10s" repeatCount="indefinite" values="M0,210 C300,175 600,225 900,190 C1100,170 1280,205 1440,195;
+                  M0,225 C300,200 600,178 900,210 C1100,225 1280,185 1440,205;
+                  M0,210 C300,175 600,225 900,190 C1100,170 1280,205 1440,195" />
                 </path>
-                <circle r="3" fill="#00ddff" opacity=".8" filter="url(#heroWaveGlow)">
+                <circle r="3" fill="#00ddff" opacity=".8" filter="url(#glow)">
                     <animateMotion dur="8s" repeatCount="indefinite"
-                        path="M0,166 C210,96 362,172 548,136 C744,98 900,176 1088,132 C1268,92 1358,134 1440,126" />
+                        path="M0,178 C180,118 360,198 540,153 C720,108 900,183 1080,143 C1260,103 1360,158 1440,148" />
                 </circle>
-                <circle r="2.5" fill="#4db8ff" opacity=".7" filter="url(#heroWaveGlow)">
+                <circle r="2.5" fill="#4db8ff" opacity=".7" filter="url(#glow)">
                     <animateMotion dur="10s" repeatCount="indefinite" begin="-3s"
-                        path="M1440,126 C1358,134 1268,92 1088,132 C900,176 744,98 548,136 C362,172 210,96 0,166" />
+                        path="M1440,148 C1360,158 1260,103 1080,143 C900,183 720,108 540,153 C360,198 180,118 0,178" />
                 </circle>
-                <circle r="2" fill="#99e8ff" opacity=".6" filter="url(#heroWaveGlow)">
+                <circle r="2" fill="#99e8ff" opacity=".6" filter="url(#glow)">
                     <animateMotion dur="7s" repeatCount="indefinite" begin="-1.5s"
-                        path="M0,188 C192,138 380,210 604,172 C812,136 1004,204 1210,164 C1328,142 1390,172 1440,162" />
+                        path="M0,195 C200,155 400,215 600,180 C800,145 1000,205 1200,170 C1320,152 1400,185 1440,178" />
                 </circle>
             </svg>
         </div>
