@@ -1,7 +1,7 @@
 const express = require('express');
 const WhatWeDoService = require('../models/WhatWeDoService');
 const requireAuth = require('../middleware/auth');
-const requireAdmin = require('../middleware/auth').requireAdmin;
+const requireDirectSave = require('../middleware/auth').requireDirectSave;
 const { requireResourceRead } = require('../utils/accessControl');
 const router = express.Router();
 
@@ -23,7 +23,7 @@ router.get('/', requireAuth, requireResourceRead('whatWeDoServices'), async (req
   } catch (err) { next(err); }
 });
 
-router.put('/:key', requireAuth, requireAdmin, async (req, res, next) => {
+router.put('/:key', requireAuth, requireDirectSave, async (req, res, next) => {
   try {
     if (!labels[req.params.key]) return res.status(400).json({ message: 'Unknown service key' });
     const doc = await WhatWeDoService.findOneAndUpdate(

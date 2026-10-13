@@ -17,7 +17,7 @@ const WhatWeDoService = require('../models/WhatWeDoService');
 const Submission = require('../models/Submission');
 const requireAuth = require('../middleware/auth');
 const requireAdmin = require('../middleware/auth').requireAdmin;
-const { hasPermission, hasFullAccess, publicAdmin } = require('../utils/accessControl');
+const { hasPermission, hasFullAccess, canSaveDirect, publicAdmin } = require('../utils/accessControl');
 const { defaults: contactDefaults } = require('./contactPage');
 
 const router = express.Router();
@@ -142,7 +142,7 @@ router.post('/', async (req, res, next) => {
     const payload = cleanObject(req.body.payload || {});
     const resourceId = String(req.body.resourceId || '').trim();
     if (!resourceType || !action) return res.status(400).json({ message: 'Resource and action are required' });
-    if (hasFullAccess(req.admin)) return res.status(400).json({ message: 'Admins can save changes directly' });
+    if (canSaveDirect(req.admin)) return res.status(400).json({ message: 'Owner/default admin can save changes directly' });
     if (resourceType === 'admins' && action !== 'profile-update') {
       return res.status(400).json({ message: 'Employee account changes must use profile approval' });
     }
@@ -170,6 +170,9 @@ router.put('/:id/approve', requireAdmin, async (req, res, next) => {
     const row = await ApprovalRequest.findById(req.params.id);
     if (!row) return res.status(404).json({ message: 'Approval request not found' });
     if (row.status !== 'pending') return res.status(400).json({ message: 'This request is already reviewed' });
+    if (!canSaveDirect(req.admin) && String(row.requester) === String(req.admin.id)) {
+      return res.status(403).json({ message: 'Owner approval required for your own request' });
+    }
     const result = await applyApproval(row);
     row.status = 'approved';
     row.reviewedBy = req.admin.id;

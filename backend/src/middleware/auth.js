@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin');
-const { publicAdmin } = require('../utils/accessControl');
+const { publicAdmin, hasFullAccess, canSaveDirect } = require('../utils/accessControl');
 async function requireAuth(req, res, next) {
   const header = req.headers.authorization || '';
   const token = header.startsWith('Bearer ') ? header.slice(7) : null;
@@ -17,11 +17,19 @@ async function requireAuth(req, res, next) {
 }
 
 function requireAdmin(req, res, next) {
-  if (!req.admin || !['owner', 'admin'].includes(req.admin.role)) {
+  if (!req.admin || !hasFullAccess(req.admin)) {
     return res.status(403).json({ message: 'Admin access required' });
+  }
+  next();
+}
+
+function requireDirectSave(req, res, next) {
+  if (!req.admin || !canSaveDirect(req.admin)) {
+    return res.status(403).json({ message: 'Owner approval required before this change can go live' });
   }
   next();
 }
 
 module.exports = requireAuth;
 module.exports.requireAdmin = requireAdmin;
+module.exports.requireDirectSave = requireDirectSave;

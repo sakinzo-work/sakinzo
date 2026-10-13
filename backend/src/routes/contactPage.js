@@ -1,7 +1,7 @@
 const express = require('express');
 const ContactPageSetting = require('../models/ContactPageSetting');
 const requireAuth = require('../middleware/auth');
-const requireAdmin = require('../middleware/auth').requireAdmin;
+const requireDirectSave = require('../middleware/auth').requireDirectSave;
 const { requireResourceRead } = require('../utils/accessControl');
 const router = express.Router();
 
@@ -33,7 +33,7 @@ router.get('/', requireAuth, requireResourceRead('contactPage'), async (req, res
   try { res.json(await getSettings()); } catch (err) { next(err); }
 });
 
-router.put('/', requireAuth, requireAdmin, async (req, res, next) => {
+router.put('/', requireAuth, requireDirectSave, async (req, res, next) => {
   try {
     const payload = { ...req.body, key: 'main' };
     delete payload._id;

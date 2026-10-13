@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const Submission = require('../models/Submission');
 const requireAuth = require('../middleware/auth');
-const requireAdmin = require('../middleware/auth').requireAdmin;
+const requireDirectSave = require('../middleware/auth').requireDirectSave;
 const { requireResourceRead } = require('../utils/accessControl');
 const router = express.Router();
 const storage = multer.diskStorage({
@@ -26,10 +26,10 @@ router.post('/', upload.single('attachment'), async (req, res, next) => {
 router.get('/', requireAuth, requireResourceRead('submissions'), async (req, res, next) => {
   try { res.json(await Submission.find().sort({ createdAt: -1 })); } catch (err) { next(err); }
 });
-router.put('/:id', requireAuth, requireAdmin, async (req, res, next) => {
+router.put('/:id', requireAuth, requireDirectSave, async (req, res, next) => {
   try { res.json(await Submission.findByIdAndUpdate(req.params.id, req.body, { new: true })); } catch (err) { next(err); }
 });
-router.delete('/:id', requireAuth, requireAdmin, async (req, res, next) => {
+router.delete('/:id', requireAuth, requireDirectSave, async (req, res, next) => {
   try { await Submission.findByIdAndDelete(req.params.id); res.json({ ok: true }); } catch (err) { next(err); }
 });
 module.exports = router;

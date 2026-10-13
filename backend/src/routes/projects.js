@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Project = require('../models/Project');
 const requireAuth = require('../middleware/auth');
-const requireAdmin = require('../middleware/auth').requireAdmin;
+const requireDirectSave = require('../middleware/auth').requireDirectSave;
 const { requireResourceRead } = require('../utils/accessControl');
 
 const router = express.Router();
@@ -57,7 +57,7 @@ router.get('/admin/all', requireAuth, requireResourceRead('projects'), async (re
   } catch (err) { next(err); }
 });
 
-router.post('/reorder', requireAuth, requireAdmin, async (req, res, next) => {
+router.post('/reorder', requireAuth, requireDirectSave, async (req, res, next) => {
   try {
     const items = Array.isArray(req.body.items) ? req.body.items : [];
     const operations = items.filter(item => mongoose.isValidObjectId(item.id || item._id)).map((item, index) => ({
@@ -77,14 +77,14 @@ router.get('/:id', validId, async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-router.post('/', requireAuth, requireAdmin, async (req, res, next) => {
+router.post('/', requireAuth, requireDirectSave, async (req, res, next) => {
   try {
     const project = await Project.create(cleanPayload(req.body));
     res.status(201).json(project);
   } catch (err) { next(err); }
 });
 
-router.put('/:id', requireAuth, requireAdmin, validId, async (req, res, next) => {
+router.put('/:id', requireAuth, requireDirectSave, validId, async (req, res, next) => {
   try {
     const project = await Project.findById(req.params.id);
     if (!project) return res.status(404).json({ message: 'Project not found' });
@@ -97,7 +97,7 @@ router.put('/:id', requireAuth, requireAdmin, validId, async (req, res, next) =>
   } catch (err) { next(err); }
 });
 
-router.delete('/:id', requireAuth, requireAdmin, validId, async (req, res, next) => {
+router.delete('/:id', requireAuth, requireDirectSave, validId, async (req, res, next) => {
   try {
     const project = await Project.findByIdAndDelete(req.params.id);
     if (!project) return res.status(404).json({ message: 'Project not found' });
