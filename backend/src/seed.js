@@ -3,11 +3,23 @@ const mongoose = require('mongoose');
 const Admin = require('./models/Admin');
 const Section = require('./models/Section');
 
+const DEFAULT_OWNER_EMAIL = 'alishafaq@gmail.com';
+const LEGACY_OWNER_EMAIL = 'alishafaq782@gmail.com';
 const sectionKeys = ['hero','why','clients','whatwedo','projects','services','cases','map','feedback','insights'];
 (async () => {
   await mongoose.connect(process.env.MONGODB_URI);
-  const email = (process.env.ADMIN_EMAIL || 'alishafaq782@gmail.com').toLowerCase();
-  const existing = await Admin.findOne({ email });
+  const email = (process.env.ADMIN_EMAIL || DEFAULT_OWNER_EMAIL).toLowerCase();
+  let existing = await Admin.findOne({ email });
+  if (!existing && email === DEFAULT_OWNER_EMAIL) {
+    const legacyOwner = await Admin.findOne({ email: LEGACY_OWNER_EMAIL });
+    if (legacyOwner) {
+      legacyOwner.email = DEFAULT_OWNER_EMAIL;
+      legacyOwner.role = 'owner';
+      legacyOwner.active = true;
+      existing = await legacyOwner.save();
+      console.log('Default owner email migrated:', email);
+    }
+  }
   if (!existing) {
     await Admin.create({ name: process.env.ADMIN_NAME || 'Admin', email, password: process.env.ADMIN_PASSWORD || 'ChangeMe@123', role: 'owner', active: true });
     console.log('Admin user created:', email);

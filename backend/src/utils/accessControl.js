@@ -31,7 +31,7 @@ const RESOURCE_PERMISSIONS = {
 };
 
 const OWNER_EMAILS = [...new Set([
-  'alishafaq782@gmail.com',
+  'alishafaq@gmail.com',
   process.env.ADMIN_EMAIL
 ].map(email => String(email || '').toLowerCase().trim()).filter(Boolean))];
 

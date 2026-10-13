@@ -19,6 +19,8 @@ const crudRouter = require('./utils/crudRouter');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const DEFAULT_OWNER_EMAIL = 'alishafaq@gmail.com';
+const LEGACY_OWNER_EMAIL = 'alishafaq782@gmail.com';
 const defaultOrigins = [
   'https://sakinzo-work.github.io',
   'http://127.0.0.1:5500',
@@ -39,7 +41,7 @@ app.use(cors({
   credentials: true
 }));
 app.use(morgan('dev'));
-app.use(express.json({ limit: '2mb' }));
+app.use(express.json({ limit: '8mb' }));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads'), {
   immutable: true,
   maxAge: '30d',
@@ -80,14 +82,24 @@ app.use((err, req, res, next) => {
 
 mongoose.connect(process.env.MONGODB_URI).then(async () => {
   console.log('MongoDB connected');
-  const bootstrapEmails = [...new Set(['alishafaq782@gmail.com', process.env.ADMIN_EMAIL].map(email => String(email || '').toLowerCase().trim()).filter(Boolean))];
+  const defaultOwner = await Admin.findOne({ email: DEFAULT_OWNER_EMAIL });
+  const legacyOwner = await Admin.findOne({ email: LEGACY_OWNER_EMAIL });
+  if (legacyOwner && !defaultOwner) {
+    legacyOwner.email = DEFAULT_OWNER_EMAIL;
+    legacyOwner.role = 'owner';
+    legacyOwner.active = true;
+    await legacyOwner.save();
+    console.log('Default owner email migrated');
+  }
+  const envAdminEmail = String(process.env.ADMIN_EMAIL || '').toLowerCase().trim();
+  const bootstrapEmails = [...new Set([DEFAULT_OWNER_EMAIL, envAdminEmail].map(email => String(email || '').toLowerCase().trim()).filter(Boolean))];
   for (const bootstrapEmail of bootstrapEmails) {
     const existing = await Admin.findOne({ email: bootstrapEmail });
     if (existing) {
       if (existing.role !== 'owner' || existing.active === false) {
         existing.role = 'owner'; existing.active = true; await existing.save();
       }
-    } else if (process.env.ADMIN_PASSWORD && bootstrapEmail === String(process.env.ADMIN_EMAIL || '').toLowerCase().trim()) {
+    } else if (process.env.ADMIN_PASSWORD && [DEFAULT_OWNER_EMAIL, envAdminEmail].includes(bootstrapEmail)) {
       await Admin.create({ name: process.env.ADMIN_NAME || 'Admin', email: bootstrapEmail, password: process.env.ADMIN_PASSWORD, role: 'owner', active: true });
       console.log('Bootstrap owner account created');
     }
