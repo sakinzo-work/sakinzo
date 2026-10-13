@@ -1,6 +1,7 @@
 const express = require('express');
 const Admin = require('../models/Admin');
 const requireAuth = require('../middleware/auth');
+const { publicAdmin, sanitizePermissions } = require('../utils/accessControl');
 const router = express.Router();
 const DEFAULT_OWNER_EMAIL = 'alishafaq782@gmail.com';
 
@@ -11,7 +12,7 @@ router.get('/', async (req, res, next) => {
     const canManage = ['owner', 'admin'].includes(req.admin.role);
     const filter = canManage ? {} : { _id: req.admin.id };
     const rows = await Admin.find(filter).select('-password').sort({ createdAt: 1 });
-    res.json(rows);
+    res.json(rows.map(publicAdmin));
   } catch (err) { next(err); }
 });
 
@@ -23,12 +24,27 @@ router.post('/', async (req, res, next) => {
     const position = String(req.body.position || 'Employee').trim();
     const email = String(req.body.email || '').toLowerCase().trim();
     const password = String(req.body.password || '');
+    const profileImage = String(req.body.profileImage || '').trim();
+    const phone = String(req.body.phone || '').trim();
+    const bio = String(req.body.bio || '').trim();
     if (!name || !email || password.length < 8) return res.status(400).json({ message: 'Name, valid email and password of at least 8 characters are required' });
     const role = req.admin.role === 'owner' && req.body.role === 'owner'
       ? 'owner'
       : req.body.role === 'admin' ? 'admin' : 'employee';
-    const admin = await Admin.create({ name, employeeId: employeeId || undefined, position, email, password, role, active: req.body.active !== false });
-    res.status(201).json({ _id: admin._id, name: admin.name, employeeId: admin.employeeId, position: admin.position, email: admin.email, role: admin.role, active: admin.active });
+    const admin = await Admin.create({
+      name,
+      employeeId: employeeId || undefined,
+      position,
+      email,
+      password,
+      role,
+      profileImage,
+      phone,
+      bio,
+      permissions: sanitizePermissions(req.body.permissions),
+      active: req.body.active !== false
+    });
+    res.status(201).json(publicAdmin(admin));
   } catch (err) {
     if (err && err.code === 11000) return res.status(409).json({ message: 'An employee with this email or ID already exists' });
     next(err);
@@ -38,12 +54,15 @@ router.post('/', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     const canManage = ['owner', 'admin'].includes(req.admin.role);
-    if (!canManage && String(req.admin.id) !== req.params.id) return res.status(403).json({ message: 'You can only update your own account' });
+    if (!canManage) return res.status(403).json({ message: 'Profile changes require admin approval' });
     const admin = await Admin.findById(req.params.id);
     if (!admin) return res.status(404).json({ message: 'Admin user not found' });
     const isDefaultOwner = admin.email === DEFAULT_OWNER_EMAIL;
     if (req.body.name !== undefined) admin.name = String(req.body.name).trim();
     if (req.body.email !== undefined && !isDefaultOwner) admin.email = String(req.body.email).toLowerCase().trim();
+    if (req.body.profileImage !== undefined) admin.profileImage = String(req.body.profileImage).trim();
+    if (req.body.phone !== undefined) admin.phone = String(req.body.phone).trim();
+    if (req.body.bio !== undefined) admin.bio = String(req.body.bio).trim();
     if (canManage && req.body.employeeId !== undefined) admin.employeeId = String(req.body.employeeId).trim() || admin.employeeId;
     if (canManage && req.body.position !== undefined) admin.position = String(req.body.position).trim() || 'Employee';
     if (req.body.password) {
@@ -58,10 +77,11 @@ router.put('/:id', async (req, res, next) => {
           : req.body.role === 'admin' ? 'admin' : 'employee';
       }
       if (req.body.active !== undefined) admin.active = isDefaultOwner ? true : req.body.active !== false;
+      if (req.body.permissions !== undefined) admin.permissions = sanitizePermissions(req.body.permissions);
     }
     if (isDefaultOwner) { admin.role = 'owner'; admin.active = true; }
     await admin.save();
-    res.json({ _id: admin._id, name: admin.name, employeeId: admin.employeeId, position: admin.position, email: admin.email, role: admin.role, active: admin.active });
+    res.json(publicAdmin(admin));
   } catch (err) {
     if (err && err.code === 11000) return res.status(409).json({ message: 'An employee with this email or ID already exists' });
     next(err);

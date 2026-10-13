@@ -2,6 +2,7 @@ const express = require('express');
 const ContactPageSetting = require('../models/ContactPageSetting');
 const requireAuth = require('../middleware/auth');
 const requireAdmin = require('../middleware/auth').requireAdmin;
+const { requireResourceRead } = require('../utils/accessControl');
 const router = express.Router();
 
 const defaults = {
@@ -28,7 +29,7 @@ const getSettings = async () => {
   return { ...defaults, ...(doc || {}) };
 };
 
-router.get('/', requireAuth, requireAdmin, async (req, res, next) => {
+router.get('/', requireAuth, requireResourceRead('contactPage'), async (req, res, next) => {
   try { res.json(await getSettings()); } catch (err) { next(err); }
 });
 

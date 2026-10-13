@@ -7,6 +7,10 @@ const AdminSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, lowercase: true, trim: true },
   password: { type: String, required: true, minlength: 8 },
   role: { type: String, enum: ['owner', 'admin', 'employee'], default: 'employee' },
+  profileImage: { type: String, default: '' },
+  phone: { type: String, default: '', trim: true },
+  bio: { type: String, default: '', trim: true, maxlength: 1000 },
+  permissions: [{ type: String, trim: true }],
   active: { type: Boolean, default: true }
 }, { timestamps: true });
 AdminSchema.pre('validate', function(next) {

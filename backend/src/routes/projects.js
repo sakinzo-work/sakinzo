@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Project = require('../models/Project');
 const requireAuth = require('../middleware/auth');
 const requireAdmin = require('../middleware/auth').requireAdmin;
+const { requireResourceRead } = require('../utils/accessControl');
 
 const router = express.Router();
 const writableFields = [
@@ -49,7 +50,7 @@ router.get('/', async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-router.get('/admin/all', requireAuth, requireAdmin, async (req, res, next) => {
+router.get('/admin/all', requireAuth, requireResourceRead('projects'), async (req, res, next) => {
   try {
     res.set('Cache-Control', 'no-store');
     res.json(await Project.find().sort({ order: 1, createdAt: -1 }).lean());

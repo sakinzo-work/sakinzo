@@ -1,0 +1,81 @@
+const PERMISSION_KEYS = [
+  'dashboard',
+  'projects',
+  'blogs',
+  'insights',
+  'clients',
+  'team',
+  'testimonials',
+  'contactPage',
+  'stats',
+  'mapLocations',
+  'whatWeDoServices',
+  'sections'
+];
+
+const RESOURCE_PERMISSIONS = {
+  projects: 'projects',
+  blogs: 'blogs',
+  insights: 'insights',
+  clients: 'clients',
+  team: 'team',
+  testimonials: 'testimonials',
+  stats: 'stats',
+  mapLocations: 'mapLocations',
+  contactOffices: 'contactPage',
+  contactPage: 'contactPage',
+  submissions: 'contactPage',
+  whatWeDoServices: 'whatWeDoServices',
+  sections: 'sections',
+  admins: 'profile'
+};
+
+function sanitizePermissions(value) {
+  const values = Array.isArray(value) ? value : String(value || '').split(',');
+  return [...new Set(values.map(item => String(item || '').trim()).filter(key => PERMISSION_KEYS.includes(key)))];
+}
+
+function hasFullAccess(admin) {
+  return ['owner', 'admin'].includes(admin?.role);
+}
+
+function hasPermission(admin, resource) {
+  if (hasFullAccess(admin)) return true;
+  const key = RESOURCE_PERMISSIONS[resource] || resource;
+  return key === 'profile' || (admin?.permissions || []).includes(key);
+}
+
+function requireResourceRead(resource) {
+  return (req, res, next) => {
+    if (hasPermission(req.admin, resource)) return next();
+    return res.status(403).json({ message: 'You do not have access to this section' });
+  };
+}
+
+function publicAdmin(admin) {
+  if (!admin) return null;
+  return {
+    id: String(admin._id || admin.id),
+    _id: String(admin._id || admin.id),
+    name: admin.name,
+    employeeId: admin.employeeId,
+    position: admin.position,
+    email: admin.email,
+    role: admin.role || 'employee',
+    active: admin.active !== false,
+    profileImage: admin.profileImage || '',
+    phone: admin.phone || '',
+    bio: admin.bio || '',
+    permissions: sanitizePermissions(admin.permissions)
+  };
+}
+
+module.exports = {
+  PERMISSION_KEYS,
+  RESOURCE_PERMISSIONS,
+  sanitizePermissions,
+  hasFullAccess,
+  hasPermission,
+  requireResourceRead,
+  publicAdmin
+};

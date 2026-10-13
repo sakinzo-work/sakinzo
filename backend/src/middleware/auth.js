@@ -1,14 +1,15 @@
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin');
+const { publicAdmin } = require('../utils/accessControl');
 async function requireAuth(req, res, next) {
   const header = req.headers.authorization || '';
   const token = header.startsWith('Bearer ') ? header.slice(7) : null;
   if (!token) return res.status(401).json({ message: 'Login required' });
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    const admin = await Admin.findById(payload.id).select('_id name email employeeId position role active');
+    const admin = await Admin.findById(payload.id).select('_id name email employeeId position role active profileImage phone bio permissions');
     if (!admin || admin.active === false) return res.status(401).json({ message: 'Admin access is disabled' });
-    req.admin = { id: String(admin._id), name: admin.name, email: admin.email, employeeId: admin.employeeId, position: admin.position, role: admin.role || 'employee' };
+    req.admin = publicAdmin(admin);
     next();
   } catch (err) {
     return res.status(401).json({ message: 'Invalid or expired token' });

@@ -4,6 +4,7 @@ const path = require('path');
 const Submission = require('../models/Submission');
 const requireAuth = require('../middleware/auth');
 const requireAdmin = require('../middleware/auth').requireAdmin;
+const { requireResourceRead } = require('../utils/accessControl');
 const router = express.Router();
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, path.join(__dirname, '../../uploads')),
@@ -22,7 +23,7 @@ router.post('/', upload.single('attachment'), async (req, res, next) => {
     res.status(201).json({ ok: true, submission: doc });
   } catch (err) { next(err); }
 });
-router.get('/', requireAuth, requireAdmin, async (req, res, next) => {
+router.get('/', requireAuth, requireResourceRead('submissions'), async (req, res, next) => {
   try { res.json(await Submission.find().sort({ createdAt: -1 })); } catch (err) { next(err); }
 });
 router.put('/:id', requireAuth, requireAdmin, async (req, res, next) => {

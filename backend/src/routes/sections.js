@@ -2,10 +2,11 @@ const express = require('express');
 const Section = require('../models/Section');
 const requireAuth = require('../middleware/auth');
 const requireAdmin = require('../middleware/auth').requireAdmin;
+const { requireResourceRead } = require('../utils/accessControl');
 const router = express.Router();
 const keys = ['hero','why','clients','whatwedo','projects','services','cases','map','feedback','insights'];
 
-router.get('/', requireAuth, requireAdmin, async (req, res, next) => {
+router.get('/', requireAuth, requireResourceRead('sections'), async (req, res, next) => {
   try { res.json(await Section.find().sort({ key: 1 })); } catch (err) { next(err); }
 });
 router.put('/:key', requireAuth, requireAdmin, async (req, res, next) => {

@@ -1,10 +1,12 @@
 const express = require('express');
 const requireAuth = require('../middleware/auth');
 const requireAdmin = require('../middleware/auth').requireAdmin;
+const { requireResourceRead } = require('./accessControl');
 
 module.exports = function crudRouter(Model, options = {}) {
   const router = express.Router();
   const publicList = options.publicList !== false;
+  const resource = options.resource || Model.modelName;
 
   if (publicList) {
     router.get('/', async (req, res, next) => {
@@ -21,7 +23,7 @@ module.exports = function crudRouter(Model, options = {}) {
     });
   }
 
-  router.get('/admin/all', requireAuth, requireAdmin, async (req, res, next) => {
+  router.get('/admin/all', requireAuth, requireResourceRead(resource), async (req, res, next) => {
     try { res.json(await Model.find().sort({ order: 1, createdAt: -1 })); }
     catch (err) { next(err); }
   });

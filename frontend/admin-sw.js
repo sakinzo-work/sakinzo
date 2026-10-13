@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sakinzo-admin-shell-v2';
+const CACHE_NAME = 'sakinzo-admin-shell-v3';
 const APP_SHELL = [
   './admin.html',
   './admin.webmanifest',
