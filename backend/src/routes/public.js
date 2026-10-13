@@ -27,7 +27,7 @@ router.get('/site-data', async (req, res, next) => {
       getContactPageSettings(),
       WhatWeDoService.find().select('key enabled').lean(),
       Insight.find({ visible: { $ne: false } }).select('title desc category author image articleUrl publishedAt rating readTime order').sort({ order: 1, publishedAt: -1 }).lean(),
-      Blog.find({ visible: { $ne: false } }).select('title slug excerpt body category author coverImage tags publishedAt readTime order').sort({ order: 1, publishedAt: -1 }).lean()
+      Blog.find({ visible: { $ne: false } }).select('title slug excerpt category author coverImage tags publishedAt readTime order').sort({ order: 1, publishedAt: -1 }).lean()
     ]);
     const sections = {};
     sectionRows.forEach(s => { sections[s.key] = s.enabled; });

@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - Sakinzo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://sakinzo.onrender.com">
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <style>
@@ -2481,12 +2484,24 @@
 
         // ── Site data cache: fetched once, used by both Team and Offices ──
         let SITE_DATA = null;
+        let SITE_DATA_PROMISE = null;
         async function getSiteData() {
             if (SITE_DATA) return SITE_DATA;
-            const res = await fetch(`${API_BASE}/public/site-data`);
-            if (!res.ok) throw new Error('API unavailable');
-            SITE_DATA = await res.json();
-            return SITE_DATA;
+            if (SITE_DATA_PROMISE) return SITE_DATA_PROMISE;
+            SITE_DATA_PROMISE = fetch(`${API_BASE}/public/site-data`)
+                .then(res => {
+                    if (!res.ok) throw new Error('API unavailable');
+                    return res.json();
+                })
+                .then(data => {
+                    SITE_DATA = data;
+                    return data;
+                })
+                .catch(err => {
+                    SITE_DATA_PROMISE = null;
+                    throw err;
+                });
+            return SITE_DATA_PROMISE;
         }
 
         const setText = (id, value) => {

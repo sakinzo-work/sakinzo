@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sakinzo - Developing Solutions That Transform Business</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://sakinzo.onrender.com">
+    <link rel="preload" as="image" href="assets/sakinzo-hero-desktop-waves.webp" type="image/webp" media="(min-width: 601px)" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/sakinzo-hero-mobile.webp" type="image/webp" media="(max-width: 600px)" fetchpriority="high">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <style>
@@ -510,7 +515,15 @@
             height: 100vh;
             height: 100svh;
             min-height: 100svh;
-            background: #030b19 url("assets/sakinzo-hero-desktop-waves.png") center bottom / cover no-repeat;
+            background-color: #030b19;
+            background-image: url("assets/sakinzo-hero-desktop-waves.png");
+            background-image: image-set(
+                url("assets/sakinzo-hero-desktop-waves.webp") type("image/webp"),
+                url("assets/sakinzo-hero-desktop-waves.png") type("image/png")
+            );
+            background-position: center bottom;
+            background-size: cover;
+            background-repeat: no-repeat;
             padding-top: 68px
         }
 
@@ -1996,6 +2009,10 @@
                 min-height: 100svh;
                 height: max(100svh, calc(100vw * 1672 / 941));
                 background-image: url("assets/sakinzo-hero-mobile.png");
+                background-image: image-set(
+                    url("assets/sakinzo-hero-mobile.webp") type("image/webp"),
+                    url("assets/sakinzo-hero-mobile.png") type("image/png")
+                );
                 background-size: cover;
                 background-position: center top;
                 padding-top: 68px
@@ -2754,8 +2771,6 @@
             .why-sec .stat-lbl { font-size:12px }
         }
     </style>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
     <link rel="manifest" href="site.webmanifest">
@@ -4060,14 +4075,43 @@
         // ── ADMIN DATA DEFAULTS (same as admin.html) ──────────────────
         const API_BASE = window.API_BASE || 'https://sakinzo.onrender.com/api';
         let WLDATA = { projects: [], insights: [], clients: [], team: [], testimonials: [], stats: [], sections: {}, mapLocations: [], whatWeDoServices: {} };
-        const SITE_DATA_CACHE_KEY = 'sakinzo-site-data-v5';
+        const SITE_DATA_CACHE_KEY = 'sakinzo-site-data-v6';
         let feedbacks = [];
         let feedbackTimer;
         let clientsMapInstance;
+        let clientsMapObserver;
+        let leafletReadyPromise;
         let fi = 0;
+        const LEAFLET_CSS_URL = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        const LEAFLET_JS_URL = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
         const escapeHtml = (value = '') => String(value).replace(/[&<>"]/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[s]));
         const fullUrl = (url = '') => url && url.startsWith('/uploads/') ? API_BASE.replace('/api','') + url : url;
         const safeHttpUrl = value => { try { const url=new URL(value); return ['http:','https:'].includes(url.protocol)?url.href:''; } catch { return ''; } };
+
+        function loadLeaflet() {
+            if (window.L) return Promise.resolve();
+            if (leafletReadyPromise) return leafletReadyPromise;
+            leafletReadyPromise = new Promise((resolve, reject) => {
+                if (!document.querySelector(`link[href="${LEAFLET_CSS_URL}"]`)) {
+                    const link = document.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.href = LEAFLET_CSS_URL;
+                    link.crossOrigin = '';
+                    document.head.appendChild(link);
+                }
+                const script = document.createElement('script');
+                script.src = LEAFLET_JS_URL;
+                script.async = true;
+                script.crossOrigin = '';
+                script.onload = () => resolve();
+                script.onerror = () => {
+                    leafletReadyPromise = null;
+                    reject(new Error('Map unavailable'));
+                };
+                document.head.appendChild(script);
+            });
+            return leafletReadyPromise;
+        }
 
         // ── PROJECTS: render + "View All Projects" load-more ──────────
         let ALL_PROJECTS = [];
@@ -4264,7 +4308,49 @@
         function fbNext() { if (!feedbacks.length) return; fi = (fi + 1) % feedbacks.length; renderFb(); }
         function fbPrev() { if (!feedbacks.length) return; fi = (fi - 1 + feedbacks.length) % feedbacks.length; renderFb(); }
         window.fbNext = fbNext; window.fbPrev = fbPrev;
-        function renderClientsMap() { const el = document.getElementById('clientsMap'); const empty = document.getElementById('mapEmpty'); if (!el || typeof L === 'undefined') return; if(clientsMapInstance){clientsMapInstance.remove();clientsMapInstance=null;} const points = (WLDATA.mapLocations || []).filter(m => m.visible !== false && Number.isFinite(Number(m.lat)) && Number.isFinite(Number(m.lng))); if (!points.length) { if (empty) empty.style.display = 'block'; return; } if (empty) empty.style.display = 'none'; clientsMapInstance = L.map('clientsMap', { scrollWheelZoom:false }).setView([20,0],2); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution:'&copy; OpenStreetMap contributors' }).addTo(clientsMapInstance); const bounds=[]; points.forEach(p=>{ const marker=L.marker([Number(p.lat),Number(p.lng)]).addTo(clientsMapInstance); marker.bindPopup(`<strong>${escapeHtml(p.name)}</strong><br>${escapeHtml([p.city,p.country].filter(Boolean).join(', '))}<br>${Number(p.clientsCount || 1)} client(s)`); bounds.push([Number(p.lat), Number(p.lng)]); }); if(bounds.length>1) clientsMapInstance.fitBounds(bounds,{padding:[40,40]}); else clientsMapInstance.setView(bounds[0],5); }
+        function mapPoints() {
+            return (WLDATA.mapLocations || []).filter(m => m.visible !== false && Number.isFinite(Number(m.lat)) && Number.isFinite(Number(m.lng)));
+        }
+        async function paintClientsMap() {
+            const el = document.getElementById('clientsMap');
+            const empty = document.getElementById('mapEmpty');
+            if (!el) return;
+            const points = mapPoints();
+            if (!points.length) { if (empty) empty.style.display = 'block'; return; }
+            if (empty) empty.style.display = 'none';
+            await loadLeaflet();
+            if (clientsMapInstance) { clientsMapInstance.remove(); clientsMapInstance = null; }
+            clientsMapInstance = L.map('clientsMap', { scrollWheelZoom:false }).setView([20,0],2);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution:'&copy; OpenStreetMap contributors' }).addTo(clientsMapInstance);
+            const bounds=[];
+            points.forEach(p=>{
+                const marker=L.marker([Number(p.lat),Number(p.lng)]).addTo(clientsMapInstance);
+                marker.bindPopup(`<strong>${escapeHtml(p.name)}</strong><br>${escapeHtml([p.city,p.country].filter(Boolean).join(', '))}<br>${Number(p.clientsCount || 1)} client(s)`);
+                bounds.push([Number(p.lat), Number(p.lng)]);
+            });
+            if(bounds.length>1) clientsMapInstance.fitBounds(bounds,{padding:[40,40]}); else clientsMapInstance.setView(bounds[0],5);
+        }
+        function renderClientsMap() {
+            const el = document.getElementById('clientsMap');
+            const empty = document.getElementById('mapEmpty');
+            if (!el) return;
+            const points = mapPoints();
+            if (!points.length) { if (empty) empty.style.display = 'block'; return; }
+            if (empty) empty.style.display = 'none';
+            if (clientsMapInstance) { paintClientsMap().catch(error => console.warn(error.message)); return; }
+            if (clientsMapObserver) clientsMapObserver.disconnect();
+            if ('IntersectionObserver' in window) {
+                clientsMapObserver = new IntersectionObserver(entries => {
+                    if (!entries.some(entry => entry.isIntersecting)) return;
+                    clientsMapObserver.disconnect();
+                    clientsMapObserver = null;
+                    paintClientsMap().catch(error => console.warn(error.message));
+                }, { rootMargin: '250px 0px' });
+                clientsMapObserver.observe(el);
+            } else {
+                paintClientsMap().catch(error => console.warn(error.message));
+            }
+        }
         function setupIndexContactForm() {
             const form = document.getElementById('indexContactForm');
             if (!form || form.dataset.ready) return;
@@ -4310,7 +4396,7 @@
         async function loadSiteData() {
             try { const cached=JSON.parse(localStorage.getItem(SITE_DATA_CACHE_KEY)||'null'); if(cached?.data){WLDATA=cached.data;renderSiteData();} } catch { try { localStorage.removeItem(SITE_DATA_CACHE_KEY); } catch {} }
             setupPageInteractions();
-            try { const res = await fetch(`${API_BASE}/public/site-data`, { cache: 'no-store' }); if (!res.ok) throw new Error('API unavailable'); WLDATA = await res.json(); try { localStorage.setItem(SITE_DATA_CACHE_KEY,JSON.stringify({data:WLDATA,savedAt:Date.now()})); } catch {} renderSiteData(); }
+            try { const res = await fetch(`${API_BASE}/public/site-data`); if (!res.ok) throw new Error('API unavailable'); WLDATA = await res.json(); try { localStorage.setItem(SITE_DATA_CACHE_KEY,JSON.stringify({data:WLDATA,savedAt:Date.now()})); } catch {} renderSiteData(); }
             catch (error) { console.warn('Unable to load API data:', error.message); }
         }
         function setupPageInteractions() { const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } }); }, { threshold:.08 }); document.querySelectorAll('.reveal').forEach(el => obs.observe(el)); document.querySelectorAll('a[href="#contact"]').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); document.getElementById('contact').scrollIntoView({ behavior:'smooth' }); }); }); setupIndexContactForm(); }
