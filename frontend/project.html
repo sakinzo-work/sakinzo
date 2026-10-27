@@ -24,8 +24,8 @@
     .preview-mode:focus-visible,.preview-open:focus-visible{outline:3px solid #1673ff;outline-offset:3px}
     .preview-device-label{font-size:12px;font-weight:700;color:#7a8799}
     .preview-stage{padding:32px 24px;border:1px solid #d9e3f2;border-radius:0 0 20px 20px;background:radial-gradient(ellipse at 50% 30%,#fff 0,#eaf0f9 75%);overflow:hidden}
-    .preview-viewport{display:flex;justify-content:center;width:100%;min-width:0}
-    .preview-device{--preview-screen-width:390px;--preview-screen-height:780px;flex:none;width:calc(var(--preview-screen-width) + 24px);padding:10px;border:2px solid #334155;border-radius:44px;background:#0c1424;box-shadow:0 28px 60px #0d1b2e24,0 0 0 1px #0d1b2e18;transform:scale(var(--preview-scale,1));transform-origin:top center}
+    .preview-viewport{display:flex;align-items:flex-start;justify-content:center;width:100%;min-width:0}
+    .preview-device{--preview-screen-width:390px;--preview-screen-height:780px;flex:none;align-self:flex-start;width:calc(var(--preview-screen-width) + 24px);height:max-content;padding:10px;border:2px solid #334155;border-radius:44px;background:#0c1424;box-shadow:0 28px 60px #0d1b2e24,0 0 0 1px #0d1b2e18;transform:scale(var(--preview-scale,1));transform-origin:top center}
     .preview-device-bar{height:26px;display:flex;align-items:center;justify-content:center;gap:12px}
     .preview-camera{width:66px;height:7px;border-radius:99px;background:#273449}.preview-camera:after{content:'';display:block;width:7px;height:7px;margin-left:80px;border-radius:50%;background:#273449}
     .preview-address,.preview-traffic{display:none}
@@ -102,8 +102,10 @@
     function resizeLivePreview(){
       const root=document.getElementById('livePreview');if(!root?.querySelector)return;
       const viewport=root.querySelector('.preview-viewport'),device=root.querySelector('.preview-device');
-      if(!viewport||!device||!viewport.clientWidth||!device.offsetWidth)return;
-      const scale=Math.min(1,viewport.clientWidth/device.offsetWidth);
+      if(!viewport||!device||!viewport.clientWidth||!device.offsetWidth||!device.offsetHeight)return;
+      // The frame keeps its intrinsic size; only its rendered footprint is scaled.
+      const availableHeight=Math.max(280,(window.visualViewport?.height||window.innerHeight||1000)-180);
+      const scale=Math.min(1,viewport.clientWidth/device.offsetWidth,availableHeight/device.offsetHeight);
       device.style.setProperty('--preview-scale',String(scale));
       viewport.style.height=`${Math.ceil(device.offsetHeight*scale)}px`;
     }
@@ -120,10 +122,15 @@
       const root=document.getElementById('livePreview');if(!root?.querySelector)return;
       root.querySelectorAll('.preview-mode').forEach(button=>button.addEventListener('click',()=>setLivePreviewDevice(button.dataset.previewDevice)));
       if(typeof ResizeObserver!=='undefined'){
-        previewResizeObserver=new ResizeObserver(resizeLivePreview);
+        let observedWidth=-1;
+        previewResizeObserver=new ResizeObserver(entries=>{
+          const width=entries[0]?.contentRect.width;
+          if(width!==observedWidth){observedWidth=width;resizeLivePreview();}
+        });
         previewResizeObserver.observe(root.querySelector('.preview-viewport'));
       }
       window.addEventListener('resize',resizeLivePreview);
+      window.visualViewport?.addEventListener('resize',resizeLivePreview);
       resizeLivePreview();
     }
     function setCoverSlide(index){const slides=[...document.querySelectorAll('.cover-slide')],dots=[...document.querySelectorAll('.cover-dot')];if(!slides.length)return;const next=((index%slides.length)+slides.length)%slides.length;slides.forEach((slide,i)=>slide.classList.toggle('active',i===next));dots.forEach((dot,i)=>dot.classList.toggle('active',i===next));window.coverSlideIndex=next;}

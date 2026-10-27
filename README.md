@@ -126,6 +126,18 @@ App Store, Google Play and APK/IPA download links show an external **Open app**
 button. Interactive previews require a web URL that permits iframe embedding;
 the Open app button is also available for sites that block embedding.
 
+Preview layout regression checks use an isolated, headless Chrome session:
+
+```bash
+cd backend
+npm run test:layout
+```
+
+Install Google Chrome before running this check. It verifies all three device
+views at desktop, tablet and mobile window sizes, including repeated resize
+observer callbacks and switching devices without reloading the app. Screenshots
+are written to the system temporary folder under `sakinzo-preview-layout`.
+
 ## Map
 
 The home page uses Leaflet + OpenStreetMap. No paid map API key is required. Add real map locations in admin panel with latitude and longitude.
