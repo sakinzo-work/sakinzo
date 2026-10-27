@@ -113,6 +113,19 @@ depend on the backend server's local disk. Video uploads require an admin login;
 saved videos are public so visitors can watch them. Deploy the updated backend
 and frontend together to enable video uploads.
 
+### Live app previews
+
+In **Projects → Add / Edit → Publishing**, add a public web app or dashboard URL
+and choose **Live preview device**: Auto, Phone, Tablet or Desktop. Auto uses a
+phone frame for Android, iOS and mobile app projects, including existing projects,
+and a desktop browser for other categories. Choose Phone to display any web app
+as a mobile app. Visitors can switch device views without reloading the embedded
+app. The preview scales to fit the page while retaining the selected app viewport.
+
+App Store, Google Play and APK/IPA download links show an external **Open app**
+button. Interactive previews require a web URL that permits iframe embedding;
+the Open app button is also available for sites that block embedding.
+
 ## Map
 
 The home page uses Leaflet + OpenStreetMap. No paid map API key is required. Add real map locations in admin panel with latitude and longitude.

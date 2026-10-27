@@ -8,7 +8,7 @@ const { requireResourceRead } = require('../utils/accessControl');
 const router = express.Router();
 const writableFields = [
   'title', 'category', 'desc', 'img', 'images', 'modelImage', 'videoUrl',
-  'demoUrl', 'creatorName', 'creatorPortfolio', 'tags', 'order', 'visible'
+  'demoUrl', 'previewDevice', 'creatorName', 'creatorPortfolio', 'tags', 'order', 'visible'
 ];
 
 function cleanList(value) {

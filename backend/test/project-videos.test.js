@@ -133,4 +133,13 @@ test('project video is optional outside IoT and validates URLs in every category
     assert.match(invalid.validateSync().errors.videoUrl.message, /Project video/);
   }
 });
+
+test('project preview device defaults to auto and accepts only supported views', () => {
+  const fields = { title: 'Demo', category: 'Web Development', creatorName: 'Creator', creatorPortfolio: 'https://example.com' };
+  assert.equal(new Project(fields).previewDevice, 'auto');
+  for (const previewDevice of ['auto', 'phone', 'tablet', 'desktop']) {
+    assert.equal(new Project({ ...fields, previewDevice }).validateSync(), undefined);
+  }
+  assert.ok(new Project({ ...fields, previewDevice: 'unknown' }).validateSync().errors.previewDevice);
+});
 });

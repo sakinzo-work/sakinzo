@@ -28,6 +28,7 @@ const projectSchema = new mongoose.Schema({
     }
   },
   demoUrl: { type: String, default: '' },
+  previewDevice: { type: String, enum: ['auto', 'phone', 'tablet', 'desktop'], default: 'auto' },
   creatorName: { type: String, required: [true, 'Creator name is required'], trim: true },
   creatorPortfolio: {
     type: String,

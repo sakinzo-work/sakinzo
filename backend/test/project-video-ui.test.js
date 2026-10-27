@@ -27,7 +27,7 @@ function adminPage() {
     return elements.get(id);
   };
   const form = element('modalForm');
-  form.values = { _id: '', title: 'Demo', category: 'Web Development', img: '', modelImage: '', images: '', tags: '', creatorName: 'Creator', creatorPortfolio: 'https://example.com', visible: 'true', order: '0' };
+  form.values = { _id: '', title: 'Demo', category: 'Web Development', previewDevice: 'auto', img: '', modelImage: '', images: '', tags: '', creatorName: 'Creator', creatorPortfolio: 'https://example.com', visible: 'true', order: '0' };
   form.querySelector = selector => selector.includes('button') ? element('submit') : selector === '#upload-project-video' ? element('upload-project-video') : element(selector.match(/name="([^"]+)"/)?.[1] || selector);
   element('category').value = form.values.category;
   class FormDataForPage extends FormData {
@@ -178,4 +178,102 @@ test('hosted videos embed YouTube and Vimeo and unsafe or empty links create no 
   assert.match(context.videoPlayer('https://vimeo.com/123456', 'Demo'), /https:\/\/player.vimeo.com\/video\/123456/);
   assert.equal(context.videoPlayer('', 'Demo'), '');
   assert.equal(context.videoPlayer('javascript:alert(1)', 'Demo'), '');
+});
+
+test('dashboard retains and saves the chosen live preview device', async () => {
+  for (const device of ['auto', 'phone', 'tablet', 'desktop']) {
+    const page = adminPage();
+    const html = page.context.projectForm({ previewDevice: device });
+    assert.match(html, new RegExp(`<option value="${device}" selected>`));
+    page.form.values.previewDevice = device;
+    await page.submit();
+    assert.deepEqual(page.alerts, []);
+    assert.equal(JSON.parse(page.requests[0].options.body).previewDevice, device);
+  }
+  const page = adminPage();
+  vm.runInContext("currentAdmin={role:'employee'};", page.context);
+  page.form.values.previewDevice = 'phone';
+  await page.submit();
+  assert.equal(JSON.parse(page.requests[0].options.body).payload.previewDevice, 'phone');
+});
+
+test('existing mobile projects automatically use a phone and web dashboards use desktop', async () => {
+  for (const [category, expected] of [['Android App', 'phone'], ['iOS App', 'phone'], ['Mobile Development', 'phone'], ['App Development', 'phone'], ['Web Development', 'desktop'], ['IoT', 'desktop']]) {
+    const { html } = await publicProject({ title: 'Demo', category, demoUrl: 'https://app.example.com/dashboard' });
+    assert.match(html, new RegExp(`id="livePreviewDevice" data-device="${expected}"`));
+    assert.match(html, /src="https:\/\/app.example.com\/dashboard"/);
+    assert.match(html, /aria-label="Preview device"/);
+    assert.match(html, /Open app/);
+  }
+});
+
+test('dashboard reports when an older backend does not retain the preview setting', async () => {
+  const page = adminPage();
+  page.form.values.previewDevice = 'phone';
+  page.context.captureSave = (url, options) => {
+    const saved = JSON.parse(options.body);
+    delete saved.previewDevice;
+    return saved;
+  };
+  await page.submit();
+  assert.match(page.alerts[0], /Preview device was not saved/);
+  assert.equal(page.element('submit').disabled, false);
+});
+
+test('a project can override its category with phone, tablet or desktop preview', async () => {
+  for (const device of ['phone', 'tablet', 'desktop']) {
+    const { html } = await publicProject({ title: 'Demo', category: 'Android App', previewDevice: device, demoUrl: 'https://app.example.com' });
+    assert.match(html, new RegExp(`id="livePreviewDevice" data-device="${device}"`));
+    assert.match(html, new RegExp(`data-preview-device="${device}" aria-pressed="true"`));
+  }
+});
+
+test('native app links open externally and empty or unsafe links do not create a preview', async () => {
+  for (const demoUrl of ['https://play.google.com/store/apps/details?id=demo', 'https://apps.apple.com/app/id123', 'https://example.com/app.apk?download=1']) {
+    const { html } = await publicProject({ title: 'Demo', demoUrl });
+    assert.match(html, /Try the app/);
+    assert.match(html, /rel="noopener noreferrer"/);
+    assert.doesNotMatch(html, /class="preview-frame"/);
+  }
+  for (const demoUrl of ['', 'javascript:alert(1)']) {
+    const { html } = await publicProject({ title: 'Demo', demoUrl });
+    assert.doesNotMatch(html, /id="livePreview"|class="preview-frame"/);
+  }
+});
+
+test('device switching keeps the app loaded and scales each viewport to fit small screens', async () => {
+  const { context } = await publicProject({ title: 'Demo' });
+  const properties = {}, viewport = { clientWidth: 1180, style: {} }, label = {};
+  const sizes = { phone: [414, 848], tablet: [792, 1092], desktop: [1298, 854] };
+  const device = {
+    dataset: { device: 'phone' }, style: { setProperty: (name, value) => { properties[name] = Number(value); } },
+    get offsetWidth() { return sizes[this.dataset.device][0]; },
+    get offsetHeight() { return sizes[this.dataset.device][1]; }
+  };
+  const iframe = { src: 'https://app.example.com', loaded: true };
+  const buttons = ['phone', 'tablet', 'desktop'].map(value => ({
+    dataset: { previewDevice: value }, attributes: {},
+    setAttribute(name, next) { this.attributes[name] = next; },
+    addEventListener(name, handler) { this[name] = handler; }
+  }));
+  const root = {
+    querySelector: selector => ({ '.preview-viewport': viewport, '.preview-device': device, '#previewDeviceLabel': label, '.preview-frame': iframe }[selector]),
+    querySelectorAll: () => buttons
+  };
+  context.document.getElementById = id => id === 'livePreview' ? root : null;
+  context.addEventListener = () => {};
+  context.setupLivePreview();
+  for (const width of [280, 360, 768, 1180]) {
+    viewport.clientWidth = width;
+    for (const button of buttons) {
+      button.click();
+      const scale = properties['--preview-scale'];
+      assert.ok(scale > 0 && scale <= 1);
+      assert.ok(device.offsetWidth * scale <= width + 0.01);
+      assert.equal(viewport.style.height, `${Math.ceil(device.offsetHeight * scale)}px`);
+      assert.equal(button.attributes['aria-pressed'], 'true');
+      assert.equal(root.querySelector('.preview-frame'), iframe);
+      assert.equal(iframe.src, 'https://app.example.com');
+    }
+  }
 });

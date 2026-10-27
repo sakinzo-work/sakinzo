@@ -11,6 +11,37 @@
   <style>
     .iot-showcase{padding:48px 0 90px}.iot-showcase h2{font-size:30px;margin:0 0 10px}.iot-showcase p{color:#68758a;margin:0 0 24px}.iot-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:24px;align-items:stretch}.model-photo,.project-video{width:100%;height:100%;min-height:360px;border-radius:22px;background:#071426;box-shadow:0 20px 60px rgba(13,27,46,.12)}.iot-grid.single-media{grid-template-columns:minmax(0,1fr)}.model-photo{object-fit:cover}.project-video{display:block;border:0;object-fit:contain;aspect-ratio:16/9}@media(max-width:760px){.iot-grid{grid-template-columns:1fr}.model-photo,.project-video{min-height:240px;aspect-ratio:16/10}}
   </style>
+  <style>
+    .preview-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:22px}
+    .preview-heading h2{margin:0 0 10px}.preview-heading p{margin:0}
+    .preview-open{display:inline-flex;align-items:center;justify-content:center;gap:8px;flex:none;padding:12px 18px;border:1px solid #cddcf2;border-radius:12px;background:#fff;color:#165fce;font-size:14px;font-weight:750}
+    .preview-open:hover{background:#e7efff}.preview-open svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}
+    .preview-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 20px;border:1px solid #d9e3f2;border-bottom:0;border-radius:20px 20px 0 0;background:#fff}
+    .preview-modes{display:flex;gap:4px;padding:4px;border-radius:12px;background:#eef3fa}
+    .preview-mode{display:flex;align-items:center;gap:7px;padding:9px 13px;border:0;border-radius:9px;background:transparent;color:#64748b;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+    .preview-mode svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7}
+    .preview-mode[aria-pressed="true"]{background:#fff;color:#165fce;box-shadow:0 2px 7px #0d1b2e12}
+    .preview-mode:focus-visible,.preview-open:focus-visible{outline:3px solid #1673ff;outline-offset:3px}
+    .preview-device-label{font-size:12px;font-weight:700;color:#7a8799}
+    .preview-stage{padding:32px 24px;border:1px solid #d9e3f2;border-radius:0 0 20px 20px;background:radial-gradient(ellipse at 50% 30%,#fff 0,#eaf0f9 75%);overflow:hidden}
+    .preview-viewport{display:flex;justify-content:center;width:100%;min-width:0}
+    .preview-device{--preview-screen-width:390px;--preview-screen-height:780px;flex:none;width:calc(var(--preview-screen-width) + 24px);padding:10px;border:2px solid #334155;border-radius:44px;background:#0c1424;box-shadow:0 28px 60px #0d1b2e24,0 0 0 1px #0d1b2e18;transform:scale(var(--preview-scale,1));transform-origin:top center}
+    .preview-device-bar{height:26px;display:flex;align-items:center;justify-content:center;gap:12px}
+    .preview-camera{width:66px;height:7px;border-radius:99px;background:#273449}.preview-camera:after{content:'';display:block;width:7px;height:7px;margin-left:80px;border-radius:50%;background:#273449}
+    .preview-address,.preview-traffic{display:none}
+    .preview-screen{height:var(--preview-screen-height);overflow:hidden;border-radius:28px;background:#fff}
+    .live-preview .preview-frame{display:block;width:100%;height:100%;min-height:0;border:0;border-radius:0;background:#fff;box-shadow:none}
+    .preview-device-bottom{display:flex;align-items:flex-end;justify-content:center;height:18px;padding-bottom:2px}.preview-device-bottom span{width:108px;height:4px;border-radius:99px;background:#d9e3f2}
+    .preview-device[data-device="tablet"]{--preview-screen-width:768px;--preview-screen-height:1024px;border-radius:32px}.preview-device[data-device="tablet"] .preview-screen{border-radius:17px}
+    .preview-device[data-device="desktop"]{--preview-screen-width:1280px;--preview-screen-height:800px;width:calc(var(--preview-screen-width) + 18px);padding:8px;border-width:1px;border-color:#c5d1e2;border-radius:17px;background:#f5f8fd}
+    .preview-device[data-device="desktop"] .preview-device-bar{height:36px;justify-content:flex-start;padding:0 8px 8px}
+    .preview-device[data-device="desktop"] .preview-camera,.preview-device[data-device="desktop"] .preview-device-bottom{display:none}
+    .preview-device[data-device="desktop"] .preview-traffic{display:flex;gap:6px}.preview-traffic i{width:9px;height:9px;border-radius:50%;background:#f87171}.preview-traffic i:nth-child(2){background:#fbbf24}.preview-traffic i:nth-child(3){background:#34d399}
+    .preview-device[data-device="desktop"] .preview-address{display:block;max-width:70%;margin:auto;padding:4px 40px;border-radius:6px;background:#e6edf7;color:#68758a;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .preview-device[data-device="desktop"] .preview-screen{border:1px solid #dde5ef;border-radius:8px}
+    .preview-store{padding:32px;border:1px solid #d9e3f2;border-radius:20px;background:#fff}.preview-store p{margin-bottom:20px;line-height:1.7}
+    @media(max-width:600px){.preview-heading{flex-direction:column;gap:16px}.preview-heading h2{font-size:26px}.preview-toolbar{padding:12px;justify-content:center}.preview-device-label{display:none}.preview-stage{padding:24px 10px}.preview-mode{padding:9px 12px}.preview-store{padding:24px}}
+  </style>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="favicon.svg">
     <link rel="manifest" href="site.webmanifest">
@@ -47,6 +78,54 @@
       return html || `<p>${esc(fallback)}</p>`;
     }
     function videoPlayer(url,title){const safe=safeUrl(fullUrl(url));if(!safe)return '';const u=new URL(safe);let embed='';if(['youtube.com','www.youtube.com','m.youtube.com','youtube-nocookie.com','www.youtube-nocookie.com'].includes(u.hostname)){const id=u.searchParams.get('v')||u.pathname.split('/').filter(Boolean).pop();if(id)embed=`https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}`;}else if(u.hostname==='youtu.be'){const id=u.pathname.split('/').filter(Boolean)[0];if(id)embed=`https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}`;}else if(['vimeo.com','www.vimeo.com','player.vimeo.com'].includes(u.hostname)){const id=u.pathname.split('/').filter(Boolean).pop();if(/^\d+$/.test(id||''))embed=`https://player.vimeo.com/video/${id}`;}return embed?`<iframe class="project-video" src="${esc(embed)}" title="${esc(title)} video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`:`<video class="project-video" controls playsinline preload="metadata" aria-label="${esc(title)} video"><source src="${esc(safe)}">Your browser cannot play this video. <a href="${esc(safe)}" target="_blank" rel="noopener">Open video</a></video>`;}
+    const previewDevices=['phone','tablet','desktop'];
+    function projectPreviewDevice(project){
+      if(previewDevices.includes(project.previewDevice))return project.previewDevice;
+      return /android|\bios\b|mobile|\bapp development\b/i.test(project.category||'')?'phone':'desktop';
+    }
+    function nativeAppLink(url){
+      const parsed=new URL(url);
+      return parsed.hostname==='apps.apple.com'||(parsed.hostname==='play.google.com'&&parsed.pathname.startsWith('/store/'))||/\.(apk|aab|ipa)$/i.test(parsed.pathname);
+    }
+    const openPreviewIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7M21 3 10 14M21 14v7H3V3h7"/></svg>';
+    const previewIcon=device=>({phone:'<rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 18h4"/>',tablet:'<rect x="3" y="2" width="18" height="20" rx="3"/><path d="M10 18h4"/>',desktop:'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 22h8M12 17v5"/>'}[device]);
+    function livePreview(project){
+      const url=safeUrl(project.demoUrl||'');if(!url)return '';
+      const open=`<a class="preview-open" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Open app ${openPreviewIcon}</a>`;
+      const heading=`<div class="preview-heading"><div><h2>Live project preview</h2><p>Explore the working app and choose a device view.</p></div>${open}</div>`;
+      if(nativeAppLink(url))return `<section class="live-preview"><div class="wrap"><div class="preview-store"><h2>Try the app</h2><p>This link opens an app store or an app download. Open it on your device to try the native app.</p>${open}</div></div></section>`;
+      const device=projectPreviewDevice(project);
+      const buttons=previewDevices.map(value=>`<button type="button" class="preview-mode" data-preview-device="${value}" aria-pressed="${value===device}" aria-controls="livePreviewDevice"><svg viewBox="0 0 24 24" aria-hidden="true">${previewIcon(value)}</svg>${value.charAt(0).toUpperCase()+value.slice(1)}</button>`).join('');
+      return `<section class="live-preview" id="livePreview"><div class="wrap">${heading}<div class="preview-toolbar"><div class="preview-modes" role="group" aria-label="Preview device">${buttons}</div><span class="preview-device-label" id="previewDeviceLabel" role="status">${device.charAt(0).toUpperCase()+device.slice(1)} preview</span></div><div class="preview-stage"><div class="preview-viewport"><div class="preview-device" id="livePreviewDevice" data-device="${device}"><div class="preview-device-bar" aria-hidden="true"><span class="preview-camera"></span><span class="preview-traffic"><i></i><i></i><i></i></span><span class="preview-address">${esc(new URL(url).hostname)}</span></div><div class="preview-screen"><iframe class="preview-frame" src="${esc(url)}" title="${esc(project.title||'Project')} live preview" loading="lazy" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts" referrerpolicy="strict-origin-when-cross-origin"></iframe></div><div class="preview-device-bottom" aria-hidden="true"><span></span></div></div></div></div></div></section>`;
+    }
+    let previewResizeObserver=null;
+    function resizeLivePreview(){
+      const root=document.getElementById('livePreview');if(!root?.querySelector)return;
+      const viewport=root.querySelector('.preview-viewport'),device=root.querySelector('.preview-device');
+      if(!viewport||!device||!viewport.clientWidth||!device.offsetWidth)return;
+      const scale=Math.min(1,viewport.clientWidth/device.offsetWidth);
+      device.style.setProperty('--preview-scale',String(scale));
+      viewport.style.height=`${Math.ceil(device.offsetHeight*scale)}px`;
+    }
+    function setLivePreviewDevice(value){
+      if(!previewDevices.includes(value))return;
+      const root=document.getElementById('livePreview');if(!root?.querySelector)return;
+      root.querySelector('.preview-device').dataset.device=value;
+      root.querySelectorAll('.preview-mode').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.previewDevice===value)));
+      const label=root.querySelector('#previewDeviceLabel');if(label)label.textContent=`${value.charAt(0).toUpperCase()+value.slice(1)} preview`;
+      resizeLivePreview();
+    }
+    function setupLivePreview(){
+      previewResizeObserver?.disconnect();
+      const root=document.getElementById('livePreview');if(!root?.querySelector)return;
+      root.querySelectorAll('.preview-mode').forEach(button=>button.addEventListener('click',()=>setLivePreviewDevice(button.dataset.previewDevice)));
+      if(typeof ResizeObserver!=='undefined'){
+        previewResizeObserver=new ResizeObserver(resizeLivePreview);
+        previewResizeObserver.observe(root.querySelector('.preview-viewport'));
+      }
+      window.addEventListener('resize',resizeLivePreview);
+      resizeLivePreview();
+    }
     function setCoverSlide(index){const slides=[...document.querySelectorAll('.cover-slide')],dots=[...document.querySelectorAll('.cover-dot')];if(!slides.length)return;const next=((index%slides.length)+slides.length)%slides.length;slides.forEach((slide,i)=>slide.classList.toggle('active',i===next));dots.forEach((dot,i)=>dot.classList.toggle('active',i===next));window.coverSlideIndex=next;}
     function startCoverCarousel(){const slides=document.querySelectorAll('.cover-slide');if(slides.length<2)return;clearInterval(window.coverSlideTimer);window.coverSlideTimer=setInterval(()=>setCoverSlide((window.coverSlideIndex||0)+1),3000);}
     async function loadProject(){
@@ -63,14 +142,14 @@
         const caseStudy=document.createElement('script');caseStudy.type='application/ld+json';caseStudy.textContent=JSON.stringify({'@context':'https://schema.org','@type':'CreativeWork',name:p.title||'Sakin.zo Project',description:projectDescription,url:location.href,image:p.img?fullUrl(p.img):undefined,creator:p.creatorName?{'@type':'Person',name:p.creatorName,url:safeUrl(p.creatorPortfolio||'')||undefined}:{'@type':'Organization',name:'Sakin.zo'}});document.head.appendChild(caseStudy);
         const images=projectImages(p);
         const cover=images.length?`<div class="wrap"><div class="cover-carousel">${images.map((img,i)=>`<img class="cover-slide ${i===0?'active':''}" src="${esc(fullUrl(img))}" alt="${esc(p.title)} image ${i+1}" loading="${i===0?'eager':'lazy'}">`).join('')}${images.length>1?`<div class="cover-dots">${images.map((_,i)=>`<button class="cover-dot ${i===0?'active':''}" type="button" aria-label="Show image ${i+1}" onclick="setCoverSlide(${i})"></button>`).join('')}</div>`:''}</div></div>`:'';
-        const demo=safeUrl(p.demoUrl||'');
         const portfolio=safeUrl(p.creatorPortfolio||'');
         const creator=p.creatorName?`<div class="creator"><span class="creator-mark">${esc(p.creatorName.trim().charAt(0).toUpperCase()||'?')}</span><div><small>Created by</small><div class="creator-name">${portfolio?`<a href="${esc(portfolio)}" target="_blank" rel="noopener noreferrer" title="View ${esc(p.creatorName)}'s portfolio">${esc(p.creatorName)} ↗</a>`:esc(p.creatorName)}</div></div></div>`:'';
         const isIot=p.category==='IoT',modelImage=isIot?safeUrl(fullUrl(p.modelImage||'')):'',player=videoPlayer(p.videoUrl||'',p.title||'Project');
         const projectShowcase=modelImage||player?`<section class="iot-showcase"><div class="wrap"><h2>${isIot&&modelImage?'Real IoT model & demo':'Project video'}</h2><p>${isIot&&modelImage?'See the physical model and watch the project working in the real world.':'Watch the project in action.'}</p><div class="iot-grid ${modelImage&&player?'':'single-media'}">${modelImage?`<img class="model-photo" src="${esc(modelImage)}" alt="${esc(p.title||'IoT project')} model" loading="lazy">`:''}${player}</div></div></section>`:'';
-        const preview=demo?`<section class="live-preview"><div class="wrap"><h2>Live project preview</h2><p>Explore the working project directly on this page.</p><iframe class="preview-frame" src="${esc(demo)}" title="${esc(p.title||'Project')} live preview" loading="lazy" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></section>`:'';
+        const preview=livePreview(p);
         document.getElementById('app').innerHTML=`<section class="hero"><div class="wrap"><div class="category">${esc(p.category||'Project')}</div><h1>${esc(p.title||'Untitled project')}</h1><div class="lead">${richText(p.desc)}</div>${creator}<div class="tags">${cleanList(p.tags).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div></div></section>${cover}${projectShowcase}${preview}`;
         startCoverCarousel();
+        setupLivePreview();
       }catch(err){showError('Could not load project',err.message)}
     }
     function showError(title,message){document.getElementById('app').innerHTML=`<div class="state"><h1>${esc(title)}</h1><p>${esc(message)}</p><p><a href="index.html#sec-projects" style="color:#1673ff">Back to projects</a></p></div>`}
