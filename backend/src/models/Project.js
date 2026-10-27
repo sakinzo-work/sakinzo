@@ -16,6 +16,7 @@ const projectSchema = new mongoose.Schema({
   videoUrl: {
     type: String,
     default: '',
+    trim: true,
     required: isIotProject,
     validate: {
       validator(value) {
@@ -23,7 +24,7 @@ const projectSchema = new mongoose.Schema({
         try { return ['http:', 'https:'].includes(new URL(value).protocol); }
         catch { return false; }
       },
-      message: 'IoT video must be a valid http(s) URL'
+      message: 'Project video must be a valid http(s) URL'
     }
   },
   demoUrl: { type: String, default: '' },

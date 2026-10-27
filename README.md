@@ -98,6 +98,21 @@ Admin can control:
 - Contact form submissions
 - Image uploads
 
+### Project videos
+
+In **Projects → Add / Edit → Project video**, paste a YouTube, Vimeo or direct
+video URL, or select an MP4, WebM or Ogg file from your device (maximum 50 MB).
+The selected file uploads when you save the project and replaces the video URL.
+Videos appear on the public project detail page for every category. Videos are
+optional except for IoT projects, which retain their required demo video.
+Use **Remove video**, then save, to clear a video from a project.
+
+Uploaded videos are streamed into MongoDB GridFS and served with byte-range
+support for playback and seeking. They persist with the database and do not
+depend on the backend server's local disk. Video uploads require an admin login;
+saved videos are public so visitors can watch them. Deploy the updated backend
+and frontend together to enable video uploads.
+
 ## Map
 
 The home page uses Leaflet + OpenStreetMap. No paid map API key is required. Add real map locations in admin panel with latitude and longitude.

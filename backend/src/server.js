@@ -68,6 +68,7 @@ app.use('/api/sections', require('./routes/sections'));
 app.use('/api/what-we-do-services', require('./routes/whatWeDoServices'));
 app.use('/api/submissions', require('./routes/submissions'));
 app.use('/api/approvals', require('./routes/approvals'));
+app.use('/api/upload/videos', require('./routes/projectVideos'));
 app.use('/api/upload', require('./routes/upload'));
 
 app.use((req, res) => res.status(404).json({ message: 'Route not found' }));
