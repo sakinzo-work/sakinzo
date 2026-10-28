@@ -1,0 +1,6 @@
+.service-nav-group .service-menu{width:min(620px,calc(100vw - 32px));max-height:calc(100vh - 100px);overflow:auto;inset-inline-start:0;min-width:0!important}
+.service-menu .service-menu-all{display:flex!important;align-items:center;justify-content:space-between;font-weight:750!important;background:#eef5ff;color:#125dbf!important;border-radius:8px;margin-bottom:10px}
+.service-menu-columns{display:grid;grid-template-columns:1fr 1fr;gap:12px}.service-menu .service-menu-label{margin:8px 14px;color:#6c7b91;font:700 10px/1.5 Inter,Arial,sans-serif;letter-spacing:.09em;text-transform:uppercase}.service-menu a[aria-current=page]{background:#edf4ff;color:#145bbf!important}
+.service-mobile-label{margin:14px 40px 3px;color:#8fa8cf;font-size:11px;line-height:1.5;letter-spacing:.06em;text-transform:uppercase;font-weight:700}.mobile-nav-items .service-mobile-label{margin-inline:16px}.mobile-nav-items .service-menu-all,.mob-sub .service-menu-all{color:#8bbaff!important;font-weight:700}
+html[dir=rtl] .service-menu-columns{text-align:right}
+@media(max-width:1200px){.service-nav-group .service-menu{inset-inline-start:auto;inset-inline-end:-120px}}

@@ -3,6 +3,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { metadata } = require('../frontend/seo');
+const services = require('../frontend/services-data');
 const root = path.join(__dirname, '../frontend');
 const site = new URL(process.argv[2] || 'https://sakinzo-work.github.io/sakinzo/frontend/');
 if (!/^https?:$/.test(site.protocol)) throw new Error('Provide an HTTP(S) site URL.');
@@ -31,7 +32,14 @@ for (const filename of fs.readdirSync(root).filter(file => file.endsWith('.html'
     organization,
     { '@type': 'WebSite', '@id': `${site.href}#website`, url: site.href, name: 'Sakin.zo', inLanguage: 'en', publisher: { '@id': `${site.href}#organization` } }
   ];
-  if (page === 'index') graph.push({ '@type': 'ProfessionalService', name: 'Sakin.zo Software Development', url, image, description, serviceType: ['Custom Software Development', 'AI Development', 'IoT Development', 'FinTech Development', 'Blockchain Development', 'eCommerce Development'], areaServed: 'Worldwide' });
+  if (page === 'index') graph.push({ '@type': 'ProfessionalService', name: 'Sakin.zo Software Development', url, image, description, serviceType: services.map(service => service.name), areaServed: 'Worldwide' });
+  const service = services.find(service => service.slug === page);
+  if (service) {
+    graph[0].mainEntity = { '@id': `${url}#service` };
+    graph.push({ '@type': 'Service', '@id': `${url}#service`, name: service.name, serviceType: service.name, description: service.summary, url, provider: { '@id': `${site.href}#organization` }, areaServed: 'Worldwide' });
+    graph.push({ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: site.href }, { '@type': 'ListItem', position: 2, name: 'Services', item: new URL('services.html', site).href }, { '@type': 'ListItem', position: 3, name: service.name, item: url }] });
+  }
+  if (page === 'services') graph.push({ '@type': 'ItemList', name: 'Sakin.zo Services', itemListElement: services.map((service, index) => ({ '@type': 'ListItem', position: index + 1, name: service.name, url: new URL(service.href, site).href })) });
   tags.push(`    <script id="sakinzo-schema" type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c')}</script>`);
   let html = fs.readFileSync(path.join(root, filename), 'utf8');
   html = html.replace(/\s*<!-- sakinzo:seo:start -->[\s\S]*?<!-- sakinzo:seo:end -->/g, '')
@@ -39,9 +47,9 @@ for (const filename of fs.readdirSync(root).filter(file => file.endsWith('.html'
     .replace(/<meta\b[^>]*(?:name=["'](?:description|keywords|robots|googlebot|twitter:[^"']+)["']|property=["']og:[^"']+["'])[^>]*>\s*/gi, '')
     .replace(/<link\b(?=[^>]*rel=["'](?:canonical|alternate)["'])(?=[^>]*(?:hreflang=|rel=["']canonical["']))[^>]*>\s*/gi, '')
     .replace(/<script\b[^>]*id=["']sakinzo-schema["'][^>]*>[\s\S]*?<\/script>\s*/gi, '')
-    .replace(/\s*<script\b[^>]*src=["'](?:seo|i18n)\.js["'][^>]*>\s*<\/script>/gi, '')
-    .replace(/\s*<link\b[^>]*href=["']i18n\.css["'][^>]*>/gi, '');
-  html = html.replace(/\s*<\/head>/i, `\n    <!-- sakinzo:seo:start -->\n${tags.join('\n')}\n    <!-- sakinzo:seo:end -->\n    <link rel="stylesheet" href="i18n.css">\n    <script src="seo.js" defer></script>\n    <script src="i18n.js" defer></script>\n</head>`);
+    .replace(/\s*<script\b[^>]*src=["'](?:seo|i18n|services-data|service-navigation)\.js["'][^>]*>\s*<\/script>/gi, '')
+    .replace(/\s*<link\b[^>]*href=["'](?:i18n|service-navigation)\.css["'][^>]*>/gi, '');
+  html = html.replace(/\s*<\/head>/i, `\n    <!-- sakinzo:seo:start -->\n${tags.join('\n')}\n    <!-- sakinzo:seo:end -->\n    <link rel="stylesheet" href="service-navigation.css">\n    <link rel="stylesheet" href="i18n.css">\n    <script src="services-data.js" defer></script>\n    <script src="service-navigation.js" defer></script>\n    <script src="seo.js" defer></script>\n    <script src="i18n.js" defer></script>\n</head>`);
   fs.writeFileSync(path.join(root, filename), html);
   if (!archived[slug] && slug !== 'project') sitemap.push(url);
 }

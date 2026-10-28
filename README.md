@@ -1,5 +1,35 @@
 # Sakinzo MongoDB Backend + Admin Panel
 
+## Service pages
+
+`frontend/services.html` is the service directory. It links all 15 advertised
+services, including the homepage's web/mobile, DevOps, architecture, PoC/MVP,
+QA, UX/UI and business-analysis offerings, plus AI, agents, IoT, smart-home,
+eCommerce, fintech, blockchain and full-cycle development.
+
+Every detail page contains static, crawlable content: an overview, capabilities,
+deliverables, delivery steps, FAQs, related services and a contact action. The
+desktop and mobile Services menus use the same catalog on every public page.
+Homepage cards and service accordion links point to their matching detail pages.
+The existing language selector also works on these pages.
+
+Edit the copy and service relationships in `frontend/services-data.js`, then run:
+
+```bash
+node scripts/build-services.js
+node scripts/update-seo.js https://sakinzo-work.github.io/sakinzo/frontend/ 2026-10-29
+```
+
+Use your actual deployment URL and modification date. The second command adds
+unique metadata, Service and breadcrumb structured data, and sitemap entries.
+Generated service HTML should be regenerated from the catalog rather than edited
+directly. Shared presentation and navigation are in `services.css`,
+`service-page.js` and `service-navigation.js`.
+
+Run `npm run test:services` from `backend/` for isolated desktop/mobile Chrome
+checks, including every service page and menus on the home, company, contact and
+blog pages. `npm test` also verifies static content and local service links.
+
 ## Website languages and SEO
 
 The EN control is now a searchable, keyboard-accessible language selector on all

@@ -1,4 +1,5 @@
 (function () {
+  const services = typeof module === 'object' && module.exports ? require('./services-data') : window.SakinzoServices || [];
   const pages = {
     index: ['Sakin.zo | AI, IoT, Robotics & Custom Software Development Company', 'Sakin.zo builds scalable AI, IoT, robotics, connected device, web, FinTech, blockchain, eCommerce and custom software solutions that transform businesses.', 'Sakinzo, Sakin.zo, custom software development company, AI development company, IoT development services, robotics software development, connected device development, IoT device development, web development company, technology solutions company, fintech software development, blockchain development, ecommerce development'],
     contactus: ['Contact Sakin.zo | Start Your Software Project', 'Talk to Sakin.zo about AI, IoT, FinTech, blockchain, eCommerce or custom software development for your business.', 'contact software development company, hire software developers, custom software project'],
@@ -17,6 +18,8 @@
     opensource: ['Open Source Software by Sakin.zo', 'Explore open source tools, reference projects and engineering knowledge from the Sakin.zo team.', 'Sakinzo open source, software engineering tools'],
     project: ['Software Project Case Study | Sakin.zo', 'Explore a Sakin.zo software project, its business challenge, solution, technology and product experience.', 'software development case study, custom software project, digital product case study']
   };
+  pages.services = ['Software Development & Product Engineering Services | Sakin.zo', 'Explore Sakin.zo services across web and mobile development, AI, IoT, DevOps, design, QA, fintech, blockchain and product strategy.', 'software development services, product engineering services, Sakinzo services'];
+  services.forEach(service => { pages[service.slug] = [service.seoTitle, service.summary, service.keywords]; });
   Object.assign(pages, {
     'ev-charging': ['EV Charging Cloud Platform Case Study | Sakin.zo', 'Explore Sakin.zo product engineering for connected EV charging, cloud management, monitoring and digital payment experiences.', 'EV charging software, connected charging platform, IoT case study'],
     'market-access': ['AI Market Access Tool Case Study | Sakin.zo', 'Explore an AI-based market access tool combining data, product strategy and software engineering from Sakin.zo.', 'AI market access software, AI case study, data platforms'],
@@ -100,7 +103,7 @@
         function visit(value) {
           if (!value || typeof value !== 'object') return;
           if (value['@type']) value.inLanguage = language;
-          if (['WebPage', 'CreativeWork'].includes(value['@type'])) value.url = url.href;
+          if (['WebPage', 'CreativeWork', 'Service'].includes(value['@type'])) value.url = url.href;
           Object.values(value).forEach(visit);
         }
         visit(data); script.textContent = JSON.stringify(data);

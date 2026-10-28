@@ -21,6 +21,6 @@ test('sitemap includes the blog and public landing pages and excludes duplicate 
   assert.match(sitemap, /\/blog\.html<\/loc>/);
   assert.match(sitemap, /\/ai-development\.html<\/loc>/);
   assert.doesNotMatch(sitemap, /\/(admin|ad|newindex|preindex|index1|constactus2|project)\.html/);
-  assert.equal([...sitemap.matchAll(/<loc>/g)].length, 20);
+  assert.equal([...sitemap.matchAll(/<loc>/g)].length, 29);
   for (const file of ['newindex.html', 'preindex.html', 'index1.html', 'constactus2.html']) assert.match(fs.readFileSync(path.join(root, file), 'utf8'), /name="robots" content="noindex, follow"/);
 });
