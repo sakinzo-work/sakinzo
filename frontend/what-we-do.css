@@ -1,0 +1,20 @@
+/* Supplied artwork sits behind each service label and its existing page link. */
+.wwd-card.wwd-has-cover{isolation:isolate;background-color:#10293a}
+.wwd-has-cover .wwd-cover{position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;object-fit:cover;object-position:right center;pointer-events:none;transition:transform .4s ease}
+.wwd-card.wwd-has-cover::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(6,19,38,.87) 0%,rgba(6,19,38,.7) 32%,rgba(6,19,38,.18) 68%,rgba(6,19,38,.02) 100%),linear-gradient(0deg,rgba(3,14,27,.25),transparent 65%)}
+.wwd-has-cover .wwd-inner{z-index:2;min-height:260px;padding:32px 36px}
+.wwd-card.wwd-has-cover.full .wwd-inner,.wwd-card.wwd-has-cover.wwd-auto-full .wwd-inner{min-height:320px}
+.wwd-has-cover .wwd-ttl{max-width:min(380px,64%);margin-bottom:18px;text-shadow:0 2px 15px rgba(3,14,27,.35)}
+.wwd-has-cover.full .wwd-ttl,.wwd-has-cover.wwd-auto-full .wwd-ttl{max-width:min(540px,54%)}
+.wwd-has-cover .lm-btn span{color:#fff}.wwd-has-cover .lm-circle{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.7)}
+.wwd-has-cover:hover .wwd-cover{transform:scale(1.025)}
+.wwd-has-cover:focus-visible{outline:3px solid #1673ff;outline-offset:5px}
+@media(max-width:700px){
+  .wwd-has-cover .wwd-cover{object-position:82% center}
+  .wwd-has-cover.iot-bg .wwd-cover{object-position:74% center}
+  .wwd-card.wwd-has-cover .wwd-inner,.wwd-card.wwd-has-cover.full .wwd-inner,.wwd-card.wwd-has-cover.wwd-auto-full .wwd-inner{min-height:260px;padding:26px 24px}
+  .wwd-card.wwd-has-cover .wwd-ttl{font-size:clamp(19px,5.4vw,23px);max-width:78%;line-height:1.3;margin-bottom:18px}
+  .wwd-card.wwd-has-cover::after{background:linear-gradient(90deg,rgba(6,19,38,.88) 0%,rgba(6,19,38,.65) 48%,rgba(6,19,38,.12) 100%),linear-gradient(0deg,rgba(3,14,27,.35),transparent 75%)}
+  .wwd-has-cover .lm-btn span{font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){.wwd-has-cover .wwd-cover{transition:none}.wwd-has-cover:hover .wwd-cover{transform:none}}
