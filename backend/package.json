@@ -8,7 +8,8 @@
     "dev": "nodemon src/server.js",
     "seed": "node src/seed.js",
     "test": "node --test",
-    "test:layout": "node --test browser-tests/project-preview-layout.js"
+    "test:layout": "node --test browser-tests/project-preview-layout.js",
+    "test:i18n": "node --test browser-tests/i18n.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

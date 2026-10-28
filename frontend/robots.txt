@@ -5,5 +5,7 @@ Disallow: /ad.html
 Disallow: /index1.html
 Disallow: /index2.html
 Disallow: /constactus2.html
+Disallow: /newindex.html
+Disallow: /preindex.html
 
 Sitemap: https://sakinzo-work.github.io/sakinzo/frontend/sitemap.xml

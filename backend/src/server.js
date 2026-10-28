@@ -16,6 +16,7 @@ const Insight = require('./models/Insight');
 const Blog = require('./models/Blog');
 const Admin = require('./models/Admin');
 const crudRouter = require('./utils/crudRouter');
+const siteCors = require('./utils/siteCors');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -33,13 +34,7 @@ const origins = [...new Set([
 ])];
 
 app.use(helmet({ crossOriginResourcePolicy: false }));
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || origins.includes(origin)) return callback(null, true);
-    callback(new Error(`CORS blocked for origin: ${origin}`));
-  },
-  credentials: true
-}));
+app.use(cors(siteCors(origins)));
 app.use(morgan('dev'));
 app.use(express.json({ limit: '8mb' }));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads'), {
@@ -54,6 +49,7 @@ app.get('/api/health', (req, res) => res.json({ ok: true, service: 'sakinzo-api'
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/admins', require('./routes/admins'));
 app.use('/api/public', require('./routes/public'));
+app.use('/api/i18n', require('./routes/i18n'));
 app.use('/api/projects', require('./routes/projects'));
 app.use('/api/clients', crudRouter(Client, { resource: 'clients' }));
 app.use('/api/team', crudRouter(TeamMember, { resource: 'team' }));

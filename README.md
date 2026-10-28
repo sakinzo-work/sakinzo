@@ -1,5 +1,71 @@
 # Sakinzo MongoDB Backend + Admin Panel
 
+## Website languages and SEO
+
+The EN control is now a searchable, keyboard-accessible language selector on all
+public pages, including mobile, blog and project pages. The bundled language list
+contains 194 entries from the [official Cloud Translation language list](https://docs.cloud.google.com/translate/docs/languages).
+
+Without translation credentials, selecting a language opens the public page in
+[Google Translate's website view](https://support.google.com/translate/answer/2534559).
+This is an external translation view; it requires a publicly reachable website and
+depends on Google and regional availability. It cannot translate localhost or text
+inside images, video, or third-party app previews. English stays available on the
+original site. No discontinued Website Translator widget is used. Deploy the
+updated backend too: it permits the site's exact Google translation origin to
+load public projects/blogs and submit the contact form, without granting access
+to admin routes.
+
+For translations **inside this website**, enable Cloud Translation API (Basic v2)
+in Google Cloud and add `GOOGLE_TRANSLATE_API_KEY` to the backend's private `.env`
+or hosting environment. See `backend/.env.i18n.example` and the
+[Cloud Translation documentation](https://docs.cloud.google.com/translate/docs/translate-text).
+Deploy the updated backend and frontend together. Use `window.API_BASE` to point
+both the website and translation client to the same API if your backend URL changes.
+The selector automatically discovers every language supported by the configured
+provider. Cloud API usage is billed by the provider; no key is shipped to browsers.
+
+In API mode, language selection translates page text, form labels/placeholders,
+image descriptions, accessibility labels, SEO metadata, structured data, and
+public content inserted later by the backend. Submitted form values are excluded.
+Selection is retained in local storage and in `?lang=hi`-style page URLs. Explicit
+URL languages take priority. Internal links retain project IDs, blog slugs and
+anchors. Urdu, Arabic and other RTL languages set the page direction appropriately.
+Translation failures restore English and show a message. The API validates and
+limits requests and caches repeated translations in server memory.
+
+Titles, descriptions, canonical links, social metadata and JSON-LD are also
+included directly in the English HTML, so crawlers and link previews can read
+them without JavaScript. In API mode, translated pages update these fields and
+advertise their language URLs with `hreflang`; free external translations are not
+advertised as local language pages. Localized metadata is rendered with JavaScript;
+social crawlers that do not execute it will see the English HTML. There are no
+prebuilt localized HTML pages, and search indexing is not guaranteed.
+
+Regenerate the static metadata and sitemap after changing the deployment URL or
+SEO copy in `frontend/seo.js` (pass the date the pages actually changed):
+
+```bash
+node scripts/update-seo.js https://your-domain/path/ 2026-10-28
+```
+
+The default URL matches the existing GitHub Pages sitemap. When changing it,
+update the sitemap URL in `frontend/robots.txt` too. A robots.txt file must be
+served at the domain root to be honored. Legacy homepage/contact copies are
+`noindex` and are excluded from the sitemap.
+
+Run the API tests and isolated Chrome browser checks with:
+
+```bash
+cd backend
+npm test
+npm run test:i18n
+```
+
+Browser translation responses are fixtures, so these checks do not need a paid
+API key or incur translation charges. Real Cloud Translation responses still
+need to be verified after a valid key is configured.
+
 This package converts your local static website into a real backend system using Node.js, Express and MongoDB Atlas.
 
 ## What is included

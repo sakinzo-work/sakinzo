@@ -7,7 +7,9 @@ const { File } = require('node:buffer');
 
 function pageScript(filename) {
   const html = fs.readFileSync(path.join(__dirname, '../../frontend', filename), 'utf8');
-  return [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(m => m[1]).filter(s => s.trim()).join('\n');
+  return [...html.matchAll(/<script(\s[^>]*)?>([\s\S]*?)<\/script>/g)]
+    .filter(match => !/\btype=["']application\/ld\+json["']/i.test(match[1] || ''))
+    .map(match => match[2]).filter(script => script.trim()).join('\n');
 }
 
 function adminPage() {
