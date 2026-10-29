@@ -36,14 +36,18 @@ async function checkHero(page, service) {
       const box = item.getBoundingClientRect();
       return { left: box.left, right: box.right, top: box.top, bottom: box.bottom };
     });
-    return { width: image.naturalWidth, src: image.getAttribute('src'), fit: getComputedStyle(image).objectFit,
+    const style = getComputedStyle(image);
+    return { width: image.naturalWidth, src: image.getAttribute('src'), fit: style.objectFit,
+      imageTopInset: parseFloat(style.paddingTop), headerHeight: document.querySelector('header').getBoundingClientRect().height,
       pageWidth: document.documentElement.scrollWidth, viewport: innerWidth,
       bounds: { left: bounds.left, right: bounds.right, top: bounds.top, bottom: bounds.bottom },
       photo: { left: photo.left, right: photo.right, top: photo.top, bottom: photo.bottom }, contents };
   });
   assert.equal(metrics.width, service.cover.width, `${service.slug}: decoded image dimensions`);
   assert.equal(metrics.src, service.cover.image, `${service.slug}: assigned cover`);
-  assert.equal(metrics.fit, 'cover');
+  const detailedCover = ['full-cycle-development', 'ai-development'].includes(service.slug);
+  assert.equal(metrics.fit, detailedCover && metrics.viewport > 700 ? 'contain' : 'cover');
+  if (detailedCover) assert.ok(metrics.imageTopInset >= metrics.headerHeight, `${service.slug}: artwork clears fixed header`);
   assert.deepEqual(metrics.photo, metrics.bounds, `${service.slug}: photo fills hero`);
   assert.ok(metrics.pageWidth <= metrics.viewport, `${service.slug}: horizontal overflow`);
   for (const box of metrics.contents) {
@@ -85,8 +89,8 @@ test('all fifteen services render on desktop and mobile, and directory, FAQ and 
         await page.screenshot({ path: path.join(screenshots, 'service-desktop.png'), fullPage: true });
         await page.screenshot({ path: path.join(screenshots, 'service-desktop-hero.png') });
       }
-      if (['ai-development', 'ecommerce-development', 'iot-development', 'fintech-development', 'devops-solutions'].includes(service.slug)) {
-        for (const width of [320, 768, 1440]) {
+      if (['full-cycle-development', 'ai-development', 'ecommerce-development', 'iot-development', 'fintech-development', 'devops-solutions'].includes(service.slug)) {
+        for (const width of [320, 768, 1440, 1535]) {
           await page.setViewportSize({ width, height: 1000 });
           await checkHero(page, service);
           await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));

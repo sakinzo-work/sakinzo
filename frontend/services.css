@@ -19,6 +19,13 @@
 .service-hero-photo.service-hub-hero h1{max-width:840px;width:70%}
 .service-hero-photo .service-hub-intro{align-items:start;flex-direction:column;max-width:640px;gap:24px}
 .service-hero-photo .service-hub-intro>p{color:#e1e9f7}
+/* These detailed covers need room below the fixed header for the full artwork. */
+.service-page:is([data-page="full-cycle-development"],[data-page="ai-development"]) .service-hero-image{padding-top:68px}
+@media(min-width:701px){
+  .service-page:is([data-page="full-cycle-development"],[data-page="ai-development"]) .service-hero-photo{min-height:680px}
+  .service-page:is([data-page="full-cycle-development"],[data-page="ai-development"]) .service-hero-image{object-fit:contain;object-position:right center}
+  .service-page:is([data-page="full-cycle-development"],[data-page="ai-development"]) .service-hero-photo:after{background:linear-gradient(90deg,rgba(3,13,29,.99) 0%,rgba(3,13,29,.95) 31%,rgba(3,13,29,.82) 48%,rgba(3,13,29,.4) 59%,rgba(3,13,29,.09) 76%,transparent 100%),linear-gradient(0deg,rgba(3,13,29,.25),transparent 65%)}
+}
 @media(max-width:1024px){.service-hero-photo .service-hero-grid>div{width:75%}.service-hero-photo:after{background:linear-gradient(90deg,rgba(3,13,29,.96),rgba(3,13,29,.79) 48%,rgba(3,13,29,.27)),linear-gradient(0deg,rgba(3,13,29,.35),transparent 70%)}}
 @media(max-width:700px){
   .service-page .hero.service-hero-photo{min-height:0;padding-bottom:56px}
