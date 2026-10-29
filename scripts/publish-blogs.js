@@ -40,9 +40,12 @@ async function publish({ email, password, apiBase = 'https://sakinzo.onrender.co
   for (const post of posts) await new Insight(insightFor(post)).validate();
   let token;
   async function request(route, method = 'GET', body) {
-    const response = await fetchImpl(`${apiBase}${route}`, { method, signal: AbortSignal.timeout(30000),
-      headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
-      ...(body ? { body: JSON.stringify(body) } : {}) });
+    let response;
+    try {
+      response = await fetchImpl(`${apiBase}${route}`, { method, signal: AbortSignal.timeout(60000),
+        headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+        ...(body ? { body: JSON.stringify(body) } : {}) });
+    } catch (error) { throw new Error(`${method} ${route} request failed (${error.name || 'network error'}).`); }
     if (!response.ok) throw new Error(`${method} ${route} failed with HTTP ${response.status}.`);
     return response.json();
   }
