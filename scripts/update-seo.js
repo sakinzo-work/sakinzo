@@ -52,13 +52,13 @@ for (const filename of fs.readdirSync(root).filter(file => file.endsWith('.html'
     .replace(/<link\b(?=[^>]*rel=["'](?:canonical|alternate)["'])(?=[^>]*(?:hreflang=|rel=["']canonical["']))[^>]*>\s*/gi, '')
     .replace(/<script\b[^>]*id=["']sakinzo-schema["'][^>]*>[\s\S]*?<\/script>\s*/gi, '')
     .replace(/\s*<script\b[^>]*src=["'](?:seo|i18n|services-data|service-navigation|page-covers|page-heroes)\.js["'][^>]*>\s*<\/script>/gi, '')
-    .replace(/\s*<link\b[^>]*href=["'](?:i18n|service-navigation|page-heroes)\.css["'][^>]*>/gi, '')
+    .replace(/\s*<link\b[^>]*href=["'](?:i18n|service-navigation|page-heroes|site-ui)\.css["'][^>]*>/gi, '')
     .replace(/\s*<link\b[^>]*data-page-cover[^>]*>/gi, '');
   const sharedHero = cover && page !== 'services' && !service;
   const preload = sharedHero && page !== 'index' ? `\n    <link rel="preload" as="image" href="${escape(cover.image)}" fetchpriority="high" data-page-cover>` : '';
   const heroTags = sharedHero ? `${preload}\n    <link rel="stylesheet" href="page-heroes.css">` : '';
   const heroScript = sharedHero ? '\n    <script src="page-heroes.js" defer></script>' : '';
-  html = html.replace(/\s*<\/head>/i, `\n    <!-- sakinzo:seo:start -->\n${tags.join('\n')}\n    <!-- sakinzo:seo:end -->${heroTags}\n    <link rel="stylesheet" href="service-navigation.css">\n    <link rel="stylesheet" href="i18n.css">\n    <script src="services-data.js" defer></script>\n    <script src="page-covers.js" defer></script>\n    <script src="service-navigation.js" defer></script>\n    <script src="seo.js" defer></script>${heroScript}\n    <script src="i18n.js" defer></script>\n</head>`);
+  html = html.replace(/\s*<\/head>/i, `\n    <!-- sakinzo:seo:start -->\n${tags.join('\n')}\n    <!-- sakinzo:seo:end -->${heroTags}\n    <link rel="stylesheet" href="site-ui.css">\n    <link rel="stylesheet" href="service-navigation.css">\n    <link rel="stylesheet" href="i18n.css">\n    <script src="services-data.js" defer></script>\n    <script src="page-covers.js" defer></script>\n    <script src="service-navigation.js" defer></script>\n    <script src="seo.js" defer></script>${heroScript}\n    <script src="i18n.js" defer></script>\n</head>`);
   fs.writeFileSync(path.join(root, filename), html);
   if (!archived[slug] && slug !== 'project') sitemap.push(url);
 }
