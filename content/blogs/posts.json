@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Practical Guide to Creating an AI Assistant for Business Systems",
+    "slug": "practical-guide-ai-assistant-business-systems",
+    "excerpt": "Plan and build a business AI assistant that can find trusted information, use approved tools and complete workflows with clear permissions, human review and measurable results.",
+    "category": "AI Development",
+    "author": "Sakinzo Team",
+    "coverImage": "https://sakinzo-work.github.io/sakinzo/frontend/assets/service-ai.webp",
+    "tags": ["AI", "AI Assistants", "MCP", "Business Automation"],
+    "bodyFile": "ai-assistant-business-systems.md"
+  },
+  {
+    "title": "Comprehensive Guide to IoT Platform Architecture and Layers",
+    "slug": "iot-platform-architecture-layers-guide",
+    "excerpt": "Understand how devices, connectivity, platform services, data and applications fit together. Follow a practical architecture guide with telemetry examples, failure tests and a pilot checklist.",
+    "category": "IoT Development",
+    "author": "Sakinzo Team",
+    "coverImage": "https://sakinzo-work.github.io/sakinzo/frontend/assets/service-iot.webp",
+    "tags": ["IoT", "IoT Development", "Architecture", "Connected Devices"],
+    "bodyFile": "iot-platform-architecture.md"
+  },
+  {
+    "title": "AI Tools for Everyday Work: Practical Tips, Prompts and Quality Checks",
+    "slug": "ai-tools-practical-tips-prompts-quality-checks",
+    "excerpt": "Use AI tools for research, writing and software work with clearer briefs, reusable prompts and simple verification habits. Includes a practical workflow for ChatGPT, GitHub Copilot and source-grounded research.",
+    "category": "AI Tools & Productivity",
+    "author": "Sakinzo Team",
+    "coverImage": "https://sakinzo-work.github.io/sakinzo/frontend/assets/page-insights.webp",
+    "tags": ["AI Tools", "Productivity", "Prompting", "Developer Tips"],
+    "bodyFile": "ai-tools-tips.md"
+  },
+  {
+    "title": "Business Web Development: A Practical Guide from Brief to Launch",
+    "slug": "business-web-development-brief-to-launch-guide",
+    "excerpt": "Turn a website brief into a reliable business experience. Follow practical steps for content, responsive design, forms, accessibility, performance, SEO, testing and a smooth launch.",
+    "category": "Web Development",
+    "author": "Sakinzo Team",
+    "coverImage": "https://sakinzo-work.github.io/sakinzo/frontend/assets/service-software-development.webp",
+    "tags": ["Web Development", "Accessibility", "Performance", "SEO"],
+    "bodyFile": "business-web-development.md"
+  }
+]

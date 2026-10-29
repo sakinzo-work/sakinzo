@@ -30,6 +30,14 @@ Run `npm run test:services` from `backend/` for isolated desktop/mobile Chrome
 checks, including every service page and menus on the home, company, contact and
 blog pages. `npm test` also verifies static content and local service links.
 
+## Blog guides
+
+Article sources and publishing instructions are in
+[`content/blogs/README.md`](content/blogs/README.md). The blog reader supports
+section headings, lists, code blocks, source links and an automatic guide index.
+Published guides appear in the blog directory and the homepage Insights section.
+Run `npm run test:blogs` from `backend/` to check article layouts and metadata.
+
 ## Website languages and SEO
 
 The EN control is now a searchable, keyboard-accessible language selector on all
