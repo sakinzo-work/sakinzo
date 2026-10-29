@@ -1,6 +1,7 @@
 .language-picker{position:relative;flex:none;display:flex;align-items:center;margin-inline-start:auto}
 .language-picker .language-trigger{display:flex!important;align-items:center;gap:7px;min-height:42px;padding:8px 10px;border:1px solid #ffffff38;border-radius:9px;color:#fff;background:transparent;font:inherit;font-size:13px;font-weight:600;line-height:1.4;cursor:pointer;white-space:nowrap}
 .language-trigger:hover,.language-trigger[aria-expanded=true]{background:#ffffff15}
+.header-wrap .language-trigger{color:#13233f;border-color:#cdd9e9}.header-wrap .language-trigger:hover,.header-wrap .language-trigger[aria-expanded=true]{background:#edf4ff}
 .language-trigger svg{width:10px;height:6px;flex:none}.language-trigger[aria-expanded=true] svg{transform:rotate(180deg)}
 .language-picker :focus-visible{outline:3px solid #68a8ff;outline-offset:2px}
 .language-panel{position:fixed;inset:auto 12px auto auto;z-index:10020;width:min(340px,calc(100vw - 24px));padding:16px;background:#fff;color:#13233f;border:1px solid #dfe7f1;border-radius:15px;box-shadow:0 20px 65px #06132638;text-align:start;line-height:1.5;font:14px/1.5 Inter,Arial,sans-serif}

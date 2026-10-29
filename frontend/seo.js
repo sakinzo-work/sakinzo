@@ -51,7 +51,7 @@
   const proxySource = new URL(sourceUrl);
   if (identity) proxySource.searchParams.set(identityKey, identity);
   const canonicalUrl = onProxy ? proxySource.href : `${location.origin}${cleanPath}${identity ? `?${identityKey}=${encodeURIComponent(identity)}` : ''}`;
-  const cover = (services.find(service => service.slug === slug) || (slug === 'services' ? services[0] : null))?.cover;
+  const cover = window.SakinzoPageCovers?.get(slug) || (services.find(service => service.slug === slug) || (slug === 'services' ? services[0] : null))?.cover;
   const socialImage = new URL(cover?.image || 'assets/sakinzo-hero-desktop-waves.webp', canonicalUrl).href;
   const imageDescription = cover?.description || 'Sakin.zo software product engineering';
   document.title = config[0];
@@ -125,7 +125,11 @@
     if (meta.image) {
       try {
         const image = new URL(meta.image, location.href);
-        if (/^https?:$/.test(image.protocol)) { upsertMeta('og:image', image.href, true); upsertMeta('twitter:image', image.href); }
+        if (/^https?:$/.test(image.protocol)) {
+          upsertMeta('og:image', image.href, true); upsertMeta('twitter:image', image.href);
+          const primary = document.getElementById('sakinzo-schema');
+          try { const data = JSON.parse(primary.textContent), page = data['@graph']?.find(item => item['@type'] === 'WebPage'); if (page) { page.primaryImageOfPage = { '@type': 'ImageObject', url: image.href }; primary.textContent = JSON.stringify(data); } } catch {}
+        }
       } catch {}
     }
     const script = document.getElementById('sakinzo-schema');

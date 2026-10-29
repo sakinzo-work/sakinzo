@@ -244,6 +244,16 @@ its social-share preview. Image sources and generation prompts are documented in
 [`frontend/assets/service-hero-assets.md`](frontend/assets/service-hero-assets.md).
 Run `npm test` and `npm run test:services` from `backend/` to verify the pages.
 
+Other public-page backgrounds are mapped in `frontend/page-covers.js` and
+rendered by `page-heroes.js` with `page-heroes.css`. Run `scripts/update-seo.js`
+after changing these assignments. Blog articles and projects prefer their
+uploaded cover; missing or broken covers fall back to a relevant category image.
+New background sources and final imagegen prompts are in
+[`frontend/assets/page-hero-assets.md`](frontend/assets/page-hero-assets.md).
+Run `npm run test:heroes` from `backend/` for desktop, tablet, mobile and dynamic
+cover checks. Hero screenshots are saved under `sakinzo-page-heroes` in the
+system temporary folder.
+
 ## Map
 
 The home page uses Leaflet + OpenStreetMap. No paid map API key is required. Add real map locations in admin panel with latitude and longitude.

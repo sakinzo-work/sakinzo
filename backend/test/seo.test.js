@@ -3,6 +3,7 @@ const { test } = require('node:test');
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.join(__dirname, '../../frontend');
+const covers = require('../../frontend/page-covers');
 
 test('every public HTML page has crawlable SEO and loads the shared language selector exactly once', () => {
   const files = fs.readdirSync(root).filter(file => file.endsWith('.html') && !/^(admin|ad|google.*)\.html$/.test(file));
@@ -12,6 +13,11 @@ test('every public HTML page has crawlable SEO and loads the shared language sel
     for (const expression of [/<title>[^<]+<\/title>/g, /name="description" content="[^"]+"/g, /rel="canonical" href="https:\/\/[^\"]+"/g, /property="og:title"/g, /name="twitter:title"/g, /src="seo\.js"/g, /src="i18n\.js"/g, /href="i18n\.css"/g]) assert.equal([...head.matchAll(expression)].length, 1, `${file}: ${expression}`);
     const schema = JSON.parse(head.match(/<script id="sakinzo-schema" type="application\/ld\+json">(.*?)<\/script>/s)[1]);
     assert.equal(schema['@graph'][0].inLanguage, 'en', file);
+    const cover = covers.get(file.replace(/\.html$/, ''));
+    assert.ok(cover && fs.existsSync(path.join(root, cover.image)), `${file}: matching local cover`);
+    assert.ok(cover.width > 0 && cover.height > 0, `${file}: image dimensions`);
+    assert.ok(schema['@graph'][0].primaryImageOfPage.url.endsWith(`/${cover.image}`), `${file}: primary image`);
+    assert.equal([...head.matchAll(/src="page-covers\.js"/g)].length, 1, `${file}: shared image catalog`);
     assert.equal([...head.matchAll(/hreflang=/g)].length, 2, `${file}: only published English and x-default variants should be in static HTML`);
   }
 });

@@ -76,7 +76,7 @@
   }
   function installPicker() {
     const old = document.querySelector('header .lang,header .lang-btn');
-    const header = document.querySelector('header .hdr-inner,header .header-wrap,header .nav,header');
+    const header = document.querySelector('header .hdr-right,header .header-right') || document.querySelector('header .hdr-inner,header .header-wrap,header .nav') || document.querySelector('header');
     if (!header) return false;
     picker = document.createElement('div'); picker.className = 'language-picker'; picker.setAttribute('translate', 'no');
     trigger = document.createElement('button'); trigger.type = 'button'; trigger.className = 'language-trigger';
