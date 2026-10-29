@@ -19,12 +19,39 @@ async function setup(browser) {
     if (url.origin === origin) {
       const file = path.resolve(root, `.${url.pathname}`);
       if (!file.startsWith(root + path.sep) || !fs.existsSync(file)) return route.fulfill({ status: 404, body: '' });
-      return route.fulfill({ body: fs.readFileSync(file), contentType: file.endsWith('.html') ? 'text/html' : file.endsWith('.js') ? 'application/javascript' : file.endsWith('.css') ? 'text/css' : file.endsWith('.json') ? 'application/json' : 'application/octet-stream' });
+      return route.fulfill({ body: fs.readFileSync(file), contentType: file.endsWith('.html') ? 'text/html' : file.endsWith('.js') ? 'application/javascript' : file.endsWith('.css') ? 'text/css' : file.endsWith('.json') ? 'application/json' : file.endsWith('.webp') ? 'image/webp' : 'application/octet-stream' });
     }
     return route.fulfill({ body: '', contentType: url.pathname.endsWith('.css') ? 'text/css' : 'application/javascript' });
   });
   const open = async file => { await page.goto(`${origin}/${file}`); await page.waitForFunction(() => window.SakinzoI18n); };
   return { page, errors, open };
+}
+
+async function checkHero(page, service) {
+  await page.locator('.service-hero-image').evaluate(image => image.decode());
+  const metrics = await page.locator('.service-hero').evaluate(hero => {
+    const image = hero.querySelector('.service-hero-image');
+    const bounds = hero.getBoundingClientRect(), photo = image.getBoundingClientRect();
+    const contents = [...hero.querySelectorAll('h1,.service-hero-actions a')].map(item => {
+      const box = item.getBoundingClientRect();
+      return { left: box.left, right: box.right, top: box.top, bottom: box.bottom };
+    });
+    return { width: image.naturalWidth, src: image.getAttribute('src'), fit: getComputedStyle(image).objectFit,
+      pageWidth: document.documentElement.scrollWidth, viewport: innerWidth,
+      bounds: { left: bounds.left, right: bounds.right, top: bounds.top, bottom: bounds.bottom },
+      photo: { left: photo.left, right: photo.right, top: photo.top, bottom: photo.bottom }, contents };
+  });
+  assert.equal(metrics.width, service.cover.width, `${service.slug}: decoded image dimensions`);
+  assert.equal(metrics.src, service.cover.image, `${service.slug}: assigned cover`);
+  assert.equal(metrics.fit, 'cover');
+  assert.deepEqual(metrics.photo, metrics.bounds, `${service.slug}: photo fills hero`);
+  assert.ok(metrics.pageWidth <= metrics.viewport, `${service.slug}: horizontal overflow`);
+  for (const box of metrics.contents) {
+    assert.ok(box.left >= 0 && box.right <= metrics.viewport + 1, `${service.slug}: hero content clipped horizontally`);
+    assert.ok(box.top >= metrics.bounds.top && box.bottom <= metrics.bounds.bottom, `${service.slug}: hero content outside banner`);
+  }
+  const social = await page.locator('meta[property="og:image"]').getAttribute('content');
+  assert.ok(social.endsWith(`/${service.cover.image}`), `${service.slug}: runtime SEO retains service cover`);
 }
 
 test('all fifteen services render on desktop and mobile, and directory, FAQ and contact navigation work', async () => {
@@ -35,6 +62,7 @@ test('all fifteen services render on desktop and mobile, and directory, FAQ and 
     for (const service of services) {
       await page.setViewportSize({ width: 1440, height: 1000 });
       await open(service.href);
+      await checkHero(page, service);
       assert.equal(await page.locator('h1').textContent(), service.headline);
       assert.equal(await page.locator('.service-capabilities article').count(), 3);
       assert.equal(await page.locator('.service-process>li').count(), 4);
@@ -44,6 +72,7 @@ test('all fifteen services render on desktop and mobile, and directory, FAQ and 
       assert.ok(await page.locator('details[open] p').isVisible());
       assert.equal(await page.locator('.service-hero-actions .btn').getAttribute('href'), 'contactus.html#form-section');
       await page.setViewportSize({ width: 390, height: 844 });
+      await checkHero(page, service);
       assert.ok(await page.locator('.language-trigger').isVisible());
       const metrics = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
       assert.ok(metrics.page <= metrics.viewport, `${service.slug}: mobile overflow ${JSON.stringify(metrics)}`);
@@ -55,6 +84,14 @@ test('all fifteen services render on desktop and mobile, and directory, FAQ and 
         await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
         await page.screenshot({ path: path.join(screenshots, 'service-desktop.png'), fullPage: true });
         await page.screenshot({ path: path.join(screenshots, 'service-desktop-hero.png') });
+      }
+      if (['ai-development', 'ecommerce-development', 'iot-development', 'fintech-development', 'devops-solutions'].includes(service.slug)) {
+        for (const width of [320, 768, 1440]) {
+          await page.setViewportSize({ width, height: 1000 });
+          await checkHero(page, service);
+          await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+          await page.screenshot({ path: path.join(screenshots, `${service.slug}-${width}.png`) });
+        }
       }
     }
     await open('services.html');

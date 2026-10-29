@@ -234,6 +234,16 @@ views at desktop, tablet and mobile window sizes, including repeated resize
 observer callbacks and switching devices without reloading the app. Screenshots
 are written to the system temporary folder under `sakinzo-preview-layout`.
 
+## Service pages and backgrounds
+
+Edit service content and `cover` assignments in `frontend/services-data.js`.
+Run `node scripts/build-services.js`, then
+`node scripts/update-seo.js https://sakinzo-work.github.io/sakinzo/frontend/`
+to regenerate the static pages and SEO. Each service's cover is also used for
+its social-share preview. Image sources and generation prompts are documented in
+[`frontend/assets/service-hero-assets.md`](frontend/assets/service-hero-assets.md).
+Run `npm test` and `npm run test:services` from `backend/` to verify the pages.
+
 ## Map
 
 The home page uses Leaflet + OpenStreetMap. No paid map API key is required. Add real map locations in admin panel with latitude and longitude.

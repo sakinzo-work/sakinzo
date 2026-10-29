@@ -23,6 +23,14 @@ test('every advertised service has complete static content, valid local destinat
     assert.equal(serviceSchema.name, service.name);
     assert.ok(serviceSchema.url.endsWith(`/${service.href}`));
     assert.equal(schema['@graph'].find(item => item['@type'] === 'BreadcrumbList').itemListElement.length, 3);
+    const hero = html.match(/<img class="service-hero-image"[^>]+>/)?.[0];
+    assert.ok(hero?.includes(`src="${service.cover.image}"`), `${service.href}: matching hero cover`);
+    assert.ok(fs.existsSync(path.join(root, service.cover.image)), `${service.href}: missing cover asset`);
+    assert.ok(html.includes(`rel="preload" as="image" href="${service.cover.image}"`), `${service.href}: prioritize hero image`);
+    const socialImage = new URL(service.cover.image, serviceSchema.url).href;
+    assert.ok(html.includes(`property="og:image" content="${socialImage}"`), `${service.href}: matching social cover`);
+    assert.equal(serviceSchema.image, socialImage);
+    assert.equal(schema['@graph'].find(item => item['@type'] === 'WebPage').primaryImageOfPage.url, socialImage);
     for (const match of html.matchAll(/href="([^"#?]+\.html)(?:[?#][^"]*)?"/g)) if (!/^https?:/.test(match[1])) assert.ok(fs.existsSync(path.join(root, match[1])), `${service.href}: missing ${match[1]}`);
   }
 });

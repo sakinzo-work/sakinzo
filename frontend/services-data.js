@@ -183,9 +183,30 @@
     faqs: [['Will this work with every smart-home device?', 'Compatibility depends on each device and its supported interfaces. We review the equipment and available APIs before agreeing the integration scope.'], ['Do you install physical hardware?', 'Our service focuses on software and integrations. Hardware supply, electrical work and installation responsibilities are agreed separately with the appropriate providers.'], ['Can we add devices later?', 'We can design extension points for future devices, while checking compatibility and testing each new integration before it is enabled.']],
     related: ['iot-development', 'web-mobile-development', 'architecture-design'], keywords: 'IoT smart home solutions, home automation software, connected building applications'
   });
+  const image = (file, width, height, description, position = '76% center', mobilePosition = '78% center') => ({ image: `assets/${file}`, width, height, description, position, mobilePosition });
+  const software = image('service-software-development.webp', 1907, 825, 'Software development workspace with design, testing and deployment workflows');
+  const ai = image('service-ai.webp', 1896, 830, 'AI workspace with a thinking android and connected AI tools', '80% center', '76% center');
+  const covers = {
+    'web-mobile-development': software,
+    'full-cycle-development': software,
+    'devops-solutions': image('service-devops.webp', 2172, 724, 'Cloud infrastructure and deployment dashboards in a DevOps workspace'),
+    'architecture-design': image('service-architecture.webp', 2172, 724, 'Connected application, database and cloud architecture on a monitor'),
+    'poc-mvp-development': software,
+    'qa-testing': image('service-quality-assurance.webp', 2172, 724, 'Automated quality checks across desktop, tablet and mobile devices'),
+    'ux-ui-design': software,
+    'business-analysis': image('service-business-analysis.webp', 2171, 724, 'Business analytics dashboards in a green workspace'),
+    'iot-development': image('service-iot.webp', 1886, 834, 'IoT network connecting sensors and smart devices through a cloud platform', '78% center', '72% center'),
+    'ai-development': ai,
+    'ai-agent-development': ai,
+    'ecommerce-development': image('service-ecommerce.webp', 1883, 835, 'Connected eCommerce storefront, shopping cart and payment network'),
+    'fintech-development': image('service-fintech.webp', 1883, 835, 'Digital banking application with payment and security connections'),
+    'blockchain-development': image('what-we-do-blockchain.webp', 2157, 729, 'Blockchain network and financial dashboard on a mobile device'),
+    'smart-home-solutions': image('what-we-do-iot.webp', 2170, 725, 'Connected smart-home controls, sensors and devices', '78% center', '74% center')
+  };
   for (const service of services) {
     service.href = `${service.slug}.html`;
     service.seoTitle = `${service.name}${service.name.endsWith('Services') ? '' : ' Services'} | Sakin.zo`;
+    service.cover = covers[service.slug];
   }
   if (typeof module === 'object' && module.exports) module.exports = services;
   else root.SakinzoServices = services;

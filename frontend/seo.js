@@ -51,6 +51,9 @@
   const proxySource = new URL(sourceUrl);
   if (identity) proxySource.searchParams.set(identityKey, identity);
   const canonicalUrl = onProxy ? proxySource.href : `${location.origin}${cleanPath}${identity ? `?${identityKey}=${encodeURIComponent(identity)}` : ''}`;
+  const cover = (services.find(service => service.slug === slug) || (slug === 'services' ? services[0] : null))?.cover;
+  const socialImage = new URL(cover?.image || 'assets/sakinzo-hero-desktop-waves.webp', canonicalUrl).href;
+  const imageDescription = cover?.description || 'Sakin.zo software product engineering';
   document.title = config[0];
   upsertMeta('description', config[1]);
   upsertMeta('keywords', config[2]);
@@ -62,13 +65,13 @@
   upsertMeta('og:description', config[1], true);
   upsertMeta('og:url', canonicalUrl, true);
   upsertMeta('og:locale', 'en_US', true);
-  upsertMeta('og:image', new URL('assets/sakinzo-hero-desktop-waves.webp', canonicalUrl).href, true);
-  upsertMeta('og:image:alt', 'Sakin.zo software product engineering', true);
+  upsertMeta('og:image', socialImage, true);
+  upsertMeta('og:image:alt', imageDescription, true);
   upsertMeta('twitter:card', 'summary_large_image');
   upsertMeta('twitter:title', config[0]);
   upsertMeta('twitter:description', config[1]);
-  upsertMeta('twitter:image', new URL('assets/sakinzo-hero-desktop-waves.webp', canonicalUrl).href);
-  upsertMeta('twitter:image:alt', 'Sakin.zo software product engineering');
+  upsertMeta('twitter:image', socialImage);
+  upsertMeta('twitter:image:alt', imageDescription);
   let canonical = document.head.querySelector('link[rel="canonical"]');
   if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
   canonical.href = canonicalUrl;

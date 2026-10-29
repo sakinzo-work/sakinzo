@@ -17,11 +17,13 @@ for (const filename of fs.readdirSync(root).filter(file => file.endsWith('.html'
   const slug = filename.replace(/\.html$/, ''), page = archived[slug] || slug;
   const [title, description, keywords] = metadata(page);
   const url = new URL(page === 'index' ? './' : `${page}.html`, site).href;
-  const image = new URL('assets/sakinzo-hero-desktop-waves.webp', site).href;
+  const cover = (services.find(service => service.slug === page) || (page === 'services' ? services[0] : null))?.cover;
+  const image = new URL(cover?.image || 'assets/sakinzo-hero-desktop-waves.webp', site).href;
+  const imageDescription = cover?.description || 'Sakin.zo software product engineering';
   const tags = [
     `    <title>${escape(title)}</title>`,
-    ...Object.entries({ description, keywords, robots: archived[slug] ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1', googlebot: archived[slug] ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1', 'twitter:card': 'summary_large_image', 'twitter:title': title, 'twitter:description': description, 'twitter:image': image, 'twitter:image:alt': 'Sakin.zo software product engineering' }).map(([key, value]) => `    <meta name="${key}" content="${escape(value)}">`),
-    ...Object.entries({ 'og:type': ['blog', 'project'].includes(page) ? 'article' : 'website', 'og:site_name': 'Sakin.zo', 'og:title': title, 'og:description': description, 'og:url': url, 'og:locale': 'en_US', 'og:image': image, 'og:image:alt': 'Sakin.zo software product engineering' }).map(([key, value]) => `    <meta property="${key}" content="${escape(value)}">`),
+    ...Object.entries({ description, keywords, robots: archived[slug] ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1', googlebot: archived[slug] ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1', 'twitter:card': 'summary_large_image', 'twitter:title': title, 'twitter:description': description, 'twitter:image': image, 'twitter:image:alt': imageDescription }).map(([key, value]) => `    <meta name="${key}" content="${escape(value)}">`),
+    ...Object.entries({ 'og:type': ['blog', 'project'].includes(page) ? 'article' : 'website', 'og:site_name': 'Sakin.zo', 'og:title': title, 'og:description': description, 'og:url': url, 'og:locale': 'en_US', 'og:image': image, 'og:image:alt': imageDescription }).map(([key, value]) => `    <meta property="${key}" content="${escape(value)}">`),
     `    <link rel="canonical" href="${escape(url)}">`,
     `    <link rel="alternate" hreflang="en" href="${escape(url)}">`,
     `    <link rel="alternate" hreflang="x-default" href="${escape(url)}">`
@@ -36,7 +38,8 @@ for (const filename of fs.readdirSync(root).filter(file => file.endsWith('.html'
   const service = services.find(service => service.slug === page);
   if (service) {
     graph[0].mainEntity = { '@id': `${url}#service` };
-    graph.push({ '@type': 'Service', '@id': `${url}#service`, name: service.name, serviceType: service.name, description: service.summary, url, provider: { '@id': `${site.href}#organization` }, areaServed: 'Worldwide' });
+    graph[0].primaryImageOfPage = { '@type': 'ImageObject', url: image, width: cover.width, height: cover.height };
+    graph.push({ '@type': 'Service', '@id': `${url}#service`, name: service.name, serviceType: service.name, description: service.summary, url, image, provider: { '@id': `${site.href}#organization` }, areaServed: 'Worldwide' });
     graph.push({ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: site.href }, { '@type': 'ListItem', position: 2, name: 'Services', item: new URL('services.html', site).href }, { '@type': 'ListItem', position: 3, name: service.name, item: url }] });
   }
   if (page === 'services') graph.push({ '@type': 'ItemList', name: 'Sakin.zo Services', itemListElement: services.map((service, index) => ({ '@type': 'ListItem', position: index + 1, name: service.name, url: new URL(service.href, site).href })) });

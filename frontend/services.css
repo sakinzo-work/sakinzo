@@ -5,3 +5,25 @@
 @media(max-width:1024px){.service-hero-grid{gap:35px;grid-template-columns:1.3fr 1fr}.service-hero-copy{font-size:15px}.service-focus{padding:24px}.service-overview,.service-deliverables,.service-faq-grid{gap:45px}.service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.service-process{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 45px}.service-capabilities{gap:14px}.service-capabilities article{padding:25px 20px}}
 @media(max-width:700px){.service-page .hero.service-hero{padding:98px 20px 48px}.service-breadcrumbs{margin-bottom:30px;font-size:11px;gap:8px}.service-hero-grid,.service-overview,.service-deliverables,.service-faq-grid{grid-template-columns:1fr;gap:30px}.service-page .service-hero h1{font-size:39px}.service-hero-grid .service-focus{margin-top:8px}.service-focus>p{font-size:24px;margin:20px 0}.service-focus li{padding:10px 12px}.service-section-nav{padding:0 20px}.service-section-nav>.wrap{gap:24px}.service-section-nav a{padding:15px 0;font-size:11px}.service-section{padding:54px 20px}.service-section h2,.service-cta h2{font-size:31px}.service-capabilities,.service-grid{grid-template-columns:1fr}.service-capabilities h3{margin-top:18px}.service-capabilities article{padding:26px}.service-section-heading{margin-bottom:26px}.service-process{gap:28px 24px;margin-top:30px}.service-process h3{font-size:16px}.service-step-number{margin-bottom:16px}.service-related-heading{align-items:start;flex-direction:column;gap:18px}.service-cta{padding:52px 20px}.service-cta>.wrap,.service-hub-intro{align-items:start;flex-direction:column;gap:26px}.service-card{padding:26px}.service-hub-intro>p{font-size:16px}.service-page .footer-inner{align-items:start}.service-page .service-hero-actions{gap:20px}.service-page .footer-links{gap:20px}}
 @media(prefers-reduced-motion:reduce){.service-card{transition:none}.service-card:hover{transform:none}.service-page{scroll-behavior:auto}}
+
+/* The hero and social preview use the cover assigned to this service. */
+.service-page .hero.service-hero-photo{background:#071426;min-height:620px}
+.service-hero-photo .service-hero-image{position:absolute;inset:0;z-index:0;width:100%;height:100%;display:block;object-fit:cover;object-position:var(--cover-position,76% center);pointer-events:none}
+.service-hero-photo:before{display:none}
+.service-hero-photo:after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(3,13,29,.96) 0%,rgba(3,13,29,.91) 27%,rgba(3,13,29,.64) 49%,rgba(3,13,29,.15) 78%,rgba(3,13,29,.07) 100%),linear-gradient(0deg,rgba(3,13,29,.3),transparent 65%);pointer-events:none}
+.service-hero-photo>.wrap{position:relative;z-index:2}
+.service-hero-photo .service-hero-grid{display:block}
+.service-hero-photo .service-hero-grid>div{max-width:720px;width:62%}
+.service-hero-photo .service-hero-copy{color:#e1e9f7;text-shadow:0 1px 8px #03101c40}
+.service-hero-photo .service-breadcrumbs{color:#bcd1ee}.service-hero-photo .service-breadcrumbs [aria-current]{color:#e1ebfa}.service-hero-photo .service-eyebrow{color:#a5ceff}
+.service-hero-photo.service-hub-hero h1{max-width:840px;width:70%}
+.service-hero-photo .service-hub-intro{align-items:start;flex-direction:column;max-width:640px;gap:24px}
+.service-hero-photo .service-hub-intro>p{color:#e1e9f7}
+@media(max-width:1024px){.service-hero-photo .service-hero-grid>div{width:75%}.service-hero-photo:after{background:linear-gradient(90deg,rgba(3,13,29,.96),rgba(3,13,29,.79) 48%,rgba(3,13,29,.27)),linear-gradient(0deg,rgba(3,13,29,.35),transparent 70%)}}
+@media(max-width:700px){
+  .service-page .hero.service-hero-photo{min-height:0;padding-bottom:56px}
+  .service-hero-photo .service-hero-image{object-position:var(--cover-mobile-position,78% center)}
+  .service-hero-photo:after{background:linear-gradient(90deg,rgba(3,13,29,.89),rgba(3,13,29,.57)),linear-gradient(0deg,rgba(3,13,29,.88),rgba(3,13,29,.1) 95%)}
+  .service-hero-photo .service-hero-grid>div,.service-hero-photo.service-hub-hero h1{width:100%;max-width:none}
+  .service-hero-photo .service-hero-copy{font-size:15px;line-height:1.8}
+}
