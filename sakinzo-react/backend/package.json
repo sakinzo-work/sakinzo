@@ -1,0 +1,32 @@
+{
+  "name": "sakinzo-mongodb-backend",
+  "version": "1.0.0",
+  "description": "Node.js + Express + MongoDB Atlas backend for Sakinzo website admin panel",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "seed": "node src/seed.js",
+    "test": "node --test",
+    "test:layout": "node --test browser-tests/project-preview-layout.js",
+    "test:i18n": "node --test browser-tests/i18n.js",
+    "test:services": "node --test browser-tests/services.js",
+    "test:heroes": "node --test browser-tests/page-heroes.js",
+    "test:blogs": "node --test browser-tests/blog-guides.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4",
+    "playwright": "1.56.1"
+  }
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "slug": "ai-agent-development",
+    "path": "/ai-agent-development"
+  },
+  {
+    "slug": "ai-development",
+    "path": "/ai-development"
+  },
+  {
+    "slug": "architecture-design",
+    "path": "/architecture-design"
+  },
+  {
+    "slug": "blockchain-development",
+    "path": "/blockchain-development"
+  },
+  {
+    "slug": "blog",
+    "path": "/blog"
+  },
+  {
+    "slug": "business-analysis",
+    "path": "/business-analysis"
+  },
+  {
+    "slug": "careers",
+    "path": "/careers"
+  },
+  {
+    "slug": "contactus",
+    "path": "/contact"
+  },
+  {
+    "slug": "devops-solutions",
+    "path": "/devops-solutions"
+  },
+  {
+    "slug": "ecommerce-development",
+    "path": "/ecommerce-development"
+  },
+  {
+    "slug": "ev-charging",
+    "path": "/ev-charging"
+  },
+  {
+    "slug": "fintech-development",
+    "path": "/fintech-development"
+  },
+  {
+    "slug": "full-cycle-development",
+    "path": "/full-cycle-development"
+  },
+  {
+    "slug": "index",
+    "path": "/"
+  },
+  {
+    "slug": "iot-cloud-platform",
+    "path": "/iot-cloud-platform"
+  },
+  {
+    "slug": "iot-development",
+    "path": "/iot-development"
+  },
+  {
+    "slug": "leadership",
+    "path": "/leadership"
+  },
+  {
+    "slug": "market-access",
+    "path": "/market-access"
+  },
+  {
+    "slug": "multi-currency-wallet",
+    "path": "/multi-currency-wallet"
+  },
+  {
+    "slug": "news",
+    "path": "/news"
+  },
+  {
+    "slug": "opensource",
+    "path": "/opensource"
+  },
+  {
+    "slug": "poc-mvp-development",
+    "path": "/poc-mvp-development"
+  },
+  {
+    "slug": "project",
+    "path": "/projects"
+  },
+  {
+    "slug": "qa-testing",
+    "path": "/qa-testing"
+  },
+  {
+    "slug": "services",
+    "path": "/services"
+  },
+  {
+    "slug": "smart-home-solutions",
+    "path": "/smart-home-solutions"
+  },
+  {
+    "slug": "smart-hvac",
+    "path": "/smart-hvac"
+  },
+  {
+    "slug": "ux-ui-design",
+    "path": "/ux-ui-design"
+  },
+  {
+    "slug": "web-mobile-development",
+    "path": "/web-mobile-development"
+  },
+  {
+    "slug": "who-we-are",
+    "path": "/who-we-are"
+  }
+]

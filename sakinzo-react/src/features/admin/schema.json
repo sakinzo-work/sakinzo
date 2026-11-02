@@ -1,0 +1,546 @@
+{
+  "projects": [
+    {
+      "name": "title",
+      "type": "String",
+      "required": true
+    },
+    {
+      "name": "category",
+      "type": "String",
+      "required": true
+    },
+    {
+      "name": "desc",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "img",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "images",
+      "type": "Array",
+      "required": false
+    },
+    {
+      "name": "modelImage",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "videoUrl",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "demoUrl",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "previewDevice",
+      "type": "String",
+      "required": false,
+      "options": ["auto", "phone", "tablet", "desktop"],
+      "default": "auto"
+    },
+    {
+      "name": "creatorName",
+      "type": "String",
+      "required": false
+    },
+    {
+      "name": "creatorPortfolio",
+      "type": "String",
+      "required": false
+    },
+    {
+      "name": "tags",
+      "type": "Array",
+      "required": false
+    },
+    {
+      "name": "order",
+      "type": "Number",
+      "required": false,
+      "default": 0
+    },
+    {
+      "name": "visible",
+      "type": "Boolean",
+      "required": false,
+      "default": true
+    }
+  ],
+  "blogs": [
+    {
+      "name": "title",
+      "type": "String",
+      "required": false,
+      "maxLength": 180
+    },
+    {
+      "name": "slug",
+      "type": "String",
+      "required": false,
+      "maxLength": 140
+    },
+    {
+      "name": "excerpt",
+      "type": "String",
+      "required": false,
+      "maxLength": 500
+    },
+    {
+      "name": "body",
+      "type": "String",
+      "required": false,
+      "maxLength": 30000
+    },
+    {
+      "name": "category",
+      "type": "String",
+      "required": false,
+      "maxLength": 80,
+      "default": "Technology"
+    },
+    {
+      "name": "author",
+      "type": "String",
+      "required": false,
+      "maxLength": 100,
+      "default": "Sakinzo Team"
+    },
+    {
+      "name": "coverImage",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "tags",
+      "type": "Array",
+      "required": false
+    },
+    {
+      "name": "readTime",
+      "type": "Number",
+      "required": false,
+      "min": 1,
+      "max": 999,
+      "default": 5
+    },
+    {
+      "name": "publishedAt",
+      "type": "Date",
+      "required": false
+    },
+    {
+      "name": "order",
+      "type": "Number",
+      "required": false,
+      "default": 0
+    },
+    {
+      "name": "visible",
+      "type": "Boolean",
+      "required": false,
+      "default": true
+    }
+  ],
+  "insights": [
+    {
+      "name": "title",
+      "type": "String",
+      "required": false,
+      "maxLength": 180
+    },
+    {
+      "name": "desc",
+      "type": "String",
+      "required": false,
+      "maxLength": 1200
+    },
+    {
+      "name": "category",
+      "type": "String",
+      "required": false,
+      "maxLength": 80,
+      "default": ""
+    },
+    {
+      "name": "author",
+      "type": "String",
+      "required": false,
+      "maxLength": 100,
+      "default": "Sakinzo Team"
+    },
+    {
+      "name": "image",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "articleUrl",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "publishedAt",
+      "type": "Date",
+      "required": false
+    },
+    {
+      "name": "rating",
+      "type": "Number",
+      "required": false,
+      "min": 0,
+      "max": 5,
+      "default": 0
+    },
+    {
+      "name": "readTime",
+      "type": "Number",
+      "required": false,
+      "min": 1,
+      "max": 999,
+      "default": 5
+    },
+    {
+      "name": "order",
+      "type": "Number",
+      "required": false,
+      "default": 0
+    },
+    {
+      "name": "visible",
+      "type": "Boolean",
+      "required": false,
+      "default": true
+    }
+  ],
+  "clients": [
+    {
+      "name": "name",
+      "type": "String",
+      "required": true
+    },
+    {
+      "name": "logo",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "website",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "order",
+      "type": "Number",
+      "required": false,
+      "default": 0
+    },
+    {
+      "name": "visible",
+      "type": "Boolean",
+      "required": false,
+      "default": true
+    }
+  ],
+  "team": [
+    {
+      "name": "name",
+      "type": "String",
+      "required": true
+    },
+    {
+      "name": "role",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "initials",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "color",
+      "type": "String",
+      "required": false,
+      "default": "#3b82f6"
+    },
+    {
+      "name": "portfolio",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "github",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "order",
+      "type": "Number",
+      "required": false,
+      "default": 0
+    },
+    {
+      "name": "visible",
+      "type": "Boolean",
+      "required": false,
+      "default": true
+    }
+  ],
+  "testimonials": [
+    {
+      "name": "name",
+      "type": "String",
+      "required": true
+    },
+    {
+      "name": "role",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "initials",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "text",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "order",
+      "type": "Number",
+      "required": false,
+      "default": 0
+    },
+    {
+      "name": "visible",
+      "type": "Boolean",
+      "required": false,
+      "default": true
+    }
+  ],
+  "stats": [
+    {
+      "name": "value",
+      "type": "String",
+      "required": true
+    },
+    {
+      "name": "label",
+      "type": "String",
+      "required": true
+    },
+    {
+      "name": "order",
+      "type": "Number",
+      "required": false,
+      "default": 0
+    },
+    {
+      "name": "visible",
+      "type": "Boolean",
+      "required": false,
+      "default": true
+    }
+  ],
+  "mapLocations": [
+    {
+      "name": "name",
+      "type": "String",
+      "required": true
+    },
+    {
+      "name": "country",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "city",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "lat",
+      "type": "Number",
+      "required": true,
+      "min": -90,
+      "max": 90
+    },
+    {
+      "name": "lng",
+      "type": "Number",
+      "required": true,
+      "min": -180,
+      "max": 180
+    },
+    {
+      "name": "clientsCount",
+      "type": "Number",
+      "required": false,
+      "default": 1
+    },
+    {
+      "name": "notes",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "order",
+      "type": "Number",
+      "required": false,
+      "default": 0
+    },
+    {
+      "name": "visible",
+      "type": "Boolean",
+      "required": false,
+      "default": true
+    }
+  ],
+  "contactOffices": [
+    {
+      "name": "name",
+      "type": "String",
+      "required": true
+    },
+    {
+      "name": "country",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "address",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "mapUrl",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "email",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "phone",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "order",
+      "type": "Number",
+      "required": false,
+      "default": 0
+    },
+    {
+      "name": "visible",
+      "type": "Boolean",
+      "required": false,
+      "default": true
+    }
+  ],
+  "admins": [
+    {
+      "name": "name",
+      "type": "String",
+      "required": false,
+      "default": "Admin"
+    },
+    {
+      "name": "employeeId",
+      "type": "String",
+      "required": false
+    },
+    {
+      "name": "position",
+      "type": "String",
+      "required": false,
+      "default": "Employee"
+    },
+    {
+      "name": "email",
+      "type": "String",
+      "required": true
+    },
+    {
+      "name": "password",
+      "type": "String",
+      "required": true,
+      "minLength": 8
+    },
+    {
+      "name": "role",
+      "type": "String",
+      "required": false,
+      "options": ["owner", "admin", "employee"],
+      "default": "employee"
+    },
+    {
+      "name": "profileImage",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "phone",
+      "type": "String",
+      "required": false,
+      "default": ""
+    },
+    {
+      "name": "bio",
+      "type": "String",
+      "required": false,
+      "maxLength": 1000,
+      "default": ""
+    },
+    {
+      "name": "permissions",
+      "type": "Array",
+      "required": false
+    },
+    {
+      "name": "active",
+      "type": "Boolean",
+      "required": false,
+      "default": true
+    }
+  ]
+}

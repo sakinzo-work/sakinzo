@@ -1,0 +1,353 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/sitemap-live.xml",
+      "destination": "/api/page?kind=sitemap"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/api/page?kind=blog&value=:slug"
+    },
+    {
+      "source": "/projects/:id",
+      "destination": "/api/page?kind=project&value=:id"
+    },
+    {
+      "source": "/blog",
+      "destination": "/api/page?kind=blog-index"
+    },
+    {
+      "source": "/projects",
+      "destination": "/api/page?kind=project-index"
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "/seo/admin.html"
+    },
+    {
+      "source": "/ai-agent-development",
+      "destination": "/seo/ai-agent-development.html"
+    },
+    {
+      "source": "/ai-development",
+      "destination": "/seo/ai-development.html"
+    },
+    {
+      "source": "/architecture-design",
+      "destination": "/seo/architecture-design.html"
+    },
+    {
+      "source": "/blockchain-development",
+      "destination": "/seo/blockchain-development.html"
+    },
+    {
+      "source": "/business-analysis",
+      "destination": "/seo/business-analysis.html"
+    },
+    {
+      "source": "/careers",
+      "destination": "/seo/careers.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/seo/contactus.html"
+    },
+    {
+      "source": "/devops-solutions",
+      "destination": "/seo/devops-solutions.html"
+    },
+    {
+      "source": "/ecommerce-development",
+      "destination": "/seo/ecommerce-development.html"
+    },
+    {
+      "source": "/ev-charging",
+      "destination": "/seo/ev-charging.html"
+    },
+    {
+      "source": "/fintech-development",
+      "destination": "/seo/fintech-development.html"
+    },
+    {
+      "source": "/full-cycle-development",
+      "destination": "/seo/full-cycle-development.html"
+    },
+    {
+      "source": "/iot-cloud-platform",
+      "destination": "/seo/iot-cloud-platform.html"
+    },
+    {
+      "source": "/iot-development",
+      "destination": "/seo/iot-development.html"
+    },
+    {
+      "source": "/leadership",
+      "destination": "/seo/leadership.html"
+    },
+    {
+      "source": "/market-access",
+      "destination": "/seo/market-access.html"
+    },
+    {
+      "source": "/multi-currency-wallet",
+      "destination": "/seo/multi-currency-wallet.html"
+    },
+    {
+      "source": "/news",
+      "destination": "/seo/news.html"
+    },
+    {
+      "source": "/opensource",
+      "destination": "/seo/opensource.html"
+    },
+    {
+      "source": "/poc-mvp-development",
+      "destination": "/seo/poc-mvp-development.html"
+    },
+    {
+      "source": "/qa-testing",
+      "destination": "/seo/qa-testing.html"
+    },
+    {
+      "source": "/services",
+      "destination": "/seo/services.html"
+    },
+    {
+      "source": "/smart-home-solutions",
+      "destination": "/seo/smart-home-solutions.html"
+    },
+    {
+      "source": "/smart-hvac",
+      "destination": "/seo/smart-hvac.html"
+    },
+    {
+      "source": "/ux-ui-design",
+      "destination": "/seo/ux-ui-design.html"
+    },
+    {
+      "source": "/web-mobile-development",
+      "destination": "/seo/web-mobile-development.html"
+    },
+    {
+      "source": "/who-we-are",
+      "destination": "/seo/who-we-are.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/api/page?kind=not-found"
+    }
+  ],
+  "functions": {
+    "api/page.mjs": {
+      "includeFiles": ".cache/seo/**",
+      "maxDuration": 30
+    }
+  },
+  "redirects": [
+    {
+      "source": "/ai-agent-development.html",
+      "destination": "/ai-agent-development",
+      "permanent": true
+    },
+    {
+      "source": "/ai-development.html",
+      "destination": "/ai-development",
+      "permanent": true
+    },
+    {
+      "source": "/architecture-design.html",
+      "destination": "/architecture-design",
+      "permanent": true
+    },
+    {
+      "source": "/blockchain-development.html",
+      "destination": "/blockchain-development",
+      "permanent": true
+    },
+    {
+      "source": "/blog.html",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/business-analysis.html",
+      "destination": "/business-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/careers.html",
+      "destination": "/careers",
+      "permanent": true
+    },
+    {
+      "source": "/contactus.html",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/devops-solutions.html",
+      "destination": "/devops-solutions",
+      "permanent": true
+    },
+    {
+      "source": "/ecommerce-development.html",
+      "destination": "/ecommerce-development",
+      "permanent": true
+    },
+    {
+      "source": "/ev-charging.html",
+      "destination": "/ev-charging",
+      "permanent": true
+    },
+    {
+      "source": "/fintech-development.html",
+      "destination": "/fintech-development",
+      "permanent": true
+    },
+    {
+      "source": "/full-cycle-development.html",
+      "destination": "/full-cycle-development",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/iot-cloud-platform.html",
+      "destination": "/iot-cloud-platform",
+      "permanent": true
+    },
+    {
+      "source": "/iot-development.html",
+      "destination": "/iot-development",
+      "permanent": true
+    },
+    {
+      "source": "/leadership.html",
+      "destination": "/leadership",
+      "permanent": true
+    },
+    {
+      "source": "/market-access.html",
+      "destination": "/market-access",
+      "permanent": true
+    },
+    {
+      "source": "/multi-currency-wallet.html",
+      "destination": "/multi-currency-wallet",
+      "permanent": true
+    },
+    {
+      "source": "/news.html",
+      "destination": "/news",
+      "permanent": true
+    },
+    {
+      "source": "/opensource.html",
+      "destination": "/opensource",
+      "permanent": true
+    },
+    {
+      "source": "/poc-mvp-development.html",
+      "destination": "/poc-mvp-development",
+      "permanent": true
+    },
+    {
+      "source": "/project.html",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/qa-testing.html",
+      "destination": "/qa-testing",
+      "permanent": true
+    },
+    {
+      "source": "/services.html",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/smart-home-solutions.html",
+      "destination": "/smart-home-solutions",
+      "permanent": true
+    },
+    {
+      "source": "/smart-hvac.html",
+      "destination": "/smart-hvac",
+      "permanent": true
+    },
+    {
+      "source": "/ux-ui-design.html",
+      "destination": "/ux-ui-design",
+      "permanent": true
+    },
+    {
+      "source": "/web-mobile-development.html",
+      "destination": "/web-mobile-development",
+      "permanent": true
+    },
+    {
+      "source": "/who-we-are.html",
+      "destination": "/who-we-are",
+      "permanent": true
+    },
+    {
+      "source": "/admin.html",
+      "destination": "/admin",
+      "permanent": true
+    },
+    {
+      "source": "/ad.html",
+      "destination": "/admin",
+      "permanent": true
+    },
+    {
+      "source": "/contactus",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/constactus2.html",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/index1.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/newindex.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/preindex.html",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/admin/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    }
+  ]
+}

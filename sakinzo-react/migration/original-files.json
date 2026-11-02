@@ -1,0 +1,782 @@
+[
+  {
+    "path": "frontend/ad.html",
+    "bytes": 44635,
+    "sha256": "2ec0892286cba39a9c665feb8e7ca2dbc0644f2c8960e31ddad1d1e24f4b412f"
+  },
+  {
+    "path": "frontend/admin-icon-192.png",
+    "bytes": 1958,
+    "sha256": "9c2f58fd48227c1964d2d1f998f5d673644c060d63f657b364ba453d1a6f33b0"
+  },
+  {
+    "path": "frontend/admin-icon-512.png",
+    "bytes": 5186,
+    "sha256": "94b41597e6904630fd6364527cdc475ea397002e894b421b87f67e3e03e40355"
+  },
+  {
+    "path": "frontend/admin-sw.js",
+    "bytes": 1402,
+    "sha256": "3a98df1a5a5a11109c5b03b8b9d0fe588d43627b43f385285df60179a1745f50"
+  },
+  {
+    "path": "frontend/admin.html",
+    "bytes": 126339,
+    "sha256": "737dcc49448c6b9bd58af3ae7558d0a406f45a1d6d09a5167803d0f78398569e"
+  },
+  {
+    "path": "frontend/admin.webmanifest",
+    "bytes": 761,
+    "sha256": "be8a630e6048c34f966423e9bae2804665ed850f3a1eeb0694bf81ffbdfa0c91"
+  },
+  {
+    "path": "frontend/ai-agent-development.html",
+    "bytes": 20642,
+    "sha256": "1df5d5513944d2744777ffdd7b7e4bc8e99c693f5c81a716897fc9a37104c138"
+  },
+  {
+    "path": "frontend/ai-development.html",
+    "bytes": 20760,
+    "sha256": "43761cf93cabce396504ff7777396f4f8932dd8c498c720cc4570c815d6411ef"
+  },
+  {
+    "path": "frontend/architecture-design.html",
+    "bytes": 20878,
+    "sha256": "45a8eae45dcfab67451da439558e6dfd78da90ab2b1bbe6a934a7a37df4abbfc"
+  },
+  {
+    "path": "frontend/assets/Blue_Network_Wave_HD_Clear.mp4",
+    "bytes": 2060771,
+    "sha256": "52565c1907388b65f3a182623769d5d07b1b7b4e67bc9eacd5d86f51a854a9c8"
+  },
+  {
+    "path": "frontend/assets/page-careers.webp",
+    "bytes": 109030,
+    "sha256": "c7e612477c45311a92c41f8b39fb0a7afb1b2b887db34a68d3c53b4fc57d44ae"
+  },
+  {
+    "path": "frontend/assets/page-company.webp",
+    "bytes": 110628,
+    "sha256": "6b4e06e30068b3c3eb5107a12e6ea7241531fb78cdb7c47a4234820dbf97f675"
+  },
+  {
+    "path": "frontend/assets/page-ev-charging.webp",
+    "bytes": 169270,
+    "sha256": "abf7e0a34df692995712ee1693d36583587a05cc954bfcbd593b97ae387201e2"
+  },
+  {
+    "path": "frontend/assets/page-hero-assets.md",
+    "bytes": 6709,
+    "sha256": "d5978a3187b264d5414b1b8a19e0e291da60340c0b2aee78345136615d8a46ce"
+  },
+  {
+    "path": "frontend/assets/page-insights.webp",
+    "bytes": 127310,
+    "sha256": "dedb107a6a27fa3f7dc3abf82b6b0165d436522ea72cf3d39c160d6be8a8a5c2"
+  },
+  {
+    "path": "frontend/assets/page-leadership.webp",
+    "bytes": 137680,
+    "sha256": "ef214b11eff51a7f471cf71ff230838a7f192f2512d3c7a07fe516dc0ad0968a"
+  },
+  {
+    "path": "frontend/assets/page-smart-hvac.webp",
+    "bytes": 124596,
+    "sha256": "31bc804f9a14323af21bb12af0e4dae9556e69715b45638ca4d2fd9b1c35fe7e"
+  },
+  {
+    "path": "frontend/assets/sakinzo-hero-desktop-waves.png",
+    "bytes": 2027199,
+    "sha256": "6ca84f056d583dec60c869bac89937881f66288c0094cbe1334b6564742a05d8"
+  },
+  {
+    "path": "frontend/assets/sakinzo-hero-desktop-waves.webp",
+    "bytes": 356746,
+    "sha256": "2d56b86a83b48f65b6227a3b3e810c99c32bad7ef838f0b7282f445b564cc330"
+  },
+  {
+    "path": "frontend/assets/sakinzo-hero-mobile.png",
+    "bytes": 1544368,
+    "sha256": "c6beecc502804118fb58ce4cbc81b7e3812fe794a7915e0213115ec417b3c462"
+  },
+  {
+    "path": "frontend/assets/sakinzo-hero-mobile.webp",
+    "bytes": 65122,
+    "sha256": "b0354c9eb69b1b81acf93953caa2c855f9467f0d42953454ab0bdb6c0d444d9d"
+  },
+  {
+    "path": "frontend/assets/service-ai.webp",
+    "bytes": 195102,
+    "sha256": "6fe06e0714887b88030849f578d7d8590669372010e348f5a82dcb59205c5200"
+  },
+  {
+    "path": "frontend/assets/service-architecture.webp",
+    "bytes": 141790,
+    "sha256": "677f3fe5619f29dd8a3e84888bb2bb313d7d48fc16f2ca1bbe0e533a4810fbde"
+  },
+  {
+    "path": "frontend/assets/service-business-analysis.webp",
+    "bytes": 114450,
+    "sha256": "f25ff668145020841155afe88430a5aae8f4c221b29d1287e2da0109cd00fdf2"
+  },
+  {
+    "path": "frontend/assets/service-devops.webp",
+    "bytes": 128152,
+    "sha256": "79512274eb8a37cbb9482a1538e3a6e09c1d1565bc77c247506899ea54006a35"
+  },
+  {
+    "path": "frontend/assets/service-ecommerce.webp",
+    "bytes": 146246,
+    "sha256": "4024cef6f9e582396fa1f608b93b70d3e06b3c47a2d5d88590ac78b2d1c0d92f"
+  },
+  {
+    "path": "frontend/assets/service-fintech.webp",
+    "bytes": 100404,
+    "sha256": "5ba5706520dacbb98d5925814785b0d7dd56e090f3457b65d54b22071d54d9cc"
+  },
+  {
+    "path": "frontend/assets/service-hero-assets.md",
+    "bytes": 4716,
+    "sha256": "712843c07efaabbba4dbacacd957fb2cd4753475f077fdef9fea274065fb2f87"
+  },
+  {
+    "path": "frontend/assets/service-iot.webp",
+    "bytes": 154034,
+    "sha256": "3bd094eeada99127b27c433d96a91212a8d7882f25a0fd47ad0f92fc776802b0"
+  },
+  {
+    "path": "frontend/assets/service-quality-assurance.webp",
+    "bytes": 102500,
+    "sha256": "c44c564af95d142eaa1ae5a69453cb472b66b816c642f118a95a27dcedda890b"
+  },
+  {
+    "path": "frontend/assets/service-software-development.webp",
+    "bytes": 176528,
+    "sha256": "1ba11a32de32ed0b041d9f1f9771fef5388a6c4ece75c51f040011aa382a8803"
+  },
+  {
+    "path": "frontend/assets/what-we-do-ai-holograms.webp",
+    "bytes": 185952,
+    "sha256": "00e94baf66a553fb87f123f1df31515d0cfb9f7636fea29a5399b383f90087e3"
+  },
+  {
+    "path": "frontend/assets/what-we-do-blockchain.webp",
+    "bytes": 141438,
+    "sha256": "db5dcef63d61be9e4fef00bb97f757f4de9a2465ddc9e86c268655c866f0cad4"
+  },
+  {
+    "path": "frontend/assets/what-we-do-development.webp",
+    "bytes": 134992,
+    "sha256": "9d57d62b0c7ab120d31fe04565ff18713a02a25e871a2f9de27c7a47c4d9986e"
+  },
+  {
+    "path": "frontend/assets/what-we-do-ecommerce.webp",
+    "bytes": 123532,
+    "sha256": "4060d408158fb041e979263d0c3ec81d7dd1da182f285cc6f4147c41311d4387"
+  },
+  {
+    "path": "frontend/assets/what-we-do-fintech.webp",
+    "bytes": 142510,
+    "sha256": "6a5e618eb07facf1706b7dd2f7e288f7216e5f05ef925b7621954234a0c12c88"
+  },
+  {
+    "path": "frontend/assets/what-we-do-iot.webp",
+    "bytes": 146352,
+    "sha256": "516018b5961d441bf98b93b605620e7cd1d3347a8f0f51b7041e918a8cca522b"
+  },
+  {
+    "path": "frontend/blockchain-development.html",
+    "bytes": 20937,
+    "sha256": "8738f8d25ca5522af3c3ee0f1e9e2d5a80f8094a410653c7e616073401fbc79b"
+  },
+  {
+    "path": "frontend/blog-content.css",
+    "bytes": 1902,
+    "sha256": "ad082ea0fd74c5c7ca35e73f3d5fdc3f785ebb73079a4c86ac0ff8185ae4940e"
+  },
+  {
+    "path": "frontend/blog-content.js",
+    "bytes": 3401,
+    "sha256": "11fba654480371b327b8ba2af770d105cb6391d4edd0f9f0981bf6d08fc32097"
+  },
+  {
+    "path": "frontend/blog.html",
+    "bytes": 20330,
+    "sha256": "0a3bc3c7b5cd85cfdd2eb8869ea8ce937be1b2d231dc7811ab21321c6cd07994"
+  },
+  {
+    "path": "frontend/business-analysis.html",
+    "bytes": 20668,
+    "sha256": "0a04f47faa63a1ea9aaa57b9313f441feee2e893f52ba4703c84dc7a5174a466"
+  },
+  {
+    "path": "frontend/careers.html",
+    "bytes": 4718,
+    "sha256": "ae001f077e9f5d21d2e20682af13c67cf3e90b7e8f3ec311e2e3c31b6950fdd9"
+  },
+  {
+    "path": "frontend/constactus2.html",
+    "bytes": 85154,
+    "sha256": "8a933158835bde88271abbc501938d3c27afb20565211f2a8236d5f972622637"
+  },
+  {
+    "path": "frontend/contactus.html",
+    "bytes": 93037,
+    "sha256": "86d40f3595b6f6c7ad6e12042ab62bc309ce3e174ccaf2618cef345d30b7f9b7"
+  },
+  {
+    "path": "frontend/devops-solutions.html",
+    "bytes": 20904,
+    "sha256": "540843f628d021a69cf61bc28a2abc2083d0fc9bf93966f9e3acd52b55a5771a"
+  },
+  {
+    "path": "frontend/ecommerce-development.html",
+    "bytes": 20895,
+    "sha256": "fe579007dd54b88f785f418a860fe17d26dba7074871e6c0724b7a90c4288a15"
+  },
+  {
+    "path": "frontend/ev-charging.html",
+    "bytes": 4779,
+    "sha256": "435dcdb5923c3bafaa2a239e4432a2afa660c8c044d28d70b63ee4643ecc288a"
+  },
+  {
+    "path": "frontend/favicon.svg",
+    "bytes": 521,
+    "sha256": "449b8b71f0880e44b7f814baa9d5126bb7a40a879ac98a588108155d4dc436e4"
+  },
+  {
+    "path": "frontend/fintech-development.html",
+    "bytes": 21002,
+    "sha256": "8bd2febfd7ba67ed6ea15cc1971efa54bde80c979b5098dbf2ec1798ea51c530"
+  },
+  {
+    "path": "frontend/full-cycle-development.html",
+    "bytes": 20841,
+    "sha256": "7410abee31716c86d4736b398b42706b07998ced39ca2107fc172530f3a396e8"
+  },
+  {
+    "path": "frontend/google9c0a841d5cc624b1.html",
+    "bytes": 53,
+    "sha256": "bfd6f71d308e60c39e7aa07aaf7bb6e615ce1d8ded414bfab80c2a4a1d06fcd4"
+  },
+  {
+    "path": "frontend/i18n.css",
+    "bytes": 3638,
+    "sha256": "baa6d16c75dc7a02f9a676e7ae9c11c0b5be52c132b673b92dc4c33b3153f47e"
+  },
+  {
+    "path": "frontend/i18n.js",
+    "bytes": 19835,
+    "sha256": "7fa228e54101c41b3abd50316a0753837e9192e94b9814764ddb34207aa3b9f0"
+  },
+  {
+    "path": "frontend/index.html",
+    "bytes": 174537,
+    "sha256": "1d9970806f17dad5a6addda29b03b26ff56014dd66bd16cbcf96f6b3d9b2a33e"
+  },
+  {
+    "path": "frontend/index1.html",
+    "bytes": 141921,
+    "sha256": "1e85b54b78f9120587a9aabf1fcce3dd98de27765df0f98a7201c16e0849b9ab"
+  },
+  {
+    "path": "frontend/iot-cloud-platform.html",
+    "bytes": 4788,
+    "sha256": "163357448f745e3c98658245da0758055649bec34a840c1a39d84c248b2368ac"
+  },
+  {
+    "path": "frontend/iot-development.html",
+    "bytes": 20965,
+    "sha256": "a5b3d567975e442126149c486d0931ae41113be87f189f091edb82ddd0ec647c"
+  },
+  {
+    "path": "frontend/languages.json",
+    "bytes": 10608,
+    "sha256": "aad77914ceee36304c4feceb167e998175c6f65fc860764de132983ddf04da8b"
+  },
+  {
+    "path": "frontend/leadership.html",
+    "bytes": 4695,
+    "sha256": "7673a7c386fb7069dbc7b724a770ab7f661c930b2077d018d91901b4d6fcd7fc"
+  },
+  {
+    "path": "frontend/market-access.html",
+    "bytes": 4730,
+    "sha256": "f098116f9a02e820de5128d98e4689ca611d20da5fb3cc1ab3f8d449d5ca59e5"
+  },
+  {
+    "path": "frontend/multi-currency-wallet.html",
+    "bytes": 4799,
+    "sha256": "62f4c575557fcc7cd5088f81495850724c262b5dab8fa77c4ae57a845368baca"
+  },
+  {
+    "path": "frontend/newindex.html",
+    "bytes": 170483,
+    "sha256": "f03d9d00f878ce5dcf4ca0ce200242092cc072e9751aa664a6ec92ad5305e9e6"
+  },
+  {
+    "path": "frontend/news.html",
+    "bytes": 4569,
+    "sha256": "11d87e7c40e87940a32f8641cc3a6c96f771b528af58edfb3c18944395bcf708"
+  },
+  {
+    "path": "frontend/opensource.html",
+    "bytes": 4656,
+    "sha256": "387d9be881c52195b6cae474e0f114748c2f6e1f612e85f482823f6128166491"
+  },
+  {
+    "path": "frontend/page-covers.js",
+    "bytes": 3325,
+    "sha256": "da2c5e2d576eb3c05f3d1c1e5cf04069cd63f2327b07c1d1261ddfb1ce077d9b"
+  },
+  {
+    "path": "frontend/page-heroes.css",
+    "bytes": 3603,
+    "sha256": "5a6569d08c7a475966cc1df11a0bf147bd0111716801ec197ba0476ff83443a9"
+  },
+  {
+    "path": "frontend/page-heroes.js",
+    "bytes": 3026,
+    "sha256": "f40ae79a14edb6c93dd9a83d5a1336e4bccc37cd7f87b5ed1eb41e539cf98586"
+  },
+  {
+    "path": "frontend/poc-mvp-development.html",
+    "bytes": 21223,
+    "sha256": "af2ac2f0edff204f5728cd383aaaa9d777e8758e7fd6a34d5cce67e97c3246d8"
+  },
+  {
+    "path": "frontend/preindex.html",
+    "bytes": 160309,
+    "sha256": "eeae5ab44cba00105819db872d52f38da94a0ae3885907eb5ddcbd5e2cae34b9"
+  },
+  {
+    "path": "frontend/project.html",
+    "bytes": 27355,
+    "sha256": "11b23c1a1124991391c9efec05ebb91c5d1eda012d15b8b6f4726af89d83ad93"
+  },
+  {
+    "path": "frontend/qa-testing.html",
+    "bytes": 20636,
+    "sha256": "0d0f1811cee6f6ac9572551c995bd54c1291e4fdb4719834e5e199015fc788cd"
+  },
+  {
+    "path": "frontend/robots.txt",
+    "bytes": 258,
+    "sha256": "30b6a10e3be9df1e21d4124896e5f0694d40b4394746f9644870dd66fef18aa2"
+  },
+  {
+    "path": "frontend/seo.js",
+    "bytes": 15109,
+    "sha256": "089a3cd918c833049a79538b22294c1a467066e9445c8474d9b7513c0f2f2cb4"
+  },
+  {
+    "path": "frontend/service-navigation.css",
+    "bytes": 1148,
+    "sha256": "5bcfab7f9bdc935736b09b5b9c1e702d78970c92f87ee958c9224d8499716690"
+  },
+  {
+    "path": "frontend/service-navigation.js",
+    "bytes": 2891,
+    "sha256": "be4bbefa73f8f813da1fe9484c9668baf68f089c432102bdc29e16a412096930"
+  },
+  {
+    "path": "frontend/service-page.js",
+    "bytes": 2085,
+    "sha256": "9ec796dd4154ce8eae0efe608c5c4eb80a2645a91101bc1129e4959dab54e1f3"
+  },
+  {
+    "path": "frontend/services-data.js",
+    "bytes": 40253,
+    "sha256": "223d9eac5a361c9e63adc305868f31d4ed30ba57c30eb7836df002bfc8a241fa"
+  },
+  {
+    "path": "frontend/services.css",
+    "bytes": 12583,
+    "sha256": "eb250fcb3891a0c89bf57356f76e62cb4b023def846b16c12f1799fef5cb6fb2"
+  },
+  {
+    "path": "frontend/services.html",
+    "bytes": 24427,
+    "sha256": "0402cbbe39d84ce29e3a791ac1c3bec2d1cda8177349d14d656a8c44cff773e8"
+  },
+  {
+    "path": "frontend/site-ui.css",
+    "bytes": 552,
+    "sha256": "e57075762d0fb733eebfb74082608979732834a773f1db9dc8006ebf04796c40"
+  },
+  {
+    "path": "frontend/site.webmanifest",
+    "bytes": 343,
+    "sha256": "f71f497d408ce6a0b42ce85a40ab77326f70a63beafcfd550bad45e2ffa19240"
+  },
+  {
+    "path": "frontend/sitemap.xml",
+    "bytes": 3611,
+    "sha256": "3c9cf8122ddbc4fd24bcf20b3d0f1d986850805dbb7c9f36cbebb0fb4190d668"
+  },
+  {
+    "path": "frontend/smart-home-solutions.html",
+    "bytes": 21053,
+    "sha256": "77cbc4c43f8daa73a4a7f6738c5c404ac1c92cb0d99a80cc429607d09ea4796a"
+  },
+  {
+    "path": "frontend/smart-hvac.html",
+    "bytes": 4684,
+    "sha256": "2226e7749c1e6e8deb8f5540a2e1d8d2edd73ad390cdffd0a6761b081e24adec"
+  },
+  {
+    "path": "frontend/subpage.css",
+    "bytes": 8505,
+    "sha256": "8c4f1d0779bccaffc16b8c32a47770e5b316385c6bbdd72e033e82fa183ee196"
+  },
+  {
+    "path": "frontend/subpage.js",
+    "bytes": 18186,
+    "sha256": "79d903517a241283664792f8263490c42e67b3bf5c63741274e6b43bd8d8d164"
+  },
+  {
+    "path": "frontend/ux-ui-design.html",
+    "bytes": 20813,
+    "sha256": "7ee3d066dec803aca85b902aa350ccb3ca63c0ad8b406d11c05673057a11abca"
+  },
+  {
+    "path": "frontend/web-mobile-development.html",
+    "bytes": 21013,
+    "sha256": "0af620971d96b1e83fc8ee90956cf845cc0826ff4dfcd163989c2d3554d7e8cf"
+  },
+  {
+    "path": "frontend/what-we-do.css",
+    "bytes": 2059,
+    "sha256": "4cf0da4884b97c43a3a0f1b9a6fde3fe1c9ca850eadb7fb8306ce89117be82d3"
+  },
+  {
+    "path": "frontend/who-we-are.html",
+    "bytes": 4861,
+    "sha256": "7f5d5b79e0347662dbcb644684e8011ed706e2655d4d11e48ef6d07cff24380b"
+  },
+  {
+    "path": "backend/.env.example",
+    "bytes": 331,
+    "sha256": "57ea6b3f2b828f13f3b06f548955c76aedf7a1c76ed25f5d54e6efac28a97f8c"
+  },
+  {
+    "path": "backend/.env.i18n.example",
+    "bytes": 250,
+    "sha256": "de03f2b637362fce265dfb9c9d396999d3424b203b684a2204ea6398d6bdfa06"
+  },
+  {
+    "path": "backend/browser-tests/blog-guides.js",
+    "bytes": 4032,
+    "sha256": "209cfa3ca566677a1ab3d06ffe075c7ffb403523dcfc9350f0e290b976cf3a6e"
+  },
+  {
+    "path": "backend/browser-tests/i18n.js",
+    "bytes": 12035,
+    "sha256": "1a28066e96656a41b113ffa9e4f7a07a58712e192d0570f5e160ce00616f2e5a"
+  },
+  {
+    "path": "backend/browser-tests/page-heroes.js",
+    "bytes": 7435,
+    "sha256": "a72e4a62a7a4e2f6d8c8d1f754a21fdc099778f7cfdf1ca5b34cc8a10ce15fa6"
+  },
+  {
+    "path": "backend/browser-tests/project-preview-layout.js",
+    "bytes": 6180,
+    "sha256": "68ddb9eeafa6942b29322bce7a8d92e8e9871d836434045acb4222c4fd20ad87"
+  },
+  {
+    "path": "backend/browser-tests/services.js",
+    "bytes": 9432,
+    "sha256": "d1f8bd7cffc5cee5baaf4ab549fc03c0bcce59edf9d6deb50177c800fad17ffc"
+  },
+  {
+    "path": "backend/package-lock.json",
+    "bytes": 63451,
+    "sha256": "c2b39e7ecbcaea7cea106fd9983f4c45ba1b216df972ab038ab90f9c67a1e9b7"
+  },
+  {
+    "path": "backend/package.json",
+    "bytes": 985,
+    "sha256": "0fef94f042dcdf3c4be5ba7c3159d4e3fb69b54bc61dfc63d5ed351a73ee0cfb"
+  },
+  {
+    "path": "backend/src/middleware/auth.js",
+    "bytes": 1402,
+    "sha256": "4a7a95caeda3d9beef3a16f2a7bd26b7508d10750366996046a3a8ec1ac19c63"
+  },
+  {
+    "path": "backend/src/models/Admin.js",
+    "bytes": 1343,
+    "sha256": "f1cb0c697080331e971e3d0574766410fcffbb32047030ed1996d7749003f919"
+  },
+  {
+    "path": "backend/src/models/ApprovalRequest.js",
+    "bytes": 1096,
+    "sha256": "e660caa9a181ab81ffe2cf00391a01c54c4db9955afb01f2bc4d65c1fbb5ef0a"
+  },
+  {
+    "path": "backend/src/models/Blog.js",
+    "bytes": 1425,
+    "sha256": "95c4ad9bd290438d1ab5529cb1a0b26d64a79b7e410e0fbe9f81c25371852c23"
+  },
+  {
+    "path": "backend/src/models/Client.js",
+    "bytes": 347,
+    "sha256": "0c66ca8ea2c04f84eb0105dc8dd30df22b7d49ef5986dd4dad7102b2171d3aaf"
+  },
+  {
+    "path": "backend/src/models/ContactOffice.js",
+    "bytes": 539,
+    "sha256": "b7b293dfa1d3c20947ef122cb427900a4aa2086d2c6ea4538d6cc73d432a1e81"
+  },
+  {
+    "path": "backend/src/models/ContactPageSetting.js",
+    "bytes": 1489,
+    "sha256": "4d6bfa8467e77bb455e98c3198daea56843fd81ffa8bf8cdec90b0f2276aeba5"
+  },
+  {
+    "path": "backend/src/models/Insight.js",
+    "bytes": 1208,
+    "sha256": "e17f663d56c585fa354aeaf276d649fc2ecd1f4fe5bcf7422548cc5f1be8e1b5"
+  },
+  {
+    "path": "backend/src/models/MapLocation.js",
+    "bytes": 560,
+    "sha256": "9c5a9b7e62c4821de149477f2affc400bb7893e6f0831f1d7a77798dadcfcd56"
+  },
+  {
+    "path": "backend/src/models/Project.js",
+    "bytes": 1715,
+    "sha256": "dd3d2929ae86e3360ceda71ee9b72a4cb9f4d54a2d9fddad45f3f9096565161b"
+  },
+  {
+    "path": "backend/src/models/Section.js",
+    "bytes": 229,
+    "sha256": "0d11ae93573fb53c0bb579ab3add018789cf05cbba08127a36e4407b114b7f38"
+  },
+  {
+    "path": "backend/src/models/Stat.js",
+    "bytes": 296,
+    "sha256": "072ba996e8e7517641b94a33d5badefbe4902a145af197da2a25ed3c5197eea7"
+  },
+  {
+    "path": "backend/src/models/Submission.js",
+    "bytes": 563,
+    "sha256": "5c80be80d69bcc1f927106afe307b463e77f1a8b4a65b5c46f9ced4cfe6f3899"
+  },
+  {
+    "path": "backend/src/models/TeamMember.js",
+    "bytes": 484,
+    "sha256": "9fc3c7dc04e8b26b6e4dc4b164829637b69a08082d9434b949d69af1d9c25021"
+  },
+  {
+    "path": "backend/src/models/Testimonial.js",
+    "bytes": 392,
+    "sha256": "adfc4ad122c214055d52f3d1b928a24daacee36a822df06a6855fc02c5aa518c"
+  },
+  {
+    "path": "backend/src/models/WhatWeDoService.js",
+    "bytes": 238,
+    "sha256": "6056bd239640ca60211819b20b1789694f8921ca481cc4526337f1cdc797d528"
+  },
+  {
+    "path": "backend/src/routes/admins.js",
+    "bytes": 5197,
+    "sha256": "bf68dcfed439ee4e9aa8ce5a3dd6b66c939e69d678949bfb6f452f71386b0eec"
+  },
+  {
+    "path": "backend/src/routes/approvals.js",
+    "bytes": 8413,
+    "sha256": "243645dcc0bbd23c6ee3cfa293751f2f2a008f71068cbcf21345524d81f645ec"
+  },
+  {
+    "path": "backend/src/routes/auth.js",
+    "bytes": 967,
+    "sha256": "17168a595dcba2f98357b519acfbef86d3920668ccd1e4007cac13280e31689d"
+  },
+  {
+    "path": "backend/src/routes/contactPage.js",
+    "bytes": 1844,
+    "sha256": "a698587ed0e057c20fe55448dd93d69ca29714e60ee5ce50060cfd6934619641"
+  },
+  {
+    "path": "backend/src/routes/i18n.js",
+    "bytes": 2467,
+    "sha256": "5f78fc5e7891af9e06b11cb1c22dc7bd807042b1ba8d1355dc31889a0fe5e619"
+  },
+  {
+    "path": "backend/src/routes/projects.js",
+    "bytes": 4528,
+    "sha256": "eeac515fad18c25aab04fb5d8f546ca215ddc306b8448341e66f9f4387575cf7"
+  },
+  {
+    "path": "backend/src/routes/projectVideos.js",
+    "bytes": 4075,
+    "sha256": "e7381a69403a237477c8d7eee03cdb7c61730d12edbc5f036cc5ad82205cab10"
+  },
+  {
+    "path": "backend/src/routes/public.js",
+    "bytes": 2752,
+    "sha256": "2e6c68f2306ee31687c6e15035fb704cccdf0c9add43432ee61214242bffcc9d"
+  },
+  {
+    "path": "backend/src/routes/sections.js",
+    "bytes": 1012,
+    "sha256": "e5338c3925dab974f7250510393284b4016865309f3253bc190cba2bbabfa85a"
+  },
+  {
+    "path": "backend/src/routes/submissions.js",
+    "bytes": 1968,
+    "sha256": "d144c8aad36d86c0b2e48fc7c418f192466eae12fca71eb51682a20ebdff831a"
+  },
+  {
+    "path": "backend/src/routes/upload.js",
+    "bytes": 777,
+    "sha256": "d6ef6ca960c0a92369a04c14705a7e136ce9bb779e912556ec27fb8389a6906a"
+  },
+  {
+    "path": "backend/src/routes/whatWeDoServices.js",
+    "bytes": 1548,
+    "sha256": "dea5be98eace53acade23ca55bcf699626c067efe7545452bd4624654021a5d0"
+  },
+  {
+    "path": "backend/src/seed.js",
+    "bytes": 1581,
+    "sha256": "1245ac119cc9dbe13b96594c959f2be0fb7e8a2ef7d87270a2637e13d77fb28a"
+  },
+  {
+    "path": "backend/src/server.js",
+    "bytes": 4984,
+    "sha256": "d23daf8b55b0038fe496fbc463226860030954186ea198be8b02142b3b580997"
+  },
+  {
+    "path": "backend/src/utils/accessControl.js",
+    "bytes": 2670,
+    "sha256": "4702cf9b88a0b73fca27a0b668d6a7a0fbf5670412a848f9dcf74334bbb7ddf8"
+  },
+  {
+    "path": "backend/src/utils/crudRouter.js",
+    "bytes": 2688,
+    "sha256": "d78a4c7cb35b3a24fa167a74f101c83291ed5f5b51ded4e302457a169ea18b88"
+  },
+  {
+    "path": "backend/src/utils/siteCors.js",
+    "bytes": 1200,
+    "sha256": "5bab4050642a9dabde544cdd72d48fa89cccc419e790f0f0a1be338200c6db5a"
+  },
+  {
+    "path": "backend/src/utils/translationService.js",
+    "bytes": 4068,
+    "sha256": "d1b6aa7317e2642e18d9eb97605a4bb6e1a08228accebfbfd0e3043d3cf68202"
+  },
+  {
+    "path": "backend/test/blog-content.test.js",
+    "bytes": 3654,
+    "sha256": "b883e8fb0255935f0c4091cddd3f6e707887bf3d2aca36011d7672f2df5841ab"
+  },
+  {
+    "path": "backend/test/i18n.test.js",
+    "bytes": 5643,
+    "sha256": "3d27d6342452aa48d024e7a4cec2b76a5a24df978431ba60de164465e5be593f"
+  },
+  {
+    "path": "backend/test/project-video-ui.test.js",
+    "bytes": 14725,
+    "sha256": "905670a65e7da6d802a09364ae7dbb078dcee7d03a7bfbcb0d221d0f8018fb82"
+  },
+  {
+    "path": "backend/test/project-videos.test.js",
+    "bytes": 6871,
+    "sha256": "a127e164200d57840e969b3e6cd1f9c988fadbdbc3098079b47f981e7db4738d"
+  },
+  {
+    "path": "backend/test/seo.test.js",
+    "bytes": 2453,
+    "sha256": "0d8b78e8a4b021808b5d1345507745bca697f8aab7f110e5b6e1c59b3bb0012a"
+  },
+  {
+    "path": "backend/test/services.test.js",
+    "bytes": 3974,
+    "sha256": "7ab4ffab6b22a5ae2f9aa4474c9031527a6b48ab09c8c9d76b8c7485a246dee6"
+  },
+  {
+    "path": "backend/test/site-cors.test.js",
+    "bytes": 2495,
+    "sha256": "ceb5c7100ae37fa012c06240e3534ec7edceae18a8f55270b006cdb39c28ca17"
+  },
+  {
+    "path": "backend/uploads/.gitkeep",
+    "bytes": 1,
+    "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "path": "backend/uploads/1783591248045-Screenshot_2026-07-02_183457.png",
+    "bytes": 303067,
+    "sha256": "c5b0b5eb4f4a43922c3f52943e31f09debe64362971e0e3e4cdb0ea007444db7"
+  },
+  {
+    "path": "backend/uploads/1783591651374-Screenshot_2024-09-11_170101.png",
+    "bytes": 8709,
+    "sha256": "821d372138a894d8459014a3391a9976cfac727d9c9bd2b82802aece1ab323a5"
+  },
+  {
+    "path": "backend/uploads/1783592328616-Screenshot_2026-07-09_154816.png",
+    "bytes": 821875,
+    "sha256": "e72dd97e314b80ddfee479ec248b8fc945c77029478c5d0281eea6eb6314d184"
+  },
+  {
+    "path": "backend/uploads/1783595174392-Screenshot__10_.png",
+    "bytes": 1382107,
+    "sha256": "832d9b5d18904f273c7bc39177d40bd63aeaa63b2b650d314185e054e057173e"
+  },
+  {
+    "path": "content/blogs/ai-assistant-business-systems.md",
+    "bytes": 7193,
+    "sha256": "5b28942d3ab9b25a218e51195f6e92d22de70cdb45f9a2ed2c37755194ed4996"
+  },
+  {
+    "path": "content/blogs/ai-tools-tips.md",
+    "bytes": 7193,
+    "sha256": "eb6eea19ade2368b6f5a28ca29e18b18167adfada9423f3d66f603e787aa327b"
+  },
+  {
+    "path": "content/blogs/business-web-development.md",
+    "bytes": 7507,
+    "sha256": "62816ba3d99e6d7137a6a2a356479ff83cabdd32edb2ad7a56f56ec6f566a011"
+  },
+  {
+    "path": "content/blogs/iot-platform-architecture.md",
+    "bytes": 7776,
+    "sha256": "9401dd828efc77fe360b16112f0a634b9867c59abf589f2cd7471523ddd91595"
+  },
+  {
+    "path": "content/blogs/posts.json",
+    "bytes": 2563,
+    "sha256": "eccb904f6aaf2c840f58a1a7a15bff7e8e145448475889c544a8988892a08281"
+  },
+  {
+    "path": "content/blogs/README.md",
+    "bytes": 1520,
+    "sha256": "2bb8345b1902b149447a2ccb7f55573167c0e75147fedb3d54d0b6db7a1f3655"
+  },
+  {
+    "path": "scripts/build-services.js",
+    "bytes": 13584,
+    "sha256": "46d77ad8dfe9e00ca3c1886229ed17b07c5eef5b69a1b36eb380fdc6ed8f3199"
+  },
+  {
+    "path": "scripts/generate-admin-icons.js",
+    "bytes": 2752,
+    "sha256": "ef8093c79e2749678fe448419af3baacc0b8fa1194d44c59b23a66f42bf4b910"
+  },
+  {
+    "path": "scripts/publish-blogs.js",
+    "bytes": 5352,
+    "sha256": "1b65b04352360174fb70d05555bc7327d3e330a389eb3eb1c1995afc87de274e"
+  },
+  {
+    "path": "scripts/update-seo.js",
+    "bytes": 7374,
+    "sha256": "5241c9c62642dd9303bb8bc551d35b1c5b471f9768a024d12e539c8e0baddada"
+  }
+]

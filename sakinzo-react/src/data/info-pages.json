@@ -1,0 +1,187 @@
+{
+  "who-we-are": {
+    "cat": "About Us",
+    "title": "We build technology that moves businesses forward",
+    "intro": "Sakinzo is a product engineering partner helping ambitious companies turn complex ideas into reliable digital products.",
+    "heading": "Technology expertise with a business-first mindset",
+    "body": "We combine strategy, design, engineering and long-term support in one accountable team. Our work is grounded in clarity, measurable outcomes and products people genuinely enjoy using.",
+    "cards": [
+      [
+        "Product thinking",
+        "We challenge assumptions and shape the right product before writing code."
+      ],
+      [
+        "Engineering excellence",
+        "Scalable architecture, clean delivery practices and quality built into every release."
+      ],
+      [
+        "True partnership",
+        "Transparent communication and a team that stays invested beyond launch."
+      ]
+    ]
+  },
+  "careers": {
+    "cat": "About Us",
+    "title": "Do meaningful work with people who care",
+    "intro": "Join a curious, collaborative team building products for real-world challenges.",
+    "heading": "Build your next chapter at Sakinzo",
+    "body": "We value ownership, thoughtful craft and continuous learning. You will work closely with clients and teammates, contribute to important decisions and see the impact of what you build.",
+    "cards": [
+      [
+        "Flexible culture",
+        "A supportive environment built around trust, focus and sustainable pace."
+      ],
+      [
+        "Growth by doing",
+        "Mentorship, challenging projects and room to explore new technologies."
+      ],
+      [
+        "Open roles",
+        "We welcome engineers, designers, analysts and product thinkers who want to grow."
+      ]
+    ]
+  },
+  "leadership": {
+    "cat": "About Us",
+    "title": "Leadership grounded in delivery",
+    "intro": "Our leaders bring together product vision, technical depth and a commitment to lasting client relationships.",
+    "heading": "The people guiding our mission",
+    "body": "Sakinzo leadership stays close to projects, customers and teams. That hands-on perspective helps us make better decisions and maintain the high standards our partners expect.",
+    "cards": [
+      [
+        "Client success",
+        "Keeping business outcomes at the center of every engagement."
+      ],
+      [
+        "Technical direction",
+        "Building strong engineering foundations for secure, scalable products."
+      ],
+      [
+        "People and culture",
+        "Creating an environment where talented teams can do their best work."
+      ]
+    ]
+  },
+  "ev-charging": {
+    "cat": "Success Story",
+    "title": "A connected cloud ecosystem for EV charging",
+    "intro": "A scalable platform bringing chargers, drivers, operators and payments into one reliable experience.",
+    "heading": "Powering a smarter charging network",
+    "body": "We designed an IoT-enabled cloud ecosystem that gives operators real-time visibility while making charging simple for drivers. The platform supports device communication, session management, billing and operational analytics.",
+    "cards": [
+      [
+        "Challenge",
+        "Unify fragmented charging infrastructure and operational workflows."
+      ],
+      [
+        "Solution",
+        "Cloud services, real-time device data and intuitive operator tools."
+      ],
+      [
+        "Impact",
+        "Faster operations, better reliability and a foundation ready to scale."
+      ]
+    ],
+    "stats": [
+      ["24/7", "Platform visibility"],
+      ["Real-time", "Device telemetry"],
+      ["Scalable", "Cloud architecture"]
+    ]
+  },
+  "market-access": {
+    "cat": "Success Story",
+    "title": "AI-based market access planning",
+    "intro": "Turning complex market signals into clear, evidence-based expansion decisions.",
+    "heading": "From scattered data to confident planning",
+    "body": "The solution brings market, competitor and internal data together, then applies AI-assisted analysis to surface opportunities and risks. Teams can compare scenarios and build stronger go-to-market plans.",
+    "cards": [
+      ["Challenge", "Manual research made planning slow and inconsistent."],
+      [
+        "Solution",
+        "A unified analytics workspace with AI-supported recommendations."
+      ],
+      ["Impact", "Shorter research cycles and clearer market prioritization."]
+    ]
+  },
+  "multi-currency-wallet": {
+    "cat": "Success Story",
+    "title": "A secure multi-currency wallet experience",
+    "intro": "One platform for holding, exchanging and transferring funds across currencies.",
+    "heading": "Making global money movement feel simple",
+    "body": "We engineered a secure fintech experience around complex ledger, compliance and exchange workflows. Customers get a clear interface while operations teams retain control and visibility.",
+    "cards": [
+      ["Challenge", "Deliver speed without compromising financial controls."],
+      [
+        "Solution",
+        "Secure wallet architecture, transaction workflows and auditability."
+      ],
+      ["Impact", "A smoother customer journey ready for regional growth."]
+    ]
+  },
+  "iot-cloud-platform": {
+    "cat": "Success Story",
+    "title": "An IoT cloud platform built to scale",
+    "intro": "Connecting distributed devices with dependable monitoring, control and analytics.",
+    "heading": "A single operational view of every device",
+    "body": "The platform securely ingests device data, manages fleets and makes critical events visible to operations teams. Its modular cloud architecture supports new device types and use cases.",
+    "cards": [
+      ["Challenge", "Manage growing fleets across disconnected systems."],
+      [
+        "Solution",
+        "Secure ingestion, device management and real-time dashboards."
+      ],
+      [
+        "Impact",
+        "Improved visibility, response time and platform extensibility."
+      ]
+    ]
+  },
+  "smart-hvac": {
+    "cat": "Success Story",
+    "title": "Smart HVAC monitoring powered by AI",
+    "intro": "Predictive insights that help teams reduce downtime and operate buildings more efficiently.",
+    "heading": "Moving maintenance from reactive to proactive",
+    "body": "Sensor data and machine learning identify unusual behavior before it becomes a costly failure. Teams receive actionable alerts and a clear view of equipment health.",
+    "cards": [
+      [
+        "Challenge",
+        "Failures were difficult to predict and expensive to resolve."
+      ],
+      ["Solution", "IoT telemetry, anomaly detection and prioritized alerts."],
+      ["Impact", "Earlier intervention, better uptime and smarter energy use."]
+    ]
+  },
+  "news": {
+    "cat": "Insights",
+    "title": "Sakinzo news and company updates",
+    "intro": "New partnerships, team milestones and important updates from our work.",
+    "heading": "What is happening at Sakinzo",
+    "body": "Follow our latest announcements and the progress we are making with clients, technology communities and our growing team.",
+    "cards": [
+      [
+        "Company updates",
+        "Milestones, initiatives and important announcements."
+      ],
+      ["Partnerships", "New collaborations built around meaningful outcomes."],
+      ["Events", "Where to meet our team and exchange ideas."]
+    ]
+  },
+  "opensource": {
+    "cat": "Insights",
+    "title": "Open source from the Sakinzo team",
+    "intro": "Tools, experiments and engineering knowledge we share with the developer community.",
+    "heading": "Building in the open",
+    "body": "Open source helps us learn together and make useful technology more accessible. Explore the ideas and reusable building blocks emerging from our engineering work.",
+    "cards": [
+      [
+        "Libraries",
+        "Focused tools designed to solve recurring engineering problems."
+      ],
+      [
+        "Reference projects",
+        "Practical examples for modern product development."
+      ],
+      ["Community", "Contributions, discussions and shared learning."]
+    ]
+  }
+}

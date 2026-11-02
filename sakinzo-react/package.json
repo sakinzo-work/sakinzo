@@ -1,0 +1,33 @@
+{
+  "name": "sakinzo-react",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 3000",
+    "build": "vite build && node scripts/build-pwa.mjs && node scripts/build-seo.mjs",
+    "preview": "vite preview --host 127.0.0.1 --port 4173",
+    "start": "npm run dev",
+    "backend:install": "npm --prefix backend ci",
+    "backend:dev": "npm --prefix backend run dev",
+    "backend:start": "npm --prefix backend start",
+    "backend:seed": "npm --prefix backend run seed",
+    "test": "node --test test/browser.test.mjs test/migration.test.mjs test/backend-connection.test.mjs test/seo.test.mjs"
+  },
+  "dependencies": {
+    "@vercel/functions": "2.2.13",
+    "leaflet": "1.9.4",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-router-dom": "^6.30.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "4.7.0",
+    "parse5": "^7.3.0",
+    "playwright": "1.56.1",
+    "vite": "6.4.5"
+  }
+}
